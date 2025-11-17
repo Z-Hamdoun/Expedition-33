@@ -33,7 +33,6 @@ boutons = {}
 
 while en_cours:
 
-    clock.tick(FPS)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -94,4 +93,6 @@ while en_cours:
     else :
         boutons = menu_principal.affichage(displaysurface)
 
+
+    clock.tick(FPS)
     pygame.display.update()
