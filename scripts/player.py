@@ -82,6 +82,6 @@ class Player:
             self.jumping = False
  
     
-    def blit_me(self):
-        ...
+    def blit_me(self, screen):
+        screen.blit(self.image, (self.rect.x, self.rect.y))
 ground= pygame.sprite.Group()
