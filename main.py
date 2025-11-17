@@ -7,8 +7,8 @@ import sys
 pygame.init()
 vec = pygame.math.Vector2 
  
-HEIGHT = 450
-WIDTH = 700
+
+WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
 FPS = 60
 
@@ -21,7 +21,6 @@ pygame.display.set_caption("Game")
 resolution = py.display.Info()
 largeur, hauteur = resolution.current_w, resolution.current_h
 bg = background(img = 'bg_test.png')  #à changer plus tard avec le path du vrai bg
-fenetre = py.display.set_mode((largeur, hauteur))
 
 
 player = Player()
@@ -48,7 +47,7 @@ while True:
         if event.type == QUIT:
             en_cours = False
     bg.maj()
-    bg.affiche(fenetre)
+    bg.affiche(displaysurface)
     py.display.flip()
 
         
