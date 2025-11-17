@@ -20,7 +20,8 @@ class Player:
         Initialise l'objet Player
         '''
         
-        self.vel = 0
+        self.max_jump_speed = 5
+        self.jump_speed = self.max_jump_speed
         self.acc = 0
         
         # Chargement des animations
@@ -44,23 +45,36 @@ class Player:
         self.jumping = False
         self.ducking = False
         self.running = True
+        
+        # Variable qui gere l'animation running
+        self.frame_number = 0
     
     def run(self):
-        self.acc = 0.5
-        self.vel += self.acc
-        self.pos.y += self.vel + 0.5 * self.acc
+        self.image = self.animations['running'][self.frame_number // 10] # change chaque 10 frames du jeu
+        # Mise a jour du rect du joueur
+        x, y = self.rect.x, self.rect.y
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.frame_number += 1
         
     def jump(self): 
-        hits = pygame.sprite.spritecollide(self, ground, False)
-        if hits and not self.jumping:
-           self.jumping = True
-           self.vel.y = -15
+        self.image = self.animations['jumping']
+        if self.jumping:
+            self.rect.y -= self.jump_speed * 4
+            self.jump_speed -= 0.8
+        if self.jump_speed < - self.max_jump_speed:
+            self.jumping = False
+            self.jump_speed = self.max_jump_speed
     
     def cancel_jump(self):
         if self.jumping:
             if self.vel.y < -3:
                 self.vel.y = -3
     def update(self, inpt: list):
+        if self.frame_number >= 20:
+            self.frame_number = 0
+        
         if self.ducking:
             self.duck()
         elif self.running:
@@ -82,6 +96,6 @@ class Player:
             self.jumping = False
  
     
-    def blit_me(self):
-        ...
+    def blit_me(self, screen):
+        screen.blit(self.image, (self.rect.x, self.rect.y))
 ground= pygame.sprite.Group()

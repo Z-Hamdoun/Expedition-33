@@ -1,13 +1,14 @@
 import pygame
 from scripts.player import Player
 from pygame.locals import *
+from scripts.scrollable_bg import *
 import sys
 
 pygame.init()
 vec = pygame.math.Vector2 
  
-HEIGHT = 450
-WIDTH = 700
+resolution = py.display.Info()
+WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
 FPS = 60
 
@@ -19,6 +20,11 @@ dico_images = { 'Oiseau' : [pygame.image.load(os.path.join("assets/Bird", "Bird1
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
+
+#definitions pour le background
+
+largeur, hauteur = resolution.current_w, resolution.current_h
+bg = background(img = 'bg_test.png')  #à changer plus tard avec le path du vrai bg
 
 
 player = Player()
@@ -37,11 +43,27 @@ while True:
                 player.jump()
         if event.type == pygame.KEYUP:    
             if event.key == pygame.K_SPACE:
-                player.cancel_jump()   
+                player.cancel_jump()
 
-            
-    displaysurface.fill((255,255,255))
-    displaysurface.blit(player.image, (player.rect.x, player.rect.y))
-    pygame.display.update()
-    clock.tick(FPS)
+    #partie background
+    clock.tick(60)
+    for event in py.event.get():
+        if event.type == QUIT:
+            en_cours = False
+    bg.maj()
+    bg.affiche(displaysurface)
+    py.display.flip()
+
         
+
+    inpt = pygame.key.get_pressed()
+    displaysurface.fill((255,255,255))
+    player.blit_me(displaysurface)
+    player.update(inpt)
+    
+    clock.tick(FPS)
+    
+    pygame.display.update()
+        
+
+

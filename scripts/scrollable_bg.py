@@ -1,6 +1,6 @@
 import pygame as py
 from pygame.locals import *
-
+import math
 
 py.init()
 
@@ -11,7 +11,7 @@ class background():
         self.vitesse = 3
         self.img = py.image.load(img).convert()
         self.defilement_horizontal = 0
-        self.pavage = ( self.largeur // self.img.get_width() ) + 1
+        self.pavage = math.ceil( self.largeur / self.img.get_width() ) + 1
 
     def maj(self):
         self.defilement_horizontal -= self.vitesse
