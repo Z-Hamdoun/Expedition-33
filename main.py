@@ -33,11 +33,15 @@ while True:
                 player.jump()
         if event.type == pygame.KEYUP:    
             if event.key == pygame.K_SPACE:
-                player.cancel_jump()   
+                player.cancel_jump()
+        
 
-            
+    inpt = pygame.key.get_pressed()
     displaysurface.fill((255,255,255))
-    displaysurface.blit(player.image, (player.rect.x, player.rect.y))
-    pygame.display.update()
+    player.blit_me(displaysurface)
+    player.update(inpt)
+    
     clock.tick(FPS)
+    
+    pygame.display.update()
         
