@@ -28,8 +28,6 @@ class Menu():
 
     def background(self,fenetre):
         fenetre.blit(self.bg, (0, 0))
-        #bouton = self.button("Start",self.police,(0,0,0), self.largeur //2, self.hauteur //2,fenetre)
-        #return bouton
 
 class MainMenu(Menu):
     def __init__(self,largeur,hauteur,img):
