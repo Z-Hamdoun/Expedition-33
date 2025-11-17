@@ -26,7 +26,7 @@ pygame.display.set_caption("Game")
 bg = background(img = os.path.join("assets/bg", "bg_test.png"))  #à changer plus tard avec le path du vrai bg
 player = Player()
 
-menu = Menu(WIDTH,HEIGHT)
+menu = Menu(WIDTH,HEIGHT,img = os.path.join("assets/bg", "menubg_test.jpg"))
 jeu_actif = False
 en_cours = True
 
