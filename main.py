@@ -3,6 +3,7 @@ from scripts.player import Player
 from pygame.locals import *
 from scripts.scrollable_bg import *
 import sys
+import os
 
 pygame.init()
 vec = pygame.math.Vector2 
@@ -20,7 +21,7 @@ pygame.display.set_caption("Game")
 #definitions pour le background
 
 largeur, hauteur = resolution.current_w, resolution.current_h
-bg = background(img = 'bg_test.png')  #à changer plus tard avec le path du vrai bg
+bg = background(img = os.path.join("assets/bg", "bg_test.png"))  #à changer plus tard avec le path du vrai bg
 
 
 player = Player()
@@ -42,18 +43,13 @@ while True:
                 player.cancel_jump()
 
     #partie background
-    clock.tick(60)
-    for event in py.event.get():
-        if event.type == QUIT:
-            en_cours = False
     bg.maj()
     bg.affiche(displaysurface)
-    py.display.flip()
 
         
 
     inpt = pygame.key.get_pressed()
-    displaysurface.fill((255,255,255))
+    #displaysurface.fill((255,255,255))
     player.blit_me(displaysurface)
     player.update(inpt)
     
