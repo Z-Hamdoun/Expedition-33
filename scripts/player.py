@@ -20,7 +20,7 @@ class Player:
         Initialise l'objet Player
         '''
         
-        self.max_jump_speed = 5
+        self.max_jump_speed = 8.5
         self.jump_speed = self.max_jump_speed
         self.acc = 0
         
@@ -40,7 +40,9 @@ class Player:
         self.rect = self.image.get_rect()
         # Valeurs initiales
         self.rect.x = 200
-        self.rect.y = 2
+        self.rect.y = 500
+        
+        self.ground_y = 500
         
         self.jumping = False
         self.ducking = False
@@ -64,13 +66,10 @@ class Player:
             self.rect.y -= self.jump_speed * 4
             self.jump_speed -= 0.8
         if self.jump_speed < - self.max_jump_speed:
+            self.rect.y = self.ground_y
             self.jumping = False
             self.jump_speed = self.max_jump_speed
     
-    def cancel_jump(self):
-        if self.jumping:
-            if self.vel.y < -3:
-                self.vel.y = -3
     def update(self, inpt: list):
         if self.frame_number >= 20:
             self.frame_number = 0
@@ -98,4 +97,3 @@ class Player:
     
     def blit_me(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
-ground= pygame.sprite.Group()
