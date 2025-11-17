@@ -20,7 +20,7 @@ pygame.display.set_caption("Game")
 #definitions pour le background
 
 largeur, hauteur = resolution.current_w, resolution.current_h
-bg = background(img = 'bg_test.png')  #à changer plus tard avec le path du vrai bg
+# bg = background(img = 'bg_test.png')  #à changer plus tard avec le path du vrai bg
 
 
 player = Player()
@@ -41,16 +41,9 @@ while True:
             if event.key == pygame.K_SPACE:
                 player.cancel_jump()
 
-    #partie background
-    clock.tick(60)
-    for event in py.event.get():
-        if event.type == QUIT:
-            en_cours = False
-    bg.maj()
-    bg.affiche(displaysurface)
+    # bg.maj()
+    # bg.affiche(displaysurface)
     py.display.flip()
-
-        
 
     inpt = pygame.key.get_pressed()
     displaysurface.fill((255,255,255))

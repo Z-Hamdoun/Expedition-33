@@ -39,8 +39,8 @@ class Player:
         self.image = self.animations['running'][0]
         self.rect = self.image.get_rect()
         # Valeurs initiales
-        self.rect.x = 100
-        self.rect.y = 200
+        self.rect.x = 200
+        self.rect.y = 2
         
         self.jumping = False
         self.ducking = False
