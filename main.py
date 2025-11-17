@@ -7,7 +7,7 @@ import sys
 pygame.init()
 vec = pygame.math.Vector2 
  
-
+resolution = py.display.Info()
 WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
 FPS = 60
@@ -18,7 +18,7 @@ displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
 
 #definitions pour le background
-resolution = py.display.Info()
+
 largeur, hauteur = resolution.current_w, resolution.current_h
 bg = background(img = 'bg_test.png')  #à changer plus tard avec le path du vrai bg
 
