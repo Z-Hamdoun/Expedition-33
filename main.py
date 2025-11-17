@@ -1,12 +1,12 @@
 import pygame
-from player import Player
+from scripts.player import Player
 from pygame.locals import *
 from scripts.scrollable_bg import *
 import sys
 import os
 from scripts.obstacle import *
 from random import randint
-from menu import *
+from scripts.menu import *
 
 pygame.init()
 vec = pygame.math.Vector2 

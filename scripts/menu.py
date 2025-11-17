@@ -37,7 +37,7 @@ class MainMenu(Menu):
 
     def affichage(self,fenetre):
         self.background(fenetre)
-        bonton_start = self.button("NOUVELLE PARTIE", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2, fenetre)
+        bonton_start = self.button("NOUVELLE PARTIE", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  -50, fenetre)
         bouton_options = self.button("OPTIONS", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2 + 50, fenetre)
-        bouton_quitter = self.button("QUITTER", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2 + 100, fenetre)
+        bouton_quitter = self.button("QUITTER", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2 + 150, fenetre)
         return {"start":bonton_start,"options":bouton_options,"quitter":bouton_quitter}
