@@ -1,6 +1,7 @@
 import pygame
 from scripts.player import Player
 from pygame.locals import *
+from scripts.scrollable_bg import *
 import sys
 
 pygame.init()
@@ -15,6 +16,10 @@ FPS = 60
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
+
+#definitions pour le background
+bg = background(img = 'bg_test.png')
+fenetre = py.display.set_mode((largeur, hauteur))
 
 
 player = Player()
@@ -34,6 +39,16 @@ while True:
         if event.type == pygame.KEYUP:    
             if event.key == pygame.K_SPACE:
                 player.cancel_jump()
+
+    #partie background
+    clock.tick(60)
+    for event in py.event.get():
+        if event.type == QUIT:
+            en_cours = False
+    bg.maj()
+    bg.affiche(fenetre)
+    py.display.flip()
+
         
 
     inpt = pygame.key.get_pressed()
@@ -45,3 +60,5 @@ while True:
     
     pygame.display.update()
         
+
+
