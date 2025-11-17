@@ -1,5 +1,8 @@
 import pygame
+from dimension import dimension
 
+WIDTH = dimension()['WIDTH']
+HEIGHT = dimension()['HEIGHT']
 
 class ground(pygame.sprite.Sprite):
     def __init__(self):
