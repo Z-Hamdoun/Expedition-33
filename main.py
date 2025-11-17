@@ -12,17 +12,22 @@ ACC = 0.5
 FPS = 60
 
 
-FramePerSec = pygame.time.Clock()
+clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
+
 
 player = Player()
 
 while True:
     for event in pygame.event.get():
-        if event.type == QUIT:
+        if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
         if event.type == pygame.KEYDOWN:    
             if event.key == pygame.K_SPACE:
                 player.jump()
@@ -31,10 +36,8 @@ while True:
                 player.cancel_jump()   
 
             
-        displaysurface.fill((0,0,0))
-
-    
-
-    
-        pygame.display.update()
-        FramePerSec.tick(FPS)
+    displaysurface.fill((255,255,255))
+    displaysurface.blit(player.image, (player.rect.x, player.rect.y))
+    pygame.display.update()
+    clock.tick(FPS)
+        

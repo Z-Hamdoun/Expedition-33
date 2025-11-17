@@ -4,6 +4,8 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
+
+
 vec = pygame.math.Vector2 
 
 
@@ -15,27 +17,33 @@ class Player:
     
     def __init__(self):
         '''
-        Initialise
+        Initialise l'objet Player
         '''
-
-        self.surf = pygame.Surface((30, 30))
-        self.surf.fill((255,255,0))
-        self.rect = self.surf.get_rect()
-
-        self.pos = vec((10, 360))
+        
         self.vel = 0
         self.acc = 0
-
-        self.animations = {'jump': None,
-            'run': None,
-            'duck': None}
         
-        """
-        self.image = None
+        # Chargement des animations
+        jumping = pygame.image.load(os.path.join("assets/Dino", "DinoJump.png"))
+        running = [pygame.image.load(os.path.join("assets/Dino", "DinoRun1.png")),
+           pygame.image.load(os.path.join("assets/Dino", "DinoRun2.png"))]
+        ducking = [pygame.image.load(os.path.join("assets/Dino", "DinoDuck1.png")),
+           pygame.image.load(os.path.join("assets/Dino", "DinoDuck2.png"))]
+        
+        # Charger les animations dans un dictionnaire
+        self.animations = {'jumping': jumping,
+            'running': running,
+            'ducking': ducking}
+        
+        self.image = self.animations['running'][0]
         self.rect = self.image.get_rect()
-        self.rect.x = self.x
-        self.rect.y = self.y
-        """
+        # Valeurs initiales
+        self.rect.x = 100
+        self.rect.y = 200
+        
+        self.jumping = False
+        self.ducking = False
+        self.running = True
     
     def run(self):
         self.acc = 0.5
@@ -53,8 +61,8 @@ class Player:
             if self.vel.y < -3:
                 self.vel.y = -3
     def update(self):
-        hits = pygame.sprite.spritecollide(player,ground, False)
-        if player.vel.y > 0:        
+        if self.ducking
+        if self.vel > 0:        
             if hits:
                 self.vel.y = 0
                 self.pos.y = hits[0].rect.top + 1    
