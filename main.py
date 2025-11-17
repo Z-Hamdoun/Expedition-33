@@ -12,11 +12,6 @@ WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
 FPS = 60
 
-dico_images = { 'Oiseau' : [pygame.image.load(os.path.join("assets/Bird", "Bird1.png"))],
-                'LargeCactus' : [pygame.image.load(os.path.join("assets/Cactus","LargeCactus1")),pygame.image.load(os.path.join("assets/Cactus","LargeCactus2")),pygame.image.load(os.path.join("assets/Cactus","LargeCactus2"))],
-                'SmallCactus' : [pygame.image.load(os.path.join("assets/Cactus","SmallCactus1")),pygame.image.load(os.path.join("assets/Cactus","SmallCactus2")),pygame.image.load(os.path.join("assets/Cactus","SmallCactus2"))]}
-
-
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
