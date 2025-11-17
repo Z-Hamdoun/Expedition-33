@@ -60,12 +60,27 @@ class Player:
         if self.jumping:
             if self.vel.y < -3:
                 self.vel.y = -3
-    def update(self):
-        if self.ducking
-        if self.vel > 0:        
-            if hits:
-                self.vel.y = 0
-                self.pos.y = hits[0].rect.top + 1    
+    def update(self, inpt: list):
+        if self.ducking:
+            self.duck()
+        elif self.running:
+            self.run()
+        elif self.jumping:
+            self.jump()
+        
+        if inpt[pygame.K_DOWN] and not self.jumping:
+            self.ducking = True
+            self.running = False
+            self.jumping = False
+        elif inpt[pygame.K_UP] and not self.jumping:
+            self.ducking = False
+            self.running = False
+            self.jumping = True
+        elif not (self.jumping or inpt[pygame.K_DOWN]):
+            self.ducking = False
+            self.running = True
+            self.jumping = False
+ 
     
     def blit_me(self):
         ...
