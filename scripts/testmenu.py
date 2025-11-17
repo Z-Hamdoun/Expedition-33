@@ -26,9 +26,10 @@ pygame.display.set_caption("Game")
 bg = background(img = os.path.join("assets/bg", "bg_test.png"))  #à changer plus tard avec le path du vrai bg
 player = Player()
 
-menu = Menu(WIDTH,HEIGHT,img = os.path.join("assets/bg", "menubg_test.jpg"))
+menu_principal = MainMenu(WIDTH,HEIGHT,img = os.path.join("assets/bg", "menubg_test.jpg"))
 jeu_actif = False
 en_cours = True
+boutons = {}
 
 while en_cours:
 
@@ -51,6 +52,15 @@ while en_cours:
             if jeu_actif:
                 if event.key == pygame.K_SPACE:
                     player.cancel_jump()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1: #clic gauche
+                if not jeu_actif :
+                    if "start" in boutons and boutons["start"].collidepoint(event.pos):
+                        jeu_actif = True
+                    if "quitter" in boutons and boutons["quitter"].collidepoint(event.pos):
+                        en_cours = False
+                    if "options" in boutons and boutons["options"].collidepoint(event.pos):
+                        print("bouton marche") # à coder après pur les thèmes
 
     if jeu_actif:
         #partie background
@@ -82,5 +92,6 @@ while en_cours:
         player.update(inpt)
 
     else :
-        menu.affichage(displaysurface)
+        boutons = menu_principal.affichage(displaysurface)
+
     pygame.display.update()
