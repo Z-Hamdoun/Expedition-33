@@ -15,7 +15,7 @@ class background():
 
     def maj(self):
         self.defilement_horizontal -= self.vitesse
-        if abs(self.defilement_horizontal) > self.largeur:
+        if abs(self.defilement_horizontal) > self.img.get_width():
             self.defilement_horizontal = 0
     
     def affiche(self,fenetre):
