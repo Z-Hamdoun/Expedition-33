@@ -13,11 +13,11 @@ class Menu():
         self.police = pygame.font.Font(None,60)
 
     def text(self,texte,font,couleur,x,y,fenetre):
-        txt_to_img = font.render(texte,False,couleur)
+        txt_to_img = font.render(texte,True,couleur)
         rect = txt_to_img.get_rect()
         rect.center  = (x,y)
         fenetre.blit(txt_to_img,rect)
 
     def affichage(self,fenetre):
         fenetre.fill(self.couleur)
-        self.text("START",self.police,(0,0,0), self.largeur //2, self.hauteur //2,fenetre)
+        self.text("Press ENTER to start",self.police,(0,0,0), self.largeur //2, self.hauteur //2,fenetre)
