@@ -20,7 +20,7 @@ pygame.display.set_caption("Game")
 #definitions pour le background
 resolution = py.display.Info()
 largeur, hauteur = resolution.current_w, resolution.current_h
-bg = background(img = 'bg_test.png')
+bg = background(img = 'bg_test.png')  #à changer plus tard avec le path du vrai bg
 fenetre = py.display.set_mode((largeur, hauteur))
 
 
