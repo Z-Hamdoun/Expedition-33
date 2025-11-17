@@ -20,7 +20,8 @@ class Player:
         Initialise l'objet Player
         '''
         
-        self.vel = 0
+        self.max_jump_speed = 5
+        self.jump_speed = self.max_jump_speed
         self.acc = 0
         
         # Chargement des animations
@@ -58,10 +59,13 @@ class Player:
         self.frame_number += 1
         
     def jump(self): 
-        hits = pygame.sprite.spritecollide(self, ground, False)
-        if hits and not self.jumping:
-           self.jumping = True
-           self.vel.y = -15
+        self.image = self.animations['jumping']
+        if self.jumping:
+            self.rect.y -= self.jump_speed * 4
+            self.jump_speed -= 0.8
+        if self.jump_speed < - self.max_jump_speed:
+            self.jumping = False
+            self.jump_speed = self.max_jump_speed
     
     def cancel_jump(self):
         if self.jumping:

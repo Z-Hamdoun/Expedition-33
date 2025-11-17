@@ -13,7 +13,6 @@ WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
 FPS = 60
 
-
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
