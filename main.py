@@ -10,7 +10,7 @@ from random import randint
 pygame.init()
 vec = pygame.math.Vector2 
  
-resolution = py.display.Info()
+resolution = pygame.display.Info()
 WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
 FPS = 60

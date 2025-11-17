@@ -13,6 +13,7 @@ class Menu():
         self.couleur = (255,255,255)
         self.police = pygame.font.Font(None,60)
         self.bg = pygame.image.load(img).convert()
+        self.bg = pygame.transform.scale(self.bg, (self.largeur, self.hauteur))
 
     def text(self,texte,font,couleur,x,y,fenetre):
         txt_to_img = font.render(texte,True,couleur)
