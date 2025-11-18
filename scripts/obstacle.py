@@ -13,7 +13,7 @@ dico_images = { 'Oiseau' : [pygame.image.load(os.path.join("assets","Bird", "Bir
                 'SmallCactus' : [pygame.image.load(os.path.join("assets","Cactus","SmallCactus1.png")),pygame.image.load(os.path.join("assets", "Cactus","SmallCactus2.png")),pygame.image.load(os.path.join("assets", "Cactus","SmallCactus3.png"))]}
 
 sol = 500
-WIDTH  = 1200
+WIDTH  = pygame.display.Info().current_w
 
 class Obstacle(pygame.sprite.Sprite):
     """ Classe générale dont vont hériter les différents obstacles"""
