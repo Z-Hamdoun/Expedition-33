@@ -1,0 +1,16 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+
+# --- Virtual Environment (Modify if yours is named differently) ---
+venv/
+env/
+.env
+
+# --- Operating System ---
+.DS_Store
+Thumbs.db
+
+# --- IDE Settings (Optional) ---
+.vscode/
+.idea/
