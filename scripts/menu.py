@@ -69,9 +69,10 @@ class GameOverMenu(Menu):
 
     def affichage(self,fenetre):
         fenetre.blit(self.overlay,(0,0))
-        self.text("GAME OVER",self.police,(255,0,0),self.largeur//2,self.hauteur//2,fenetre)
+        self.text("GAME OVER",self.police,(255,0,0),self.largeur//2,self.hauteur//4,fenetre)
         bouton_quitter = self.button("Quitter", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100, fenetre)
-        return {"quitter_over":bouton_quitter}
+        bouton_rejouer = self.button("Rejouer", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2, fenetre)
+        return {"quitter_over":bouton_quitter,"rejouer_over":bouton_rejouer}
     
 class PauseMenu(Menu):
     def __init__(self,largeur,hauteur):
@@ -83,6 +84,7 @@ class PauseMenu(Menu):
     def affichage(self,fenetre):
         fenetre.blit(self.overlay,(0,0))
         self.text("PAUSE",self.police,(255,0,0),self.largeur//2,self.hauteur//4,fenetre)
-        quitter_pause = self.button("Quitter", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100, fenetre)
+        quitter_pause = self.button("Quitter", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 200, fenetre)
         reprendre = self.button("Reprendre", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2 , fenetre)
-        return {"quitter_pause":quitter_pause,"reprendre":reprendre}
+        bouton_rejouer = self.button("Rejouer", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100, fenetre)
+        return {"quitter_pause":quitter_pause,"reprendre":reprendre,"rejouer_pause":bouton_rejouer}

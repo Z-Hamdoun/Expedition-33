@@ -7,6 +7,7 @@ import os
 from scripts.obstacle import *
 from random import randint
 from scripts.menu import *
+from scripts.reset import *
 
 pygame.init()
 vec = pygame.math.Vector2 
@@ -81,6 +82,14 @@ while en_cours:
                         etat_menu = "main"
                         jeu_actif = False
                     if "reprendre" in boutons and boutons["reprendre"].collidepoint(event.pos):
+                        etat_menu = "main"
+                        jeu_actif = True
+                    if "rejouer_pause" in boutons and boutons["rejouer_pause"].collidepoint(event.pos):
+                        player, obstacles, bg = reinitialiser()
+                        etat_menu = "main"
+                        jeu_actif = True
+                    if "rejouer_over" in boutons and boutons["rejouer_over"].collidepoint(event.pos):
+                        player, obstacles, bg = reinitialiser()
                         etat_menu = "main"
                         jeu_actif = True
 
