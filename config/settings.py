@@ -13,6 +13,7 @@ class Settings:
         self.game_title = "Expedition 33"
         self.game_high_score = 0
         self.game_ground_y = 600
+        self.game_game_speed = 10
         
         # ------ Player ----------
         self.player_jump_power = -16
@@ -30,16 +31,19 @@ class Settings:
         """Extrait les parametres a partir du fichier settings.json
         """
         try:
-            with open('settings.json', 'r') as f:
+            with open('config/settings.json', 'r') as f:
                 data = json.load(f)
+                print(data)
                 
                 # Game settings
                 data_game = data.get('game', {})
                 self.game_fps = data_game.get('fps', self.game_fps)
                 self.game_title = data_game.get('title', self.game_title)
-                self.high_score = data.get('high_score', self.game_high_score)
-                self.game_ground_y = data.get('ground_y', self.game_ground_y)
-                self.game_game_speed = data.get('game_speed', self.game_game_speed)
+                self.high_score = data_game.get('high_score', self.game_high_score)
+                self.game_ground_y = data_game.get('ground_y', self.game_ground_y)
+                self.game_game_speed = data_game.get('game_speed', self.game_game_speed)
+                
+                print(data_game)
 
                 # Player settings
                 data_player = data.get('player', {})
@@ -55,7 +59,7 @@ class Settings:
                 
         except FileNotFoundError:
             print("[Parametres] Fichier de parametres non trouve")
-            self.save() # Create the file for next time
+            self.save_settings() # Create the file for next time
     
     def save_settings(self):
         """Sauvegarde les variables python dans le fichier settings.json"""
@@ -80,7 +84,7 @@ class Settings:
 
         # Ecriture des donnees dans le fichier settings.json
         try:
-            with open('settings.json', 'w') as f:
+            with open('config/settings.json', 'w') as f:
                 # indent=4 pour rendre le fichier lisible
                 json.dump(data, f, indent=4) 
                 print("[Parametres] Sauvegarde de parametres terminee!")
