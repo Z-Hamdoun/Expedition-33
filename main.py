@@ -81,6 +81,7 @@ while en_cours:
                 obstacle.update(obstacles)
                 if player.rect.colliderect(obstacle.rect):
                     pygame.time.delay(1000)
+                    obstacles = []
                     jeu_actif = False
         
 
