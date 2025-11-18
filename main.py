@@ -98,13 +98,10 @@ while en_cours:
                     jeu_actif = True
                     play_music(music_game_file)
 
-            if jeu_actif:
-                if event.key == pygame.K_SPACE:
-                    player.jump()
         if event.type == pygame.KEYUP:     
             if jeu_actif:
-                if event.key == pygame.K_SPACE:
-                    player.cancel_jump()
+                if event.key == pygame.K_UP:
+                    player.end_jump()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1: #clic gauche
                 if not jeu_actif :
