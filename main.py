@@ -58,14 +58,15 @@ while True:
         if nb == 2:
             obstacles.append(LargeCactus())
     
+    death_count = 0
+
     for obstacle in obstacles:
             obstacle.draw(displaysurface)
             obstacle.update(obstacles)
-            #if player.dino_rect.colliderect(obstacle.rect):
-            #    pygame.time.delay(2000)
-            #    death_count += 1
-            #    menu(death_count)
-    
+            if player.rect.colliderect(obstacle.rect):
+                death_count += 1
+                pygame.quit()
+                sys.exit()
 
     inpt = pygame.key.get_pressed()
     #displaysurface.fill((255,255,255))

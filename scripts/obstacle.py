@@ -4,6 +4,7 @@ from random import randint
 import os
 import sys
 
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
 
@@ -11,7 +12,7 @@ dico_images = { 'Oiseau' : [pygame.image.load(os.path.join("assets\Bird", "Bird1
                 'LargeCactus' : [pygame.image.load(os.path.join("assets\Cactus","LargeCactus1.png")),pygame.image.load(os.path.join("assets\Cactus","LargeCactus2.png")),pygame.image.load(os.path.join("assets\Cactus","LargeCactus3.png"))],
                 'SmallCactus' : [pygame.image.load(os.path.join("assets\Cactus","SmallCactus1.png")),pygame.image.load(os.path.join("assets\Cactus","SmallCactus2.png")),pygame.image.load(os.path.join("assets\Cactus","SmallCactus3.png"))]}
 
-HEIGHT = 200
+sol = 500
 WIDTH  = 1000
 
 class Obstacle(pygame.sprite.Sprite):
@@ -37,7 +38,7 @@ class Oiseau(Obstacle):
         self.type = 0
         self.image = dico_images['Oiseau']
         super().__init__(self.image,self.type)
-        self.rect.y = HEIGHT - 100
+        self.rect.y = sol - 100
 
 class LargeCactus(Obstacle):
     """Sauter par dessus"""
@@ -45,7 +46,7 @@ class LargeCactus(Obstacle):
         self.type = randint(0,2)
         self.image = dico_images['LargeCactus']
         super().__init__(self.image,self.type)
-        self.rect.y = HEIGHT - 300 #à préciser
+        self.rect.y = sol #à préciser
 
 class SmallCactus(Obstacle):
     """Sauter par dessus"""
@@ -53,7 +54,7 @@ class SmallCactus(Obstacle):
         self.type = randint(0,2)
         self.image = dico_images["SmallCactus"]
         super().__init__(self.image,self.type)
-        self.rect.y = HEIGHT - 300 #à préciser
+        self.rect.y = sol #à préciser
 
 class Pics(SmallCactus):
     """Mettre un coup de griffe pour les passer"""
