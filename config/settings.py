@@ -12,6 +12,7 @@ class Settings:
         self.game_fps = 60
         self.game_title = "Expedition 33"
         self.game_high_score = 0
+        self.game_ground_y = 600
         
         # ------ Player ----------
         self.player_jump_power = -16
@@ -37,6 +38,8 @@ class Settings:
                 self.game_fps = data_game.get('fps', self.game_fps)
                 self.game_title = data_game.get('title', self.game_title)
                 self.high_score = data.get('high_score', self.game_high_score)
+                self.game_ground_y = data.get('ground_y', self.game_ground_y)
+                self.game_game_speed = data.get('game_speed', self.game_game_speed)
 
                 # Player settings
                 data_player = data.get('player', {})
@@ -61,7 +64,9 @@ class Settings:
             "game": {
                 "fps" : self.game_fps,
                 "title": self.game_title,
-                "high_score": self.game_high_score
+                "high_score": self.game_high_score,
+                "ground_y" : self.game_ground_y,
+                "game_speed": self.game_game_speed
             },
             "constants": {
                 "gravity": self.constants_gravity

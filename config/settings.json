@@ -2,7 +2,9 @@
     "game": {
         "fps" : 60,
         "title": "Expedition 33",
-        "high_score": 0
+        "high_score": 0,
+        "ground_y" : 600,
+        "game_speed": 10
     },
 
     "constants": {
