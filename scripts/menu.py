@@ -57,3 +57,20 @@ class OptionMenu(Menu):
         bouton_themes = self.button("Thème", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2 , fenetre)
         bouton_difficulté = self.button("Difficulté", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100 , fenetre)
         return {"themes":bouton_themes,"difficulte":bouton_difficulté}
+
+
+class GameOverMenu(Menu):
+    def __init__(self,largeur,hauteur):
+        super().__init__(largeur,hauteur,None)
+        self.overlay = pygame.surface(self.largeur,self.hauteur)
+        self.overlay.fill((255,255,255))
+        self.overlay.set_alpha(180)
+
+    def affichage(self,fenetre):
+        fenetre.blit(self.overlay,(0,0))
+        self.text("GAME OVER",self.police,(255,0,0),self.largeur//2,self.hauteur//2,fenetre)
+        bouton_quitter = self.button("quitter", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100 , fenetre)
+        return {bouton_quitter}
+
+
+
