@@ -1,15 +1,10 @@
 import pygame
 import sys
 import os
+from pygame.math import Vector2
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
-
-
-vec = pygame.math.Vector2 
-
-
-
-class Player:
+class Player(pygame.sprite.Sprite):
     '''
     Classe representant le joueur
     '''
@@ -18,10 +13,17 @@ class Player:
         '''
         Initialise l'objet Player
         '''
+        super().__init__()
         
         self.max_jump_speed = 8.5
         self.jump_speed = self.max_jump_speed
-        self.acc = 0
+        self.pos = Vector2(200, 500)
+        self.vel = Vector2(0, 0)
+        
+        # Settings
+        self.gravity = 0.8
+        self.jump_power = -16
+        self.terminal_vel = 15
         
         # Chargement des animations
         jumping = pygame.image.load(os.path.join("assets", "Dino", "DinoJump.png"))
@@ -51,57 +53,85 @@ class Player:
         # Variable qui gere l'animation running
         self.frame_number = 0
     
-    def run(self):
-        self.image = self.animations['running'][self.frame_number // 10] # change chaque 10 frames du jeu
-        # Mise a jour du rect du joueur
-        origin = self.rect.bottomleft
-        self.rect = self.image.get_rect()
-        self.rect.bottomleft = origin
-        self.frame_number += 1
-        
-    def jump(self): 
-        origin = self.rect.bottomleft
-        self.image = self.animations['jumping']
-        self.rect = self.image.get_rect()
-        self.rect.bottomleft = origin
-        if self.jumping:
-            self.rect.y -= self.jump_speed * 4
-            self.jump_speed -= 0.5
-        if self.jump_speed < - self.max_jump_speed:
-            self.jumping = False
-            self.jump_speed = self.max_jump_speed
+    
+    def jump(self):
+        """Permet au joueur de sauter
+        """
+        if self.pos.y >= self.ground_y:
+            self.vel.y = self.jump_power
+            self.jumping = True
+            # Code pour ajouter du son !!
+    
+    def end_jump(self):
+        """
+        S'applique quand le joueur lache le boutton de saut
+        """
+        if self.vel.y < -5:
+            self.vel.y *= 0.5
+    
+    def physics(self):
+        """Gere la physique du joueur
+        """
+        self.vel.y += self.gravity
+        if self.vel.y > self.terminal_vel:
+            self.vel.y = self.terminal_vel
             
-    def duck(self):
-        self.image = self.animations['ducking'][self.frame_number // 10]
-        if self.ducking:
-            origin = self.rect.bottomleft
-            self.rect = self.image.get_rect()
-            self.rect.bottomleft = origin
-            self.frame_number += 1
 
     def update(self, inpt: list):
+        # Appliquer le PFD
+        self.vel.y += self.gravity
+        
+        # Gerer les entrees du joueur
+        self.handle_input(inpt)
+        
+        self.pos.y += self.vel.y
+        
+        # Detection de collision avec le sol
+        if self.pos.y >= self.ground_y:
+            self.pos.y = self.ground_y
+            self.vel.y = 0
+            self.running = True
+        else:
+            self.running = False
+        
+        self.update_animation()
+        
+        # Recentrer le joueur (evite les glitch)
+        self.rect.midbottom = self.pos
+    
+    def handle_input(self, inpt):
+        # Jumping
+        if inpt[pygame.K_UP] and self.running:
+            self.jump()
+            self.running = False
+        
+        # Ducking
+        if inpt[pygame.K_DOWN] and self.running:
+            self.ducking = True
+        else:
+            self.ducking = False
+    
+    def update_animation(self):
+        # Compteur de frames
+        self.frame_number += 1
         if self.frame_number >= 20:
             self.frame_number = 0
         
+        # Actualiser l'animation selon les frames
         if self.ducking:
-            self.duck()
-        elif self.running:
-            self.run()
-        elif self.jumping:
-            self.jump()
+            self.image = self.animations['ducking'][self.frame_number // 10]
         
-        if inpt[pygame.K_DOWN] and not self.jumping:
-            self.ducking = True
-            self.running = False
-            self.jumping = False
-        elif inpt[pygame.K_UP] and not self.jumping:
-            self.ducking = False
-            self.running = False
-            self.jumping = True
-        elif not (self.jumping or inpt[pygame.K_DOWN]):
-            self.ducking = False
-            self.running = True
-            self.jumping = False
+            # Mise a jour du rect apres changement de l'animation
+            self.rect = self.image.get_rect()
+
+        elif self.jumping or not self.running:
+            self.image = self.animations['jumping']
+            self.rect = self.image.get_rect()
+
+        else:
+            frame_index = self.frame_number // 10
+            self.image = self.animations['running'][frame_index % 2]
+            self.rect = self.image.get_rect()
  
     
     def blit_me(self, screen):
