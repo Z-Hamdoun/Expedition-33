@@ -24,11 +24,11 @@ class Player:
         self.acc = 0
         
         # Chargement des animations
-        jumping = pygame.image.load(os.path.join("assets/Dino", "DinoJump.png"))
-        running = [pygame.image.load(os.path.join("assets/Dino", "DinoRun1.png")),
-           pygame.image.load(os.path.join("assets/Dino", "DinoRun2.png"))]
-        ducking = [pygame.image.load(os.path.join("assets/Dino", "DinoDuck1.png")),
-           pygame.image.load(os.path.join("assets/Dino", "DinoDuck2.png"))]
+        jumping = pygame.image.load(os.path.join("project-expedition-33","assets/Dino", "DinoJump.png"))
+        running = [pygame.image.load(os.path.join("project-expedition-33","assets/Dino", "DinoRun1.png")),
+           pygame.image.load(os.path.join("project-expedition-33","assets/Dino", "DinoRun2.png"))]
+        ducking = [pygame.image.load(os.path.join("project-expedition-33","assets/Dino", "DinoDuck1.png")),
+           pygame.image.load(os.path.join("project-expedition-33","assets/Dino", "DinoDuck2.png"))]
         
         # Charger les animations dans un dictionnaire
         self.animations = {'jumping': jumping,
