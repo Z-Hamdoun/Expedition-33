@@ -13,7 +13,6 @@ class GestionDifficulte():
     def maj(self):
         tps_ecoulé = (pygame.time.get_ticks() - self.depart)/1000 #conversion en secondes
         vitesse = min(self.vitesse0 + (tps_ecoulé * self.acceleration) , self.vmax)
-        print(vitesse)
         score = int(self.acceleration*tps_ecoulé*10)
         return vitesse,score
 
