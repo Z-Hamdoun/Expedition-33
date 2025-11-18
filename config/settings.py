@@ -3,7 +3,7 @@ import json
 
 class Settings:
     """
-    Une classe pour gerer les parametres efficacement
+    Classe permettant de gerer les parametres efficacement
     """
     def __init__(self):
         # Parametres par defaut
@@ -27,14 +27,46 @@ class Settings:
     def load(self):
         """Extrait les parametres a partir du fichier settings.json
         """
-        with open('settings.json', 'r') as f:
-            data = json.load(f)
-            
-            # Game settings
-            data_game = data.get('game', {})
-            self.game_fps = data_game.get('fps', 60)
-            self.game_title = data_game.get('title', 'Expedition 33')
-            self.high_score = data.get('high_score', 0)
-            
-            print("Parametres Charges")
+        try:
+            with open('settings.json', 'r') as f:
+                data = json.load(f)
                 
+                # Game settings
+                data_game = data.get('game', {})
+                self.game_fps = data_game.get('fps', 60)
+                self.game_title = data_game.get('title', 'Expedition 33')
+                self.high_score = data.get('high_score', 0)
+                
+                print("[Parametres] Parametres Charges")
+                
+        except FileNotFoundError:
+            print("[Parametres] Fichier de parametres non trouve")
+            self.save() # Create the file for next time
+    
+    def save_settings(self):
+        """Sauvegarde les variables python dans le fichier settings.json"""
+        
+        data = {
+            "game": {
+                "fps" : 60,
+                "title": "Expedition 33",
+                "high_score": 0
+            },
+            "constants": {
+                "GRAVITY": 0.8
+            },
+            "player": {
+                "jump_power": -16,
+                "vitesse_limite": 15,
+                "pos_initiale": [200, 500]
+            }
+        }
+
+        # Ecriture des donnees dans le fichier settings.json
+        try:
+            with open('settings.json', 'w') as f:
+                # indent=4 pour rendre le fichier lisible
+                json.dump(data, f, indent=4) 
+                print("[Parametres] Sauvegarde de parametres terminee!")
+        except IOError as e:
+            print(f"[Parametres] Erreur: {e}")
