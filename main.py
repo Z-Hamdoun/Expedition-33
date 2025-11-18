@@ -30,6 +30,7 @@ player = Player()
 menu_principal = MainMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
 menu_option = OptionMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
 menu_game_over = GameOverMenu(WIDTH,HEIGHT)
+menu_pause = PauseMenu(WIDTH,HEIGHT)
 jeu_actif = False
 en_cours = True
 etat_menu = "main"
@@ -46,11 +47,15 @@ while en_cours:
             if event.key == pygame.K_ESCAPE:
                 if jeu_actif :
                     jeu_actif = False
-                    etat_menu = 'main'
+                    etat_menu = 'pause'
                 elif etat_menu == 'option' :
                     etat_menu = 'main'
                 elif etat_menu == "main" :
                     en_cours = False
+                elif etat_menu == 'pause':
+                    etat_menu = 'main'
+                    jeu_actif = True
+
             if event.key == pygame.K_RETURN:
                 jeu_actif = True
             if jeu_actif:
@@ -72,6 +77,12 @@ while en_cours:
                     if "quitter_over" in boutons and boutons["quitter_over"].collidepoint(event.pos):
                         etat_menu = "main"
                         jeu_actif = False
+                    if "quitter_pause" in boutons and boutons["quitter_pause"].collidepoint(event.pos):
+                        etat_menu = "main"
+                        jeu_actif = False
+                    if "reprendre" in boutons and boutons["reprendre"].collidepoint(event.pos):
+                        etat_menu = "main"
+                        jeu_actif = True
 
     if jeu_actif:
         #partie background
@@ -111,6 +122,13 @@ while en_cours:
         player.blit_me(displaysurface)
         boutons  = menu_game_over.affichage(displaysurface)
 
+    elif etat_menu == "pause":
+        bg.affiche(displaysurface)
+        for obstacle in obstacles:
+            obstacle.draw(displaysurface)
+        player.blit_me(displaysurface)
+        boutons  = menu_pause.affichage(displaysurface)
+        
     else :
         if etat_menu == "main":
             boutons = menu_principal.affichage(displaysurface)

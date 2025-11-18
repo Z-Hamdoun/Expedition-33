@@ -70,8 +70,19 @@ class GameOverMenu(Menu):
     def affichage(self,fenetre):
         fenetre.blit(self.overlay,(0,0))
         self.text("GAME OVER",self.police,(255,0,0),self.largeur//2,self.hauteur//2,fenetre)
-        bouton_quitter = self.button("quitter", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100 , fenetre)
+        bouton_quitter = self.button("Quitter", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100, fenetre)
         return {"quitter_over":bouton_quitter}
+    
+class PauseMenu(Menu):
+    def __init__(self,largeur,hauteur):
+        super().__init__(largeur,hauteur,None)
+        self.overlay = pygame.Surface((self.largeur,self.hauteur))
+        self.overlay.fill((255,255,255))
+        self.overlay.set_alpha(180)
 
-
-
+    def affichage(self,fenetre):
+        fenetre.blit(self.overlay,(0,0))
+        self.text("PAUSE",self.police,(255,0,0),self.largeur//2,self.hauteur//4,fenetre)
+        quitter_pause = self.button("Quitter", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100, fenetre)
+        reprendre = self.button("Reprendre", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2 , fenetre)
+        return {"quitter_pause":quitter_pause,"reprendre":reprendre}
