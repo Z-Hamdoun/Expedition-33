@@ -28,6 +28,7 @@ player = Player()
 
 menu_principal = MainMenu(WIDTH,HEIGHT,img = os.path.join("assets/bg", "menubg_test.jpg"))
 menu_option = OptionMenu(WIDTH,HEIGHT,img = os.path.join("assets/bg", "menubg_test.jpg"))
+menu_game_over = GameOverMenu(WIDTH,HEIGHT)
 jeu_actif = False
 en_cours = True
 etat_menu = "main"
@@ -67,6 +68,9 @@ while en_cours:
                         en_cours = False
                     if "options" in boutons and boutons["options"].collidepoint(event.pos):
                         etat_menu = "option"
+                    if "quitter_over" in boutons and boutons["quitter_over"].collidepoint(event.pos):
+                        etat_menu = "main"
+                        jeu_actif = False
 
     if jeu_actif:
         #partie background
@@ -90,12 +94,21 @@ while en_cours:
                     pygame.time.delay(1000)
                     obstacles = []
                     jeu_actif = False
+                    etat_menu = "perdu"
+
         
 
         inpt = pygame.key.get_pressed()
         #displaysurface.fill((255,255,255))
         player.blit_me(displaysurface)
         player.update(inpt)
+
+    elif etat_menu == 'perdu':
+        bg.affiche(displaysurface)
+        for obstacle in obstacles:
+            obstacle.draw(displaysurface)
+        player.blit_me(displaysurface)
+        boutons  = menu_game_over.affichage(displaysurface)
 
     else :
         if etat_menu == "main":
