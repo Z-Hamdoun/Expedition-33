@@ -11,6 +11,7 @@ class Settings:
         # ------ Game ----------------
         self.game_fps = 60
         self.game_title = "Expedition 33"
+        self.game_high_score = 0
         
         # ------ Player ----------
         self.player_jump_power = -16
@@ -33,9 +34,19 @@ class Settings:
                 
                 # Game settings
                 data_game = data.get('game', {})
-                self.game_fps = data_game.get('fps', 60)
-                self.game_title = data_game.get('title', 'Expedition 33')
-                self.high_score = data.get('high_score', 0)
+                self.game_fps = data_game.get('fps', self.game_fps)
+                self.game_title = data_game.get('title', self.game_title)
+                self.high_score = data.get('high_score', self.game_high_score)
+
+                # Player settings
+                data_player = data.get('player', {})
+                self.player_jump_power = data_player.get('jump_power', self.player_jump_power)
+                self.player_vitesse_limite = data_player.get('vitesse_limite', self.player_vitesse_limite)
+                self.player_pos_initiale = data_player.get('pos_initiale', self.player_pos_initiale)
+                
+                # Constants
+                data_constants = data.get('constants', {})
+                self.constants_gravity = data_constants.get('gravity', self.constants_gravity)
                 
                 print("[Parametres] Parametres Charges")
                 
@@ -48,17 +59,17 @@ class Settings:
         
         data = {
             "game": {
-                "fps" : 60,
-                "title": "Expedition 33",
-                "high_score": 0
+                "fps" : self.game_fps,
+                "title": self.game_title,
+                "high_score": self.game_high_score
             },
             "constants": {
-                "GRAVITY": 0.8
+                "gravity": self.constants_gravity
             },
             "player": {
-                "jump_power": -16,
-                "vitesse_limite": 15,
-                "pos_initiale": [200, 500]
+                "jump_power": self.player_jump_power,
+                "vitesse_limite": self.player_vitesse_limite,
+                "pos_initiale": list(self.player_pos_initiale)
             }
         }
 
