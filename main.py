@@ -46,6 +46,7 @@ ACC = 0.5
 FPS = 60
 obstacles = []
 game_speed = 10 # 6.5
+vitesse_actuelle = game_speed
 difficulté = GestionDifficulte(game_speed,0.5)  # acceleraion à modifier plus tard
 score = 0
 score_police = pygame.font.Font(None, 60)
@@ -114,9 +115,14 @@ while en_cours:
                     if "quitter_over" in boutons and boutons["quitter_over"].collidepoint(event.pos):
                         etat_menu = "main"
                         jeu_actif = False
+                        player, obstacles, bg, score = reinitialiser()
+                        difficulté.reset_depart()
+                        vitesse_actuelle = game_speed
                         play_music(music_menu_file) 
                     if "rejouer_over" in boutons and boutons["rejouer_over"].collidepoint(event.pos):
-                        player, obstacles, bg = reinitialiser()
+                        player, obstacles, bg, score = reinitialiser()
+                        vitesse_actuelle = game_speed
+                        difficulté.reset_depart()
                         etat_menu = "main"
                         jeu_actif = True
                         play_music(music_game_file)
@@ -124,19 +130,23 @@ while en_cours:
                     if "quitter_pause" in boutons and boutons["quitter_pause"].collidepoint(event.pos):
                         etat_menu = "main"
                         jeu_actif = False
+                        player, obstacles, bg, score = reinitialiser()
+                        difficulté.reset_depart()
+                        vitesse_actuelle = game_speed
                     if "reprendre" in boutons and boutons["reprendre"].collidepoint(event.pos):
                         etat_menu = "main" 
                         jeu_actif = True
                         play_music(music_game_file)
                     if "rejouer_pause" in boutons and boutons["rejouer_pause"].collidepoint(event.pos):
-                        player, obstacles, bg = reinitialiser()
+                        player, obstacles, bg, score = reinitialiser()
+                        vitesse_actuelle = game_speed
+                        difficulté.reset_depart()
                         etat_menu = "main"
                         jeu_actif = True
                         play_music(music_game_file)
 
     if jeu_actif:
         play_music(music_game_file)
-        
         vitesse_actuelle,score = difficulté.maj()
         #partie background
         bg.vitesse = vitesse_actuelle

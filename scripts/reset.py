@@ -7,4 +7,4 @@ def reinitialiser():
     player = Player()
     default_bg_path = os.path.join("assets", "Backgrounds", "Game","tall_trees.png")
     bg = background(img=default_bg_path)
-    return player, obstacles, bg
+    return player, obstacles, bg, 0
