@@ -56,8 +56,8 @@ class OptionMenu(Menu):
         boutons = {}
         self.background(fenetre)
         self.text("OPTIONS",self.police,(0,0,0),self.largeur//2,self.hauteur//4,fenetre)
-        boutons["themes"] = self.button("Thème", self.police, (0,0,0),(255,215,0), 3*self.largeur // 4, self.hauteur // 2 , fenetre)
-        boutons["difficulté"] = self.button("Difficulté", self.police, (0,0,0),(255,215,0), self.largeur // 4, self.hauteur // 2  , fenetre)
+        boutons["themes"] = self.button("Thème", self.police, (0,0,0),(0,0,0), 3*self.largeur // 4, self.hauteur // 2 , fenetre)
+        boutons["difficulté"] = self.button("Difficulté", self.police, (0,0,0),(0,0,0), self.largeur // 4, self.hauteur // 2  , fenetre)
         modes = ["Facile","Moyen","Difficile"]
         for i,diff in enumerate(modes):
             if diff.lower() == mode.lower() : color = (255,215,0) 
