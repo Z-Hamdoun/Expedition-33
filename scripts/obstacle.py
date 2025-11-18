@@ -55,7 +55,7 @@ class SmallCactus(Obstacle):
         self.type = randint(0,2)
         self.image = dico_images["SmallCactus"]
         super().__init__(self.image,self.type)
-        self.rect.y = sol + 40 #à préciser
+        self.rect.y = sol + 30 #à préciser
 
 class Pics(SmallCactus):
     """Mettre un coup de griffe pour les passer"""
