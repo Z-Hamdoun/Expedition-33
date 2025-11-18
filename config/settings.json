@@ -1,6 +1,12 @@
 {
-    "physics": {
-        "GRAVITY": 0.9
+    "game": {
+        "fps" : 60,
+        "title": "Expedition 33",
+        "high_score": 0
+    },
+
+    "constants": {
+        "GRAVITY": 0.8
     },
     "player": {
         "jump_power": -16,
