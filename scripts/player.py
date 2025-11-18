@@ -43,7 +43,8 @@ class Player:
         self.rect.y = 500
         
         self.ground_y = 500
-        
+        self.duck_y = 560
+
         self.jumping = False
         self.ducking = False
         self.running = True
@@ -54,7 +55,7 @@ class Player:
     def run(self):
         self.image = self.animations['running'][self.frame_number // 10] # change chaque 10 frames du jeu
         # Mise a jour du rect du joueur
-        x, y = self.rect.x, self.rect.y
+        x, y = self.rect.x, self.ground_y
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -66,10 +67,19 @@ class Player:
             self.rect.y -= self.jump_speed * 4
             self.jump_speed -= 0.8
         if self.jump_speed < - self.max_jump_speed:
-            self.rect.y = self.ground_y
+            self.rect.y = self.duck_y
             self.jumping = False
             self.jump_speed = self.max_jump_speed
-    
+            
+    def duck(self):
+        self.image = self.animations['ducking'][self.frame_number // 10]
+        if self.ducking:
+            x, y = self.rect.x, self.duck_y
+            self.rect = self.image.get_rect()
+            self.rect.x = x
+            self.rect.y = y
+            self.frame_number += 1
+
     def update(self, inpt: list):
         if self.frame_number >= 20:
             self.frame_number = 0
