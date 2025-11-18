@@ -16,7 +16,7 @@ WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
 FPS = 60
 obstacles = []
-game_speed = 6.5
+game_speed = 10 # 6.5
 
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))

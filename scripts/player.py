@@ -1,5 +1,4 @@
 import pygame
-from pygame.locals import *
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
@@ -37,7 +36,7 @@ class Player:
             'ducking': ducking}
         
         self.image = self.animations['running'][0]
-        self.rect = self.image.get_rect()
+        self.rect: pygame.Rect = self.image.get_rect()
         # Valeurs initiales
         self.rect.x = 200
         self.rect.y = 500
@@ -55,10 +54,9 @@ class Player:
     def run(self):
         self.image = self.animations['running'][self.frame_number // 10] # change chaque 10 frames du jeu
         # Mise a jour du rect du joueur
-        x, y = self.rect.x, self.ground_y
+        origin = self.rect.bottomleft
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.bottomleft = origin
         self.frame_number += 1
         
     def jump(self): 
