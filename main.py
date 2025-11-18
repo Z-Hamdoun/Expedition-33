@@ -16,6 +16,7 @@ WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
 FPS = 60
 obstacles = []
+game_speed = 6.5
 
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -89,9 +90,9 @@ while en_cours:
         
         for obstacle in obstacles:
                 obstacle.draw(displaysurface)
-                obstacle.update(obstacles)
+                obstacle.update(obstacles,game_speed)
                 if player.rect.colliderect(obstacle.rect):
-                    pygame.time.delay(1000)
+                    pygame.time.delay(300)
                     obstacles = []
                     jeu_actif = False
                     etat_menu = "perdu"

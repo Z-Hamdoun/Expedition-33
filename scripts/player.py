@@ -65,9 +65,8 @@ class Player:
         self.image = self.animations['jumping']
         if self.jumping:
             self.rect.y -= self.jump_speed * 4
-            self.jump_speed -= 0.8
+            self.jump_speed -= 0.5
         if self.jump_speed < - self.max_jump_speed:
-            self.rect.y = self.duck_y
             self.jumping = False
             self.jump_speed = self.max_jump_speed
             
