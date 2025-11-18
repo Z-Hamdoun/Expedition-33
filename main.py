@@ -24,11 +24,11 @@ pygame.display.set_caption("Game")
 
 #definitions pour le background
 
-bg = background(img = os.path.join("assets/bg", "bg_test.png"))  #à changer plus tard avec le path du vrai bg
+bg = background(img = os.path.join("assets/Backgrounds/Game", "tall_trees.png"))  #à changer plus tard avec le path du vrai bg
 player = Player()
 
-menu_principal = MainMenu(WIDTH,HEIGHT,img = os.path.join("assets/bg", "menubg_test.jpg"))
-menu_option = OptionMenu(WIDTH,HEIGHT,img = os.path.join("assets/bg", "menubg_test.jpg"))
+menu_principal = MainMenu(WIDTH,HEIGHT,img = os.path.join("assets/Backgrounds/Menu", "menubg_test.jpg"))
+menu_option = OptionMenu(WIDTH,HEIGHT,img = os.path.join("assets/Backgrounds/Menu", "menubg_test.jpg"))
 menu_game_over = GameOverMenu(WIDTH,HEIGHT)
 jeu_actif = False
 en_cours = True
