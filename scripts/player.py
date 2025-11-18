@@ -6,6 +6,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
 from config.settings import Settings
 
+pygame.mixer.init()
+
 class Player(pygame.sprite.Sprite):
     '''
     Classe representant le joueur
@@ -48,12 +50,14 @@ class Player(pygame.sprite.Sprite):
     
     
     def jump(self):
-        """Permet au joueur de sauter
+        """
+        Permet au joueur de sauter
         """
         if self.pos.y >= self.settings.game_ground_y:
             self.vel.y = self.settings.player_jump_power
             self.jumping = True
-            # Code pour ajouter du son !!
+            son = pygame.mixer.Sound(r"Sons\thème troll\saut-2.mp3")
+            son.play()
     
     def end_jump(self):
         """

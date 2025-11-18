@@ -6,7 +6,7 @@ import sys
 
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
-
+pygame.mixer.init()
 
 dico_images = { 'Oiseau' : [pygame.image.load(os.path.join("assets","Bird", "Bird1.png"))],
                 'LargeCactus' : [pygame.image.load(os.path.join("assets","Cactus","LargeCactus1.png")),pygame.image.load(os.path.join("assets", "Cactus","LargeCactus2.png")),pygame.image.load(os.path.join("assets", "Cactus","LargeCactus3.png"))],
@@ -40,6 +40,8 @@ class Oiseau(Obstacle):
         super().__init__(self.image,self.type)
         aleatoire = randint(-5,15) #l'oiseau peut apparaître plus ou moins haut
         self.rect.y = sol - 70 + aleatoire
+        son = pygame.mixer.Sound(r"Sons\thème troll\Oiseaux-dinosaure-1.mp3")
+        son.play()
 
 class LargeCactus(Obstacle):
     """Sauter par dessus"""

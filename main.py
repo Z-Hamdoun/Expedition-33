@@ -162,7 +162,10 @@ while en_cours:
                     obstacles = []
                     jeu_actif = False
                     etat_menu = "perdu"
+                    son = pygame.mixer.Sound(r"Sons\thème troll\Mort méchant dinosaure.mp3")
+                    son.play()
                     play_music(music_game_over_file)
+                    
 
         
 
