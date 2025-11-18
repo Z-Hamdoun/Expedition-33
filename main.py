@@ -79,10 +79,9 @@ while en_cours:
         for obstacle in obstacles:
                 obstacle.draw(displaysurface)
                 obstacle.update(obstacles)
-                #if player.dino_rect.colliderect(obstacle.rect):
-                #    pygame.time.delay(2000)
-                #    death_count += 1
-                #    menu(death_count)
+                if player.rect.colliderect(obstacle.rect):
+                    pygame.time.delay(1000)
+                    jeu_actif = False
         
 
         inpt = pygame.key.get_pressed()
