@@ -10,6 +10,8 @@ from scripts.menu import *
 from scripts.reset import *
 from scripts.difficulté import *
 
+from config.settings import Settings
+
 pygame.init()
 
 pygame.mixer.init()
@@ -38,26 +40,25 @@ def play_music(file_path):
 
 play_music(music_menu_file)
 
-vec = pygame.math.Vector2 
+
+settings = Settings()
  
 resolution = pygame.display.Info()
 WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
-FPS = 60
 obstacles = []
-game_speed = 10 # 6.5
-difficulté = GestionDifficulte(game_speed,0.5)  # acceleraion à modifier plus tard
+difficulté = GestionDifficulte(settings.game_game_speed,0.5)
 score = 0
 score_police = pygame.font.Font(None, 60)
 
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Game")
+pygame.display.set_caption(settings.game_title)
 
 #definitions pour le background
 
 bg = background(img = os.path.join("assets", "Backgrounds", "Game", "tall_trees.png"))  #à changer plus tard avec le path du vrai bg
-player = Player()
+player = Player(settings)
 
 menu_principal = MainMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
 menu_option = OptionMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
@@ -78,6 +79,7 @@ while en_cours:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             en_cours = False
+            settings.save_settings()
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -106,14 +108,16 @@ while en_cours:
                         play_music(music_game_file)
                     if "quitter" in boutons and boutons["quitter"].collidepoint(event.pos):
                         en_cours = False
+                        settings.save_settings()
                     if "options" in boutons and boutons["options"].collidepoint(event.pos):
                         etat_menu = "option"
                     if "quitter_over" in boutons and boutons["quitter_over"].collidepoint(event.pos):
                         etat_menu = "main"
                         jeu_actif = False
+                        settings.save_settings()
                         play_music(music_menu_file) 
                     if "rejouer_over" in boutons and boutons["rejouer_over"].collidepoint(event.pos):
-                        player, obstacles, bg = reinitialiser()
+                        player, obstacles, bg = reinitialiser(settings)
                         etat_menu = "main"
                         jeu_actif = True
                         play_music(music_game_file)
@@ -126,7 +130,7 @@ while en_cours:
                         jeu_actif = True
                         play_music(music_game_file)
                     if "rejouer_pause" in boutons and boutons["rejouer_pause"].collidepoint(event.pos):
-                        player, obstacles, bg = reinitialiser()
+                        player, obstacles, bg = reinitialiser(settings)
                         etat_menu = "main"
                         jeu_actif = True
                         play_music(music_game_file)
@@ -192,5 +196,5 @@ while en_cours:
             boutons = menu_option.affichage(displaysurface)
 
 
-    clock.tick(FPS)
+    clock.tick(settings.game_fps)
     pygame.display.update()
