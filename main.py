@@ -8,6 +8,7 @@ from scripts.obstacle import *
 from random import randint
 from scripts.menu import *
 from scripts.reset import *
+from scripts.difficulté import *
 
 pygame.init()
 vec = pygame.math.Vector2 
@@ -18,6 +19,9 @@ ACC = 0.5
 FPS = 60
 obstacles = []
 game_speed = 10 # 6.5
+difficulté = GestionDifficulte(game_speed,0.5)  # acceleraion à modifier plus tard
+score = 0
+score_police = pygame.font.Font(None, 40)
 
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -57,8 +61,6 @@ while en_cours:
                     etat_menu = 'main'
                     jeu_actif = True
 
-            if event.key == pygame.K_RETURN:
-                jeu_actif = True
             if jeu_actif:
                 if event.key == pygame.K_SPACE:
                     player.jump()
@@ -94,7 +96,9 @@ while en_cours:
                         jeu_actif = True
 
     if jeu_actif:
+        vitesse_actuelle,score = difficulté.maj()
         #partie background
+        bg.vitesse = vitesse_actuelle
         bg.maj()
         bg.affiche(displaysurface)
 
@@ -110,7 +114,7 @@ while en_cours:
         
         for obstacle in obstacles:
                 obstacle.draw(displaysurface)
-                obstacle.update(obstacles,game_speed)
+                obstacle.update(obstacles,vitesse_actuelle)
                 if player.rect.colliderect(obstacle.rect):
                     pygame.time.delay(300)
                     obstacles = []
@@ -123,6 +127,8 @@ while en_cours:
         #displaysurface.fill((255,255,255))
         player.blit_me(displaysurface)
         player.update(inpt)
+
+        displaysurface.blit(score_police.render(f'Score: {score}', True, (0, 0, 0)),(WIDTH - 250, 20))
 
     elif etat_menu == 'perdu':
         bg.affiche(displaysurface)
