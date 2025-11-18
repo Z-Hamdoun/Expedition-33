@@ -8,9 +8,9 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
 
-dico_images = { 'Oiseau' : [pygame.image.load(os.path.join("project-expedition-33","assets","Bird", "Bird1.png"))],
-                'LargeCactus' : [pygame.image.load(os.path.join("project-expedition-33","assets","Cactus","LargeCactus1.png")),pygame.image.load(os.path.join("project-expedition-33","assets\Cactus","LargeCactus2.png")),pygame.image.load(os.path.join("project-expedition-33","assets\Cactus","LargeCactus3.png"))],
-                'SmallCactus' : [pygame.image.load(os.path.join("project-expedition-33","assets","Cactus","SmallCactus1.png")),pygame.image.load(os.path.join("project-expedition-33","assets\Cactus","SmallCactus2.png")),pygame.image.load(os.path.join("project-expedition-33","assets\Cactus","SmallCactus3.png"))]}
+dico_images = { 'Oiseau' : [pygame.image.load(os.path.join("assets","Bird", "Bird1.png"))],
+                'LargeCactus' : [pygame.image.load(os.path.join("assets","Cactus","LargeCactus1.png")),pygame.image.load(os.path.join("assets\Cactus","LargeCactus2.png")),pygame.image.load(os.path.join("assets\Cactus","LargeCactus3.png"))],
+                'SmallCactus' : [pygame.image.load(os.path.join("assets","Cactus","SmallCactus1.png")),pygame.image.load(os.path.join("assets\Cactus","SmallCactus2.png")),pygame.image.load(os.path.join("assets\Cactus","SmallCactus3.png"))]}
 
 sol = 500
 WIDTH  = 1200
