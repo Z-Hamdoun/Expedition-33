@@ -48,7 +48,7 @@ obstacles = []
 game_speed = 10 # 6.5
 difficulté = GestionDifficulte(game_speed,0.5)  # acceleraion à modifier plus tard
 score = 0
-score_police = pygame.font.Font(None, 40)
+score_police = pygame.font.Font(None, 60)
 
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -177,7 +177,7 @@ while en_cours:
         for obstacle in obstacles:
             obstacle.draw(displaysurface)
         player.blit_me(displaysurface)
-        boutons  = menu_game_over.affichage(displaysurface)
+        boutons  = menu_game_over.affichage(displaysurface,score)
 
     elif etat_menu == "pause":
         bg.affiche(displaysurface)

@@ -67,11 +67,12 @@ class GameOverMenu(Menu):
         self.overlay.fill((255,255,255))
         self.overlay.set_alpha(180)
 
-    def affichage(self,fenetre):
+    def affichage(self,fenetre,score):
         fenetre.blit(self.overlay,(0,0))
         self.text("GAME OVER",self.police,(255,0,0),self.largeur//2,self.hauteur//4,fenetre)
-        bouton_quitter = self.button("Quitter", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100, fenetre)
-        bouton_rejouer = self.button("Rejouer", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2, fenetre)
+        self.text("Score final : " + str(score) ,self.police,(255,215,0),self.largeur//2,self.hauteur//2,fenetre)
+        bouton_quitter = self.button("Quitter", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 200, fenetre)
+        bouton_rejouer = self.button("Rejouer", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100, fenetre)
         return {"quitter_over":bouton_quitter,"rejouer_over":bouton_rejouer}
     
 class PauseMenu(Menu):
