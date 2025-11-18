@@ -4,26 +4,24 @@ import os
 from pygame.math import Vector2
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
+from config.settings import Settings
+
 class Player(pygame.sprite.Sprite):
     '''
     Classe representant le joueur
     '''
     
-    def __init__(self):
+    def __init__(self, settings: Settings):
         '''
         Initialise l'objet Player
         '''
         super().__init__()
         
-        self.max_jump_speed = 8.5
-        self.jump_speed = self.max_jump_speed
-        self.pos = Vector2(200, 500)
-        self.vel = Vector2(0, 0)
+        # Parametres du joueur
+        self.settings = settings
         
-        # Settings
-        self.gravity = 0.8
-        self.jump_power = -16
-        self.terminal_vel = 15
+        self.pos = Vector2(self.settings.player_pos_initiale().copy())
+        self.vel = Vector2(0, 0)
         
         # Chargement des animations
         jumping = pygame.image.load(os.path.join("assets", "Dino", "DinoJump.png"))
@@ -39,13 +37,8 @@ class Player(pygame.sprite.Sprite):
         
         self.image = self.animations['running'][0]
         self.rect: pygame.Rect = self.image.get_rect()
-        # Valeurs initiales
-        self.rect.x = 200
-        self.rect.y = 500
-        
-        self.ground_y = 500
-        self.duck_y = 560
 
+        # Etat initial
         self.jumping = False
         self.ducking = False
         self.running = True
@@ -57,8 +50,8 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         """Permet au joueur de sauter
         """
-        if self.pos.y >= self.ground_y:
-            self.vel.y = self.jump_power
+        if self.pos.y >= self.settings.game_ground_y:
+            self.vel.y = self.settings.player_jump_power
             self.jumping = True
             # Code pour ajouter du son !!
     
@@ -72,14 +65,14 @@ class Player(pygame.sprite.Sprite):
     def physics(self):
         """Gere la physique du joueur
         """
-        self.vel.y += self.gravity
-        if self.vel.y > self.terminal_vel:
-            self.vel.y = self.terminal_vel
+        self.vel.y += self.settings.constants_gravity
+        if self.vel.y > self.settings.player_vitesse_limite:
+            self.vel.y = self.settings.player_vitesse_limite
             
 
     def update(self, inpt: list):
         # Appliquer le PFD
-        self.vel.y += self.gravity
+        self.vel.y += self.settings.constants_gravity
         
         # Gerer les entrees du joueur
         self.handle_input(inpt)
@@ -87,8 +80,8 @@ class Player(pygame.sprite.Sprite):
         self.pos.y += self.vel.y
         
         # Detection de collision avec le sol
-        if self.pos.y >= self.ground_y:
-            self.pos.y = self.ground_y
+        if self.pos.y >= self.settings.game_ground_y:
+            self.pos.y = self.settings.game_ground_y
             self.vel.y = 0
             self.running = True
         else:
