@@ -60,7 +60,10 @@ class Player:
         self.frame_number += 1
         
     def jump(self): 
+        origin = self.rect.bottomleft
         self.image = self.animations['jumping']
+        self.rect = self.image.get_rect()
+        self.rect.bottomleft = origin
         if self.jumping:
             self.rect.y -= self.jump_speed * 4
             self.jump_speed -= 0.5
@@ -71,10 +74,9 @@ class Player:
     def duck(self):
         self.image = self.animations['ducking'][self.frame_number // 10]
         if self.ducking:
-            x, y = self.rect.x, self.duck_y
+            origin = self.rect.bottomleft
             self.rect = self.image.get_rect()
-            self.rect.x = x
-            self.rect.y = y
+            self.rect.bottomleft = origin
             self.frame_number += 1
 
     def update(self, inpt: list):
