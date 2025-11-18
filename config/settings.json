@@ -1,0 +1,10 @@
+{
+    "physics": {
+        "GRAVITY": 0.9
+    },
+    "player": {
+        "jump_power": -16,
+        "vitesse_limite": 15,
+        "pos_initiale": [200, 500]
+    }
+}
