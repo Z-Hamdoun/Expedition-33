@@ -46,8 +46,11 @@ ACC = 0.5
 FPS = 60
 obstacles = []
 game_speed = 10 # 6.5
+vmax = 40
+acceleration = 0.5
+mode = "Moyen"
 vitesse_actuelle = game_speed
-difficulté = GestionDifficulte(game_speed,0.5)  # acceleraion à modifier plus tard
+difficulté = GestionDifficulte(game_speed,acceleration)
 score = 0
 score_police = pygame.font.Font(None, 60)
 
@@ -106,6 +109,7 @@ while en_cours:
             if event.button == 1: #clic gauche
                 if not jeu_actif :
                     if "start" in boutons and boutons["start"].collidepoint(event.pos):
+                        difficulté.reset_depart()
                         jeu_actif = True
                         play_music(music_game_file)
                     if "quitter" in boutons and boutons["quitter"].collidepoint(event.pos):
@@ -144,9 +148,32 @@ while en_cours:
                         etat_menu = "main"
                         jeu_actif = True
                         play_music(music_game_file)
+                    if "Facile" in boutons and boutons["Facile"].collidepoint(event.pos):
+                        game_speed = 5
+                        difficulté.vmax = 20
+                        difficulté.acceleration = 0.3
+                        difficulté.vitesse0 = game_speed
+                        mode = "Facile"
+                    if "Moyen" in boutons and boutons["Moyen"].collidepoint(event.pos):
+                        game_speed = 10
+                        difficulté.vmax = 40
+                        difficulté.acceleration = 0.5
+                        difficulté.vitesse0 = game_speed
+                        mode = "Moyen"
+                    if "Difficile" in boutons and boutons["Difficile"].collidepoint(event.pos):
+                        game_speed = 15
+                        difficulté.vmax = 60
+                        difficulté.acceleration = 0.7
+                        difficulté.vitesse0 = game_speed
+                        mode = "Difficile"
+
+
 
     if jeu_actif:
         play_music(music_game_file)
+        difficulté.vitesse0 = game_speed
+        difficulté.vmax = vmax
+        difficulté.acceleration = acceleration
         vitesse_actuelle,score = difficulté.maj()
         #partie background
         bg.vitesse = vitesse_actuelle
@@ -202,7 +229,7 @@ while en_cours:
         if etat_menu == "main":
             boutons = menu_principal.affichage(displaysurface)
         if etat_menu == "option":
-            boutons = menu_option.affichage(displaysurface)
+            boutons = menu_option.affichage(displaysurface,mode)
 
 
     clock.tick(FPS)

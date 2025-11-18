@@ -52,12 +52,18 @@ class OptionMenu(Menu):
     def __init__(self,largeur,hauteur,img):
         super().__init__(largeur, hauteur, img)
 
-    def affichage(self,fenetre):
+    def affichage(self,fenetre,mode):
+        boutons = {}
         self.background(fenetre)
         self.text("OPTIONS",self.police,(0,0,0),self.largeur//2,self.hauteur//4,fenetre)
-        bouton_themes = self.button("Thème", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2 , fenetre)
-        bouton_difficulté = self.button("Difficulté", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100 , fenetre)
-        return {"themes":bouton_themes,"difficulte":bouton_difficulté}
+        boutons["themes"] = self.button("Thème", self.police, (0,0,0),(255,215,0), 3*self.largeur // 4, self.hauteur // 2 , fenetre)
+        boutons["difficulté"] = self.button("Difficulté", self.police, (0,0,0),(255,215,0), self.largeur // 4, self.hauteur // 2  , fenetre)
+        modes = ["Facile","Moyen","Difficile"]
+        for i,diff in enumerate(modes):
+            if diff.lower() == mode.lower() : color = (255,215,0) 
+            else : color = (0,0,0)
+            boutons[diff] = self.button(diff,self.police,color,(255,215,0),self.largeur//4,self.hauteur//2  + (i+2)*50,fenetre) 
+        return boutons
 
 
 class GameOverMenu(Menu):
