@@ -11,6 +11,33 @@ from scripts.reset import *
 from scripts.difficulté import *
 
 pygame.init()
+
+pygame.mixer.init()
+
+music_game_file = os.path.join("Musiques", "Musique_thème_classique_Night_Drifting.mp3") 
+music_menu_file = os.path.join("Musiques", "Musique_écran_acceuil.mp3") 
+music_game_over_file = os.path.join("Musiques", "Musique_game_over.mp3") 
+
+# Variable pour suivre quelle musique est censée jouer
+current_music = "" 
+
+def play_music(file_path):
+    global current_music
+    if current_music == file_path:
+        return
+    # Arrête la musique en cours
+    pygame.mixer.music.stop()
+    try:
+        # Charge et joue la nouvelle musique en boucle
+        pygame.mixer.music.load(file_path)
+        pygame.mixer.music.play(-1)
+        current_music = file_path
+    except pygame.error as e:
+        print(f"ÉCHEC DE CHARGEMENT OU LECTURE DE LA MUSIQUE {file_path}: {e}")
+        current_music = ""
+
+play_music(music_menu_file)
+
 vec = pygame.math.Vector2 
  
 resolution = pygame.display.Info()
@@ -35,11 +62,15 @@ player = Player()
 menu_principal = MainMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
 menu_option = OptionMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
 menu_game_over = GameOverMenu(WIDTH,HEIGHT)
-menu_pause = PauseMenu(WIDTH,HEIGHT)
+menu_pause = PauseMenu(WIDTH,HEIGHT) 
 jeu_actif = False
 en_cours = True
 etat_menu = "main"
 boutons = {}
+
+# Lancement initial de la musique du menu 
+play_music(music_menu_file)
+
 
 while en_cours:
 
@@ -53,6 +84,7 @@ while en_cours:
                 if jeu_actif :
                     jeu_actif = False
                     etat_menu = 'pause'
+                    play_music(music_menu_file) 
                 elif etat_menu == 'option' :
                     etat_menu = 'main'
                 elif etat_menu == "main" :
@@ -60,11 +92,12 @@ while en_cours:
                 elif etat_menu == 'pause':
                     etat_menu = 'main'
                     jeu_actif = True
+                    play_music(music_game_file)
 
             if jeu_actif:
                 if event.key == pygame.K_SPACE:
                     player.jump()
-        if event.type == pygame.KEYUP:    
+        if event.type == pygame.KEYUP:     
             if jeu_actif:
                 if event.key == pygame.K_SPACE:
                     player.cancel_jump()
@@ -73,6 +106,7 @@ while en_cours:
                 if not jeu_actif :
                     if "start" in boutons and boutons["start"].collidepoint(event.pos):
                         jeu_actif = True
+                        play_music(music_game_file)
                     if "quitter" in boutons and boutons["quitter"].collidepoint(event.pos):
                         en_cours = False
                     if "options" in boutons and boutons["options"].collidepoint(event.pos):
@@ -80,22 +114,29 @@ while en_cours:
                     if "quitter_over" in boutons and boutons["quitter_over"].collidepoint(event.pos):
                         etat_menu = "main"
                         jeu_actif = False
-                    if "quitter_pause" in boutons and boutons["quitter_pause"].collidepoint(event.pos):
-                        etat_menu = "main"
-                        jeu_actif = False
-                    if "reprendre" in boutons and boutons["reprendre"].collidepoint(event.pos):
-                        etat_menu = "main"
-                        jeu_actif = True
-                    if "rejouer_pause" in boutons and boutons["rejouer_pause"].collidepoint(event.pos):
-                        player, obstacles, bg = reinitialiser()
-                        etat_menu = "main"
-                        jeu_actif = True
+                        play_music(music_menu_file) 
                     if "rejouer_over" in boutons and boutons["rejouer_over"].collidepoint(event.pos):
                         player, obstacles, bg = reinitialiser()
                         etat_menu = "main"
                         jeu_actif = True
+                        play_music(music_game_file)
+
+                    if "quitter_pause" in boutons and boutons["quitter_pause"].collidepoint(event.pos):
+                        etat_menu = "main"
+                        jeu_actif = False
+                    if "reprendre" in boutons and boutons["reprendre"].collidepoint(event.pos):
+                        etat_menu = "main" 
+                        jeu_actif = True
+                        play_music(music_game_file)
+                    if "rejouer_pause" in boutons and boutons["rejouer_pause"].collidepoint(event.pos):
+                        player, obstacles, bg = reinitialiser()
+                        etat_menu = "main"
+                        jeu_actif = True
+                        play_music(music_game_file)
 
     if jeu_actif:
+        play_music(music_game_file)
+        
         vitesse_actuelle,score = difficulté.maj()
         #partie background
         bg.vitesse = vitesse_actuelle
@@ -120,17 +161,18 @@ while en_cours:
                     obstacles = []
                     jeu_actif = False
                     etat_menu = "perdu"
+                    play_music(music_game_over_file)
 
         
 
         inpt = pygame.key.get_pressed()
-        #displaysurface.fill((255,255,255))
         player.blit_me(displaysurface)
         player.update(inpt)
 
         displaysurface.blit(score_police.render(f'Score: {score}', True, (0, 0, 0)),(WIDTH - 250, 20))
 
     elif etat_menu == 'perdu':
+        # Écran Game Over.
         bg.affiche(displaysurface)
         for obstacle in obstacles:
             obstacle.draw(displaysurface)
@@ -145,6 +187,8 @@ while en_cours:
         boutons  = menu_pause.affichage(displaysurface)
         
     else :
+        play_music(music_menu_file) 
+        
         if etat_menu == "main":
             boutons = menu_principal.affichage(displaysurface)
         if etat_menu == "option":
