@@ -20,7 +20,7 @@ class Player(pygame.sprite.Sprite):
         # Parametres du joueur
         self.settings = settings
         
-        self.pos = Vector2(self.settings.player_pos_initiale().copy())
+        self.pos = Vector2(self.settings.player_pos_initiale.copy())
         self.vel = Vector2(0, 0)
         
         # Chargement des animations
