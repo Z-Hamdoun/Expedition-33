@@ -1,0 +1,34 @@
+import pygame
+
+class Button:
+    def __init__(self, x, y, text, font, color_base, color_hover):
+        self.x = x
+        self.y = y
+        self.text = text
+        self.font = font
+        self.color_base = color_base
+        self.color_hover = color_hover
+        
+        # Render text and get dimensions
+        self.surf = self.font.render(text, True, color_base)
+        self.rect = self.surf.get_rect(center=(x, y))
+        self.is_hovered = False
+
+    def update(self, mouse_pos):
+        """Met a jour le boutton en mode hover"""
+        self.is_hovered = self.rect.collidepoint(mouse_pos)
+
+    def draw(self, screen):
+        """Dessine le bouton"""
+        color = self.color_hover if self.is_hovered else self.color_base
+        
+        # Re-render si la couleur change
+        text_surf = self.font.render(self.text, True, color)
+        screen.blit(text_surf, self.rect)
+
+    def is_clicked(self, event):
+        """Retourn True si clicke"""
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self.is_hovered:
+                return True
+        return False
