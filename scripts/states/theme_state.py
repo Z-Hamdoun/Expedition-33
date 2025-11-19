@@ -76,6 +76,14 @@ class ThemeState(State):
         for event in events:
             if self.theme_1.is_clicked(event):
                 # Entrer dans l'etat Play
-                new_state = ThemeState(self.game)
+                new_state = PlayState(self.game)
+                self.game.current_state = new_state
+            if self.theme_2.is_clicked(event):
+                # Entrer dans l'etat Play
+                new_state = PlayState(self.game)
+                self.game.current_state = new_state
+            if self.theme_3.is_clicked(event):
+                # Entrer dans l'etat Play
+                new_state = PlayState(self.game)
                 self.game.current_state = new_state
                 
