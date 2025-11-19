@@ -87,6 +87,7 @@ class Player(pygame.sprite.Sprite):
             self.pos.y = self.settings.game_ground_y
             self.vel.y = 0
             self.running = True
+            self.jumping = False
         else:
             self.running = False
         
@@ -124,9 +125,8 @@ class Player(pygame.sprite.Sprite):
             self.image = self.animations['jumping']
             self.rect = self.image.get_rect()
 
-        else:
-            frame_index = self.frame_number // 10
-            self.image = self.animations['running'][frame_index % 2]
+        elif self.running:
+            self.image = self.animations['running'][self.frame_number // 10]
             self.rect = self.image.get_rect()
     
 
