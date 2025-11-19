@@ -4,7 +4,7 @@ from pygame.locals import *
 from scripts.scrollable_bg import *
 import sys
 import os
-from scripts.obstacle import *
+# from scripts.obstacle import *
 from random import randint
 from scripts.menu import *
 from scripts.reset import *
@@ -12,6 +12,7 @@ from scripts.difficulté import *
 
 from config.settings import Settings
 from config.assets import AssetManager
+from scripts.obstacles import ObstacleManager
 
 pygame.init()
 
@@ -45,7 +46,6 @@ play_music(music_menu_file)
 resolution = pygame.display.Info()
 WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
-obstacles = []
 score = 0
 score_police = pygame.font.Font(None, 60)
 
@@ -72,6 +72,8 @@ jeu_actif = False
 en_cours = True
 etat_menu = "main"
 boutons = {}
+
+obstacle_manager = ObstacleManager(assets, settings)
 
 # Lancement initial de la musique du menu 
 play_music(music_menu_file)
@@ -121,7 +123,7 @@ while en_cours:
                         settings.save_settings()
                         play_music(music_menu_file) 
                     if "rejouer_over" in boutons and boutons["rejouer_over"].collidepoint(event.pos):
-                        player, obstacles, bg = reinitialiser(settings)
+                        player, obstacle_manager.obstacles, bg = reinitialiser(settings)
                         etat_menu = "main"
                         jeu_actif = True
                         play_music(music_game_file)
@@ -134,7 +136,7 @@ while en_cours:
                         jeu_actif = True
                         play_music(music_game_file)
                     if "rejouer_pause" in boutons and boutons["rejouer_pause"].collidepoint(event.pos):
-                        player, obstacles, bg = reinitialiser(settings)
+                        player, obstacle_manager.obstacles, bg = reinitialiser(settings)
                         etat_menu = "main"
                         jeu_actif = True
                         play_music(music_game_file)
@@ -142,56 +144,44 @@ while en_cours:
     if jeu_actif:
         play_music(music_game_file)
         
-        vitesse_actuelle,score = difficulté.maj()
+        settings.game_game_speed,score = difficulté.maj()
         #partie background
-        bg.vitesse = vitesse_actuelle
+        bg.vitesse = settings.game_game_speed
         bg.maj()
         bg.affiche(displaysurface)
 
         #partie obstacle
-        if len(obstacles) == 0:
-            nb = randint(0, 2)
-            if nb == 0:
-                obstacles.append(Oiseau())
-            if nb == 1:
-                obstacles.append(SmallCactus())
-            if nb == 2:
-                obstacles.append(LargeCactus())
-        
-        for obstacle in obstacles:
-                obstacle.draw(displaysurface)
-                obstacle.update(obstacles,vitesse_actuelle)
-                if player.rect.colliderect(obstacle.rect):
-                    pygame.time.delay(300)
-                    obstacles = []
-                    jeu_actif = False
-                    etat_menu = "perdu"
-                    son = pygame.mixer.Sound(r"Sons\thème troll\Mort méchant dinosaure.mp3")
-                    son.play()
-                    play_music(music_game_over_file)
-                    
+        collisions = pygame.sprite.spritecollide(player, obstacle_manager.obstacles, False)
+        if collisions and not player.attacking:
+            pygame.time.delay(300)
+            jeu_actif = False
+            etat_menu = 'perdu'
+            # Sons, a rectifier
+            son = pygame.mixer.Sound(r"Sons\thème troll\Mort méchant dinosaure.mp3")
+            son.play()
+            play_music(music_game_over_file)
 
-        
+                            
 
         inpt = pygame.key.get_pressed()
         player.blit_me(displaysurface)
         player.update(inpt)
+        obstacle_manager.update()
+        obstacle_manager.draw(displaysurface)
 
         displaysurface.blit(score_police.render(f'Score: {score}', True, (0, 0, 0)),(WIDTH - 250, 20))
 
     elif etat_menu == 'perdu':
         # Écran Game Over.
         bg.affiche(displaysurface)
-        for obstacle in obstacles:
-            obstacle.draw(displaysurface)
         player.blit_me(displaysurface)
+        obstacle_manager.draw(displaysurface)
         boutons  = menu_game_over.affichage(displaysurface,score)
 
     elif etat_menu == "pause":
         bg.affiche(displaysurface)
-        for obstacle in obstacles:
-            obstacle.draw(displaysurface)
         player.blit_me(displaysurface)
+        obstacle_manager.draw(displaysurface)
         boutons  = menu_pause.affichage(displaysurface)
         
     else :
@@ -200,7 +190,7 @@ while en_cours:
         if etat_menu == "main":
             boutons = menu_principal.affichage(displaysurface)
         if etat_menu == "option":
-            boutons = menu_option.affichage(displaysurface)
+            boutons = menu_option.affichage(displaysurface, settings.game_mode)
 
 
     clock.tick(settings.game_fps)
