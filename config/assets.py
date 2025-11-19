@@ -11,7 +11,8 @@ class AssetManager:
         self.asset_dir = os.path.join(self.base_dir, 'assets')
         
         # Stockage des images dans des dictionnaires
-        self.player_imgs = {}   # Will store {'run': [img1, img2], 'jump': img}
+        self.player_imgs = {}   # Format {'run': [img1, img2], 'jump': img}
+        self.obstacles = {} # format {'statique': {'cactus': {...}, 'arbre':{...}, ...}, 'dynamique': {'bird': ...}}
         self.backgrounds = {}
         self.enemies = {}
         self.sounds = {}
@@ -69,6 +70,10 @@ class AssetManager:
         # transparent=False pour plus de performance
         self.backgrounds['background'] = self.load_image(['Backgrounds', 'Game'], 'tall_trees.png', transparent=False)
         
+        # --- Obstacles ----
+        # Cactus
+        for i in range(6):
+            self.obstacles['statique']['cactus'][i] = self.load_image(['obstacles', 'statique', 'cactus'], f'{i}.png')
         # --- Sons ---
         
         # A completer
