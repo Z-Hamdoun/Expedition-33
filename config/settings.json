@@ -5,7 +5,7 @@
         "high_score": 0,
         "ground_y": 1000,
         "game_speed": 40,
-        "mode": "Difficile",
+        "mode": "Moyen",
         "acceleration": 0.5,
         "vmax": 40
     },
