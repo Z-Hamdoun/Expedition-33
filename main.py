@@ -22,17 +22,14 @@ music_game_file = os.path.join("Musiques", "Musique_thème_classique_Night_Drift
 music_menu_file = os.path.join("Musiques", "Musique_écran_acceuil.mp3") 
 music_game_over_file = os.path.join("Musiques", "Musique_game_over.mp3") 
 
-# Variable pour suivre quelle musique est censée jouer
 current_music = "" 
 
 def play_music(file_path):
     global current_music
     if current_music == file_path:
         return
-    # Arrête la musique en cours
     pygame.mixer.music.stop()
     try:
-        # Charge et joue la nouvelle musique en boucle
         pygame.mixer.music.load(file_path)
         pygame.mixer.music.play(-1)
         current_music = file_path
@@ -42,34 +39,32 @@ def play_music(file_path):
 
 play_music(music_menu_file)
 
- 
 resolution = pygame.display.Info()
-WIDTH, HEIGHT= resolution.current_w, resolution.current_h
+WIDTH, HEIGHT = resolution.current_w, resolution.current_h
 ACC = 0.5
 score = 0
+best_score = 0   # BEST SCORE
+
 score_police = pygame.font.Font(None, 60)
+best_score_police = pygame.font.Font(None, 60)
 menu_actuel = "foret"
 
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 
-# Configurations
 settings = Settings()
 assets = AssetManager()
 
 pygame.display.set_caption(settings.game_title)
-difficulté = GestionDifficulte(settings.game_game_speed,0.5)
+difficulté = GestionDifficulte(settings.game_game_speed, 0.5)
 
-#definitions pour le background
-
-bg = background(img = assets.backgrounds['background'])
+bg = background(img=assets.backgrounds['background'])
 player = Player(settings, assets)
 
-menu_principal = MainMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
-menu_option = OptionMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
-menu_game_over = GameOverMenu(WIDTH,HEIGHT)
-menu_pause = PauseMenu(WIDTH,HEIGHT) 
-menu_themes = ThemeMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
+menu_principal = MainMenu(WIDTH, HEIGHT, img=os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
+menu_option = OptionMenu(WIDTH, HEIGHT, img=os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
+menu_game_over = GameOverMenu(WIDTH, HEIGHT)
+menu_pause = PauseMenu(WIDTH, HEIGHT)
 
 jeu_actif = False
 en_cours = True
@@ -81,9 +76,7 @@ obstacle_manager = ObstacleManager(assets, settings)
 # Lancement initial de la musique du menu 
 play_music(music_menu_file)
 
-
 while en_cours:
-
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -92,13 +85,13 @@ while en_cours:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                if jeu_actif :
+                if jeu_actif:
                     jeu_actif = False
                     etat_menu = 'pause'
-                    play_music(music_menu_file) 
-                elif etat_menu == 'option' :
+                    play_music(music_menu_file)
+                elif etat_menu == 'option':
                     etat_menu = 'main'
-                elif etat_menu == "main" :
+                elif etat_menu == "main":
                     en_cours = False
                 elif etat_menu == 'pause':
                     etat_menu = 'main'
@@ -189,7 +182,6 @@ while en_cours:
         displaysurface.blit(score_police.render(f'Score: {score}', True, (0, 0, 0)),(WIDTH - 250, 20))
 
     elif etat_menu == 'perdu':
-        # Écran Game Over.
         bg.affiche(displaysurface)
         player.blit_me(displaysurface)
         obstacle_manager.draw(displaysurface)
@@ -215,3 +207,7 @@ while en_cours:
 
     clock.tick(settings.game_fps)
     pygame.display.update()
+
+
+
+
