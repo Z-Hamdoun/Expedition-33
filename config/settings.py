@@ -33,7 +33,6 @@ class Settings:
         try:
             with open('config/settings.json', 'r') as f:
                 data = json.load(f)
-                print(data)
                 
                 # Game settings
                 data_game = data.get('game', {})

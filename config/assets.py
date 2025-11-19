@@ -6,7 +6,7 @@ class AssetManager:
     """
     def __init__(self):
         # Dossier principal du projet
-        self.base_dir = os.path.dirname(os.path.abspath(__file__))
+        self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         # Dossier assets
         self.asset_dir = os.path.join(self.base_dir, 'assets')
         
@@ -67,7 +67,7 @@ class AssetManager:
 
         # --- Backgrounds ---
         # transparent=False pour plus de performance
-        self.backgrounds['ground'] = self.load_image(['Backgrounds', 'Game'], 'tall_trees.png', transparent=False)
+        self.backgrounds['background'] = self.load_image(['Backgrounds', 'Game'], 'tall_trees.png', transparent=False)
         
         # --- Sons ---
         

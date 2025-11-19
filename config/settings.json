@@ -1,18 +1,20 @@
 {
     "game": {
-        "fps" : 60,
+        "fps": 60,
         "title": "Expedition 33",
         "high_score": 0,
-        "ground_y" : 600,
+        "ground_y": 600,
         "game_speed": 10
     },
-
     "constants": {
-        "GRAVITY": 0.8
+        "gravity": 0.8
     },
     "player": {
         "jump_power": -16,
         "vitesse_limite": 15,
-        "pos_initiale": [200, 500]
+        "pos_initiale": [
+            200,
+            500
+        ]
     }
 }
