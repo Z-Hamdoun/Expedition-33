@@ -2,6 +2,7 @@ import pygame
 import os
 from scripts.states.state import State
 from scripts.states.play_state import PlayState
+from scripts.states.theme_state import ThemeState
 from scripts.ui import Button
  
 class MenuState(State):
@@ -51,8 +52,7 @@ class MenuState(State):
             # Logique du Play Button
             if self.btn_play.is_clicked(event):
                 # Entrer dans l'etat Play
-                new_state = PlayState(self.game)
-                new_state.enter_state()
+                new_state = ThemeState(self.game)
                 self.game.current_state = new_state
                 
             # Logique boutton quitter

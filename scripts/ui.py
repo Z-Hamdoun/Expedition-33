@@ -32,3 +32,25 @@ class Button:
             if self.is_hovered:
                 return True
         return False
+    
+'''class ImgButton():
+    def __init__(self,image_surface,x,y,fenetre,selected=False):
+        self.image = image_surface
+        self.x = x
+        self.y = y
+        self.fenetre = fenetre
+        self.selected = selected
+        self.hovered = False
+        
+    def draw(self):
+        souris = pygame.mouse.get_pos()
+        rect = self.image_surface.get_rect()
+        rect.center = (self.x, self.y)
+        self.fenetre.blit(self.image_surface, rect)
+    
+    def update(self):
+        if rect.collidepoint(souris):
+            pygame.draw.rect(fenetre, (255, 255, 255), rect, 3)
+        if selected:
+            pygame.draw.rect(fenetre, (255, 215, 0), rect, 6)
+        return rect'''
