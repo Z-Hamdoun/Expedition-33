@@ -30,7 +30,9 @@ class Obstacle(pygame.sprite.Sprite):
 
         # Spawn
         # on ajoute + 100 pour qu'il n'apparait pas instantannement
-        self.rect.x = self.settings.game_width + 100
+        
+        ######## A CHANGER
+        self.rect.x = 1500 + 100
 
     def update(self):
         # Bouge vers la gauche en utilisant la game_speed

@@ -12,7 +12,7 @@ class AssetManager:
         
         # Stockage des images dans des dictionnaires
         self.player_imgs = {}   # Format {'run': [img1, img2], 'jump': img}
-        self.obstacles = {} # format {'statique': {'cactus': {...}, 'arbre':{...}, ...}, 'dynamique': {'bird': ...}}
+        self.obstacles = {'statique': {'cactus': []}, 'dynamique': {'oiseau': []}} # format {'statique': {'cactus': {...}, 'arbre':{...}, ...}, 'dynamique': {'bird': ...}}
         self.backgrounds = {}
         self.enemies = {}
         self.sounds = {}
@@ -77,6 +77,7 @@ class AssetManager:
         for i in range(6):
             self.obstacles['statique']['cactus'].append(
                 self.load_image(['obstacles', 'statique', 'cactus'], f'{i}.png'))
+        print(self.obstacles)
 
         # A completer
             
