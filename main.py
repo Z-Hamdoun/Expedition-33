@@ -79,9 +79,6 @@ play_music(music_menu_file)
 while en_cours:
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            en_cours = False
-            settings.save_settings()
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -96,7 +93,7 @@ while en_cours:
                 elif etat_menu == 'pause':
                     etat_menu = 'main'
                     jeu_actif = True
-                    play_music(music_game_file)
+                    # play_music(music_game_file)
 
         if event.type == pygame.KEYUP:     
             if jeu_actif:

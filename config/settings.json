@@ -3,9 +3,9 @@
         "fps": 60,
         "title": "Expedition 33",
         "high_score": 0,
-        "ground_y": 1000,
-        "game_speed": 40,
-        "mode": "Difficile",
+        "ground_y": 800,
+        "game_speed": 26.3125,
+        "mode": "Facile",
         "acceleration": 0.5,
         "vmax": 40
     },
@@ -17,7 +17,7 @@
         "vitesse_limite": 15,
         "pos_initiale": [
             200,
-            500
+            1000
         ]
     }
 }

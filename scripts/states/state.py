@@ -29,3 +29,6 @@ class State:
     def exit_state(self):
         """Applee quand on quitte cet etat"""
         pass
+    
+    def desc(self):
+        pass

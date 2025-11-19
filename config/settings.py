@@ -14,7 +14,7 @@ class Settings:
         self.game_high_score = 0
         self.game_ground_y = 600
         self.game_game_speed = 10
-        self.game_mode = 'Moyen'
+        self.game_mode = 'Facile'
         self.game_acceleration = 0.5
         self.game_vmax = 40
         

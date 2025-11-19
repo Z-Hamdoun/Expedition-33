@@ -55,8 +55,7 @@ class Player(pygame.sprite.Sprite):
         if self.pos.y >= self.settings.game_ground_y:
             self.vel.y = self.settings.player_jump_power
             self.jumping = True
-            son = pygame.mixer.Sound(r"Sons\thème troll\saut-2.mp3")
-            son.play()
+
     
     def end_jump(self):
         """
@@ -87,6 +86,7 @@ class Player(pygame.sprite.Sprite):
             self.pos.y = self.settings.game_ground_y
             self.vel.y = 0
             self.running = True
+            self.jumping = False
         else:
             self.running = False
         
@@ -124,9 +124,8 @@ class Player(pygame.sprite.Sprite):
             self.image = self.animations['jumping']
             self.rect = self.image.get_rect()
 
-        else:
-            frame_index = self.frame_number // 10
-            self.image = self.animations['running'][frame_index % 2]
+        elif self.running:
+            self.image = self.animations['running'][self.frame_number // 10]
             self.rect = self.image.get_rect()
     
 
