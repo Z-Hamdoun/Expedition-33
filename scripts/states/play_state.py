@@ -74,7 +74,7 @@ class PlayState(State):
         start_pos = self.player.rect.center
         
         # Creer la balle
-        new_bullet = Bullet(start_pos, mouse_pos)
+        new_bullet = Bullet(start_pos, mouse_pos, self.game.assets)
         
         # Ajouter au groupe
         self.bullets.add(new_bullet)

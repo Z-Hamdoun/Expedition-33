@@ -17,6 +17,8 @@ class AssetManager:
         self.enemies = {}
         self.sounds = {}
         
+        self.other = {}
+        
         # Charger tout les assets
         self.load_all()
     
@@ -85,6 +87,9 @@ class AssetManager:
         # Dynamique
         self.obstacles['dynamique']['oiseau'] = [self.load_image(['obstacles', 'dynamique', 'oiseau'], f'1.png'),
             self.load_image(['obstacles', 'dynamique', 'oiseau'], f'2.png')]
+        
+        # --- Other ----
+        self.other['bullet'] = self.load_image(['other'], 'bullet.png')
         
         # --- Sons ---
         

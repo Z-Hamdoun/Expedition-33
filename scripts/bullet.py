@@ -1,13 +1,15 @@
 import pygame
 from pygame.math import Vector2
+import os
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, start_pos, target_pos):
+    def __init__(self, start_pos, target_pos, assets):
         super().__init__()
         
         # Creer la surface Bullet
-        self.image = pygame.Surface((10, 10))
-        self.image.fill((255, 0, 0)) # Carre rouge pour le moment, a remplacer
+        # self.image = pygame.Surface((10, 10))
+        # self.image.fill((255, 0, 0)) # Carre rouge pour le moment, a remplacer
+        self.image = assets.other['bullet']
         self.rect = self.image.get_rect(center=start_pos)
         
         # Calculer le vecteur direction
