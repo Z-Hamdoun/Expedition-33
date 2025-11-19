@@ -34,6 +34,17 @@ class Menu():
         rect.center  = (x,y)
         fenetre.blit(txt_to_img,rect)
 
+    def img_button(self, image_surface, x, y, fenetre, selected=False):
+        souris = pygame.mouse.get_pos()
+        rect = image_surface.get_rect()
+        rect.center = (x, y)
+        fenetre.blit(image_surface, rect)
+        if rect.collidepoint(souris):
+            pygame.draw.rect(fenetre, (255, 255, 255), rect, 3)
+        if selected:
+            pygame.draw.rect(fenetre, (255, 215, 0), rect, 6)
+        return rect
+
     def background(self,fenetre):
         fenetre.blit(self.bg, (0, 0))
 
@@ -84,14 +95,52 @@ class GameOverMenu(Menu):
 class PauseMenu(Menu):
     def __init__(self,largeur,hauteur):
         super().__init__(largeur,hauteur,None)
-        self.overlay = pygame.Surface((self.largeur,self.hauteur))
+        self.overlay = pygame.Surface((self.hauteur//2,3*self.largeur//8))
         self.overlay.fill((255,255,255))
         self.overlay.set_alpha(180)
+        self.overlay_rect = self.overlay.get_rect()
+        self.overlay_rect.center = (self.largeur//2, self.hauteur//2)
+        
 
     def affichage(self,fenetre):
-        fenetre.blit(self.overlay,(0,0))
+        fenetre.blit(self.overlay,self.overlay_rect)
         self.text("PAUSE",self.police,(255,0,0),self.largeur//2,self.hauteur//4,fenetre)
         quitter_pause = self.button("Quitter", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 200, fenetre)
         reprendre = self.button("Reprendre", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2 , fenetre)
         bouton_rejouer = self.button("Rejouer", self.police, (0,0,0),(255,215,0), self.largeur // 2, self.hauteur // 2  + 100, fenetre)
         return {"quitter_pause":quitter_pause,"reprendre":reprendre,"rejouer_pause":bouton_rejouer}
+
+class ThemeMenu(Menu):
+    def __init__(self,largeur,hauteur,img):
+        super().__init__(largeur, hauteur, img)
+        self.choix_l = 200
+        self.choix_h = 400
+        self.choix = {}
+        themes = ["foret","desert","ocean"]
+        for theme in themes:
+            cadre = pygame.surface.Surface((self.choix_l,self.choix_h))
+            if theme == "ocean" : cadre.fill((0,100,255))
+            if theme == "desert" : cadre.fill((240,200,100))
+            if theme == "foret" : cadre.fill((34,139,34))
+            self.choix[theme] = cadre
+    
+
+    def affichage(self,fenetre,theme_actuel):
+        self.background(fenetre)
+        self.text("Selectionnez un thème",self.police,(0,0,0),self.largeur//2,self.hauteur//4,fenetre)
+        boutons = {}
+        is_selected = (theme_actuel == "ocean")
+        boutons["theme_ocean"] = self.img_button(self.choix["ocean"],self.largeur//4,5*self.hauteur//8, fenetre, is_selected)
+        self.text("Ocean", self.police,(0,0,0),self.largeur//4,self.hauteur//4  + self.choix_h//2 + 100,fenetre)
+
+        is_selected = (theme_actuel == "desert")
+        boutons["theme_desert"] = self.img_button(self.choix["desert"],self.largeur//2,5*self.hauteur//8, fenetre, is_selected)
+        self.text("Desert", self.police,(0,0,0),self.largeur//2,self.hauteur//4  + self.choix_h//2  + 100, fenetre)
+
+        # 3. Forest (Right)
+        is_selected = (theme_actuel == "foret")
+        boutons["theme_foret"] = self.img_button(self.choix["foret"],3*self.largeur//4,5*self.hauteur//8, fenetre, is_selected)
+        self.text("Foret", self.police,(0,0,0),3*self.largeur//4,self.hauteur//4  + self.choix_h//2  + 100, fenetre)
+
+
+        

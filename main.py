@@ -78,9 +78,6 @@ play_music(music_menu_file)
 while en_cours:
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            en_cours = False
-            settings.save_settings()
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -95,7 +92,7 @@ while en_cours:
                 elif etat_menu == 'pause':
                     etat_menu = 'main'
                     jeu_actif = True
-                    play_music(music_game_file)
+                    # play_music(music_game_file)
 
         if event.type == pygame.KEYUP:     
             if jeu_actif:
@@ -118,7 +115,7 @@ while en_cours:
                         settings.save_settings()
                         play_music(music_menu_file) 
                     if "rejouer_over" in boutons and boutons["rejouer_over"].collidepoint(event.pos):
-                        player, obstacle_manager.obstacles, bg = reinitialiser(settings)
+                        player, obstacle_manager.obstacles, bg = reinitialiser(settings,assets)
                         etat_menu = "main"
                         jeu_actif = True
                         play_music(music_game_file)
@@ -131,16 +128,30 @@ while en_cours:
                         jeu_actif = True
                         play_music(music_game_file)
                     if "rejouer_pause" in boutons and boutons["rejouer_pause"].collidepoint(event.pos):
-                        player, obstacle_manager.obstacles, bg = reinitialiser(settings)
+                        player, obstacle_manager.obstacles, bg = reinitialiser(settings,assets)
                         etat_menu = "main"
                         jeu_actif = True
                         play_music(music_game_file)
+                    if "Facile" in boutons and boutons["Facile"].collidepoint(event.pos):
+                        settings.game_mode = "Facile"
+                        settings.game_acceleration = 0.3
+                        settings.game_vmax = 20
+                        
+                    if "Difficile" in boutons and boutons["Difficile"].collidepoint(event.pos):
+                        settings.game_mode = "Difficile"
+                        settings.game_acceleration = 0.7
+                        settings.game_vmax = 80
+
+                    if "Moyen" in boutons and boutons["Moyen"].collidepoint(event.pos):
+                        settings.game_mode = "Moyen"
+                        settings.game_acceleration = 0.5
+                        settings.game_vmax = 40
+
 
     if jeu_actif:
+        difficulté = GestionDifficulte(settings.game_game_speed,settings.game_acceleration)
         play_music(music_game_file)
-        
         settings.game_game_speed,score = difficulté.maj()
-        #partie background
         bg.vitesse = settings.game_game_speed
         bg.maj()
         bg.affiche(displaysurface)

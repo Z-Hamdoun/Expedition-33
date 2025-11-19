@@ -5,11 +5,11 @@ import math
 pygame.init()
 
 class background():
-    def __init__(self,largeur = pygame.display.Info().current_w,hauteur = pygame.display.Info().current_h,img = 'bg.png', vitesse = 3):
+    def __init__(self,largeur = pygame.display.Info().current_w,hauteur = pygame.display.Info().current_h,img = None , vitesse = 3):
+        self.img = img
         self.largeur = largeur
         self.hauteur = hauteur
         self.vitesse = 3
-        self.img = img
         self.img = pygame.transform.scale(self.img, (self.largeur, self.hauteur))
         self.defilement_horizontal = 0
         self.pavage = math.ceil( self.largeur / self.img.get_width() ) + 1

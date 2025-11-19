@@ -32,7 +32,7 @@ class Obstacle(pygame.sprite.Sprite):
         # on ajoute + 100 pour qu'il n'apparait pas instantannement
         
         ######## A CHANGER
-        self.rect.x = 1500 + 100
+        self.rect.x = 1920
 
     def update(self):
         # Bouge vers la gauche en utilisant la game_speed
