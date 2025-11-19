@@ -71,9 +71,20 @@ class AssetManager:
         self.backgrounds['background'] = self.load_image(['Backgrounds', 'Game'], 'tall_trees.png', transparent=False)
         
         # --- Obstacles ----
+        # Statique
         # Cactus
+        self.obstacles['statique']['cactus'] = []
         for i in range(6):
-            self.obstacles['statique']['cactus'][i] = self.load_image(['obstacles', 'statique', 'cactus'], f'{i}.png')
+            self.obstacles['statique']['cactus'].append(
+                self.load_image(['obstacles', 'statique', 'cactus'], f'{i}.png'))
+
+        # A completer
+            
+            
+        # Dynamique
+        self.obstacles['dynamique']['oiseau'] = [self.load_image(['obstacles', 'dynamique', 'oiseau'], f'1.png'),
+            self.load_image(['obstacles', 'dynamique', 'oiseau'], f'2.png')]
+        
         # --- Sons ---
         
         # A completer
