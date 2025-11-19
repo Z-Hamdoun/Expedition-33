@@ -86,4 +86,8 @@ class ThemeState(State):
                 # Entrer dans l'etat Play
                 new_state = PlayState(self.game)
                 self.game.current_state = new_state
-                
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    from scripts.states.menu_state import MenuState
+                    new_state = MenuState(self.game)
+                    self.game.current_state = new_state
