@@ -152,7 +152,7 @@ while en_cours:
 
         #partie obstacle
         collisions = pygame.sprite.spritecollide(player, obstacle_manager.obstacles, False)
-        if collisions:
+        if collisions and not player.attacking:
             pygame.time.delay(300)
             jeu_actif = False
             etat_menu = 'perdu'
@@ -160,6 +160,7 @@ while en_cours:
             son = pygame.mixer.Sound(r"Sons\thème troll\Mort méchant dinosaure.mp3")
             son.play()
             play_music(music_game_over_file)
+
                             
 
         inpt = pygame.key.get_pressed()
