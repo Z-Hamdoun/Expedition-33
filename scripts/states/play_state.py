@@ -22,9 +22,6 @@ class PlayState(State):
         self.score = 0
         self.score_font = pygame.font.Font(None, 60)
         
-        # Pause
-        self.pause = False
-        self.lost = False
         
         # Music
         # A completer
@@ -34,24 +31,23 @@ class PlayState(State):
         pass
     
     def update(self):
-        if not self.pause:
-            # Gestion du background
-            self.bg.maj()
+        # Gestion du background
+        self.bg.maj()
 
-            # Entree joueur + physique
-            keys = pygame.key.get_pressed()
-            self.player.update(keys)
+        # Entree joueur + physique
+        keys = pygame.key.get_pressed()
+        self.player.update(keys)
 
-            # Ennemis
-            self.obstacle_manager.update()
+        # Ennemis
+        self.obstacle_manager.update()
             
-            self.score += int(self.game.settings.game_game_speed / 10)
+        self.score += int(self.game.settings.game_game_speed / 10)
 
-            # 4. Collision 
-            collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
-            if collisions:
-                # Entrer dans etat game_over
-                self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
+        # 4. Collision 
+        collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
+        if collisions:
+            # Entrer dans etat game_over
+            self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
     
     def handle_input(self, events):
         for event in events:
