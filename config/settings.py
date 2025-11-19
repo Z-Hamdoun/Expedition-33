@@ -15,6 +15,8 @@ class Settings:
         self.game_ground_y = 600
         self.game_game_speed = 10
         self.game_mode = 'Moyen'
+        self.game_acceleration = 0.5
+        self.game_vmax = 40
         
         # ------ Player ----------
         self.player_jump_power = -16
@@ -43,6 +45,8 @@ class Settings:
                 self.game_ground_y = data_game.get('ground_y', self.game_ground_y)
                 self.game_game_speed = data_game.get('game_speed', self.game_game_speed)
                 self.game_mode = data_game.get('mode', self.game_mode)
+                self.game_acceleration = data_game.get("acceleration", self.game_acceleration)
+                self.game_vmax = data_game.get("vmax", self.game_vmax)
                 
                 print(data_game)
 
@@ -72,7 +76,9 @@ class Settings:
                 "high_score": self.game_high_score,
                 "ground_y" : self.game_ground_y,
                 "game_speed": self.game_game_speed,
-                "mode": self.game_mode
+                "mode": self.game_mode,
+                "acceleration": self.game_acceleration,
+                "vmax": self.game_vmax
             },
             "constants": {
                 "gravity": self.constants_gravity
