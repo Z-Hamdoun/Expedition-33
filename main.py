@@ -48,6 +48,7 @@ WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
 score = 0
 score_police = pygame.font.Font(None, 60)
+menu_actuel = "foret"
 
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -68,6 +69,8 @@ menu_principal = MainMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds
 menu_option = OptionMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
 menu_game_over = GameOverMenu(WIDTH,HEIGHT)
 menu_pause = PauseMenu(WIDTH,HEIGHT) 
+menu_themes = ThemeMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
+
 jeu_actif = False
 en_cours = True
 etat_menu = "main"
@@ -110,7 +113,7 @@ while en_cours:
             if event.button == 1: #clic gauche
                 if not jeu_actif :
                     if "start" in boutons and boutons["start"].collidepoint(event.pos):
-                        jeu_actif = True
+                        etat_menu = "themes"
                         play_music(music_game_file)
                     if "quitter" in boutons and boutons["quitter"].collidepoint(event.pos):
                         en_cours = False
@@ -197,6 +200,9 @@ while en_cours:
         player.blit_me(displaysurface)
         obstacle_manager.draw(displaysurface)
         boutons  = menu_pause.affichage(displaysurface)
+
+    elif etat_menu == "themes":
+        boutons = menu_themes.affichage(displaysurface,menu_actuel)
         
     else :
         play_music(music_menu_file) 
