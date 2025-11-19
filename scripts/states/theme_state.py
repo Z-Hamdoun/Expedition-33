@@ -20,22 +20,24 @@ class ThemeState(State):
         self.choix_h = 400
         self.choix = {}
         self.boutons = {}
-        self.theme_actuel = "foret"
         themes = ["foret","desert","ocean"]
         for theme in themes:
-            cadre = pygame.surface.Surface((self.choix_l,self.choix_h))
-            if theme == "ocean" : cadre.fill((0,100,255))
-            if theme == "desert" : cadre.fill((240,200,100))
-            if theme == "foret" : cadre.fill((34,139,34))
+            if theme == "ocean" :
+                path = os.path.join("assets","Backgrounds","Game","colored_castle.png")
+            if theme == "desert" : 
+                path = os.path.join("assets","Backgrounds","Game","colored_desert.png")
+            if theme == "foret" : 
+                path = os.path.join("assets","Backgrounds","Game","tall_trees.png")
+            image = pygame.image.load(path).convert()
+            cadre = pygame.transform.scale(image, (self.choix_l, self.choix_h))
             self.choix[theme] = cadre
         
         
         # Bouttons images
-        image_surface = self.choix['ocean']
-        self.theme_1 = ImgButton(image_surface=image_surface,
-            x = self.largeur//4,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
+        self.theme_1 = ImgButton(image_surface=self.choix["ocean"], x = self.largeur//4,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
+        self.theme_2 = ImgButton(image_surface=self.choix["foret"], x = self.largeur//2,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
+        self.theme_3 = ImgButton(image_surface=self.choix["desert"], x = 3*self.largeur//4,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))    
 
-    
     def text(self,texte,font,couleur,x,y,fenetre):
         txt_to_img = font.render(texte,True,couleur)
         rect = txt_to_img.get_rect()
@@ -47,6 +49,8 @@ class ThemeState(State):
         # Gere hover sur un boutton
         mouse_pos = pygame.mouse.get_pos()
         self.theme_1.update(mouse_pos)
+        self.theme_2.update(mouse_pos)
+        self.theme_3.update(mouse_pos)
 
     def draw(self,screen):
         if self.bg_img:
@@ -55,6 +59,8 @@ class ThemeState(State):
             screen.fill("gray")
         self.text("Selectionnez un thème",self.font,(0,0,0),self.largeur//2,self.hauteur//4,screen)
         self.theme_1.draw(screen)
+        self.theme_2.draw(screen)
+        self.theme_3.draw(screen)
         self.text("Ocean", self.font,(0,0,0),self.largeur//4,self.hauteur//4  + self.choix_h//2 + 100,screen)
 
         #is_selected = (theme_actuel == "desert")
