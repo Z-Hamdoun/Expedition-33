@@ -16,16 +16,17 @@ class AssetManager:
         self.enemies = {}
         self.sounds = {}
         
-        
+        # Charger tout les assets
+        self.load_all()
     
     def load_image(self,
-        folder_path: str,
+        folder_path: list[str],
         filename: str,
         transparent: bool = True):
         """Permet de charger une image a partir d'un path
 
         Args:
-            folder_path (str): path au dossier assets.
+            folder_path (list): liste de sous dossiers.
             filename (str): nom du fichier a charger.
             transparent (bool, optional): True pour les sprites, False pour le fond d'ecran. Defaults to True.
 
@@ -47,5 +48,31 @@ class AssetManager:
             surf = pygame.Surface((50, 50))
             surf.fill((255, 0, 255)) 
             return surf
+    
+    def load_all(self):
+        print("[AssetManager][Info] Chargement des assets ...")
+        
+        # --- Player ---
+        
+        # A changer lors de l'ajout de skins
+        self.player_imgs['run'] = [
+            self.load_image(['Dino'], 'DinoRun1.png'),
+            self.load_image(['Dino'], 'DinoRun2.png')
+        ]
+        self.player_imgs['jump'] = self.load_image(['Dino'], 'DinoJump.png')
+        self.player_imgs['duck'] = [
+            self.load_image(['Dino'], 'DinoDuck1.png'),
+            self.load_image(['Dino'], 'DinoDuck2.png')
+        ]
+
+        # --- Backgrounds ---
+        # transparent=False pour plus de performance
+        self.backgrounds['ground'] = self.load_image(['Backgrounds', 'Game'], 'tall_trees.png', transparent=False)
+        
+        # --- Sons ---
+        
+        # A completer
+        
+        print("[AssetManager][Success] Assets charges!")
 
    
