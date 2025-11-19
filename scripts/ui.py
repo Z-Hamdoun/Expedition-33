@@ -33,24 +33,35 @@ class Button:
                 return True
         return False
     
-'''class ImgButton():
-    def __init__(self,image_surface,x,y,fenetre,selected=False):
-        self.image = image_surface
+class ImgButton:
+    def __init__(self, x, y, color_base, color_hover, image_surface):
         self.x = x
         self.y = y
-        self.fenetre = fenetre
-        self.selected = selected
-        self.hovered = False
+        self.color_base = color_base
+        self.color_hover = color_hover
+        self.image_surface = image_surface
         
-    def draw(self):
-        souris = pygame.mouse.get_pos()
-        rect = self.image_surface.get_rect()
-        rect.center = (self.x, self.y)
-        self.fenetre.blit(self.image_surface, rect)
-    
-    def update(self):
-        if rect.collidepoint(souris):
-            pygame.draw.rect(fenetre, (255, 255, 255), rect, 3)
-        if selected:
-            pygame.draw.rect(fenetre, (255, 215, 0), rect, 6)
-        return rect'''
+        # Render text and get dimensions
+        self.rect = image_surface.get_rect(center=(x, y))
+        self.is_hovered = False
+
+    def update(self, mouse_pos):
+        """Met a jour le boutton en mode hover"""
+        self.is_hovered = self.rect.collidepoint(mouse_pos)
+
+    def draw(self, screen):
+        """Dessine le bouton"""
+        # color = self.color_hover if self.is_hovered else self.color_base
+        if self.is_hovered:
+            pygame.draw.rect(screen, (255, 255, 255), self.rect, 3)
+        else:
+            pygame.draw.rect(screen, (255, 215, 0), self.rect, 6)
+        # Re-render si la couleur change
+        screen.blit(self.image_surface, self.rect)
+
+    def is_clicked(self, event):
+        """Retourn True si clicke"""
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self.is_hovered:
+                return True
+        return False

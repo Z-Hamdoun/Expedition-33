@@ -63,6 +63,3 @@ class MenuState(State):
             if self.btn_options.is_clicked(event):
                 pass
                 # A remplir par l'etat options
-    
-    def desc(self):
-        return 'menu'
