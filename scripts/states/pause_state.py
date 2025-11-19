@@ -61,8 +61,8 @@ class PauseState(State):
                 self.game.current_state = MenuState(self.game)
             
             if self.btn_rejouer.is_clicked(event):
-                from scripts.states.play_state import PlayState
-                self.game.current_state = PlayState(self.game)
+                from scripts.states.theme_state import ThemeState
+                self.game.current_state = ThemeState(self.game)
 
             # Key: ESC to Resume
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:

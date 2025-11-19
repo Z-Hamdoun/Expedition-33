@@ -55,9 +55,9 @@ class GameOverState(State):
                 self.game.current_state = MenuState(self.game)
                 
             if self.btn_replay.is_clicked(event):
-                # Go back to the game
-                from scripts.states.play_state import PlayState
-                self.game.current_state = PlayState(self.game)
+                # Revenir au jeu
+                from scripts.states.theme_state import ThemeState
+                self.game.current_state = ThemeState(self.game)
     
     def desc(self):
         return 'game_over'
