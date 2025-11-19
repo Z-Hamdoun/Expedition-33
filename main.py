@@ -144,9 +144,9 @@ while en_cours:
     if jeu_actif:
         play_music(music_game_file)
         
-        vitesse_actuelle,score = difficulté.maj()
+        settings.game_game_speed,score = difficulté.maj()
         #partie background
-        bg.vitesse = vitesse_actuelle
+        bg.vitesse = settings.game_game_speed
         bg.maj()
         bg.affiche(displaysurface)
 
@@ -189,7 +189,7 @@ while en_cours:
         if etat_menu == "main":
             boutons = menu_principal.affichage(displaysurface)
         if etat_menu == "option":
-            boutons = menu_option.affichage(displaysurface)
+            boutons = menu_option.affichage(displaysurface, settings.game_mode)
 
 
     clock.tick(settings.game_fps)

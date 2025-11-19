@@ -3,14 +3,15 @@
         "fps": 60,
         "title": "Expedition 33",
         "high_score": 0,
-        "ground_y": 600,
-        "game_speed": 10
+        "ground_y": 1000,
+        "game_speed": 15.843,
+        "mode": "Difficile"
     },
     "constants": {
         "gravity": 0.8
     },
     "player": {
-        "jump_power": -16,
+        "jump_power": -20,
         "vitesse_limite": 15,
         "pos_initiale": [
             200,
