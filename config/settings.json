@@ -3,7 +3,7 @@
         "fps": 60,
         "title": "Expedition 33",
         "high_score": 0,
-        "ground_y": 600,
+        "ground_y": 800,
         "game_speed": 10
     },
     "constants": {
