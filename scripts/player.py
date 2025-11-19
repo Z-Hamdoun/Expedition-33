@@ -42,6 +42,10 @@ class Player(pygame.sprite.Sprite):
         
         # Variable qui gere l'animation running
         self.frame_number = 0
+
+
+        # Hitting
+        self.attacking = False
     
     
     def jump(self):
@@ -124,6 +128,15 @@ class Player(pygame.sprite.Sprite):
             frame_index = self.frame_number // 10
             self.image = self.animations['running'][frame_index % 2]
             self.rect = self.image.get_rect()
+    
+
+    def attack(self):
+        """
+        Gere le cas ou le joueur touche un obstacle
+        """
+        self.hit = True
+        son = pygame.mixer.Sound(r"Sons\thème troll\hit_hurt.mp3")
+        son.play()
  
     
     def blit_me(self, screen):
