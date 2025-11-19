@@ -3,6 +3,7 @@ import sys
 import os
 from pygame.math import Vector2
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+from scripts.bullet import Bullet
 
 from config.settings import Settings
 from config.assets import AssetManager
@@ -46,7 +47,6 @@ class Player(pygame.sprite.Sprite):
 
         # Hitting
         self.attacking = False
-    
     
     def jump(self):
         """
@@ -127,16 +127,6 @@ class Player(pygame.sprite.Sprite):
         elif self.running:
             self.image = self.animations['running'][self.frame_number // 10]
             self.rect = self.image.get_rect()
-    
-
-    def attack(self):
-        """
-        Gere le cas ou le joueur touche un obstacle
-        """
-        self.hit = True
-        son = pygame.mixer.Sound(r"Sons\thème troll\hit_hurt.mp3")
-        son.play()
- 
     
     def blit_me(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
