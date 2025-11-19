@@ -2,7 +2,7 @@ import pygame
 import os
 from scripts.states.state import State
 from scripts.states.play_state import PlayState
-from scripts.ui import Button
+from scripts.ui import Button, ImgButton
 
 class ThemeState(State):
     def __init_(self,game):
@@ -28,17 +28,12 @@ class ThemeState(State):
             if theme == "desert" : cadre.fill((240,200,100))
             if theme == "foret" : cadre.fill((34,139,34))
             self.choix[theme] = cadre
-
-    def img_button(self, image_surface, x, y, fenetre, selected=False):
-        souris = pygame.mouse.get_pos()
-        rect = image_surface.get_rect()
-        rect.center = (x, y)
-        fenetre.blit(image_surface, rect)
-        if rect.collidepoint(souris):
-            pygame.draw.rect(fenetre, (255, 255, 255), rect, 3)
-        if selected:
-            pygame.draw.rect(fenetre, (255, 215, 0), rect, 6)
-        return rect
+        
+        
+        # Bouttons images
+        image_surface = self.choix['ocean']
+        self.theme_1 = ImgButton(image_surface=image_surface,
+            x = self.largeur//4,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
 
     
     def text(self,texte,font,couleur,x,y,fenetre):
@@ -53,17 +48,16 @@ class ThemeState(State):
         else:
             fenetre.fill("gray")
         self.text("Selectionnez un thème",self.police,(0,0,0),self.largeur//2,self.hauteur//4,fenetre)
-        is_selected = (theme_actuel == "ocean")
-        self.boutons["ocean"] = self.img_button(self.choix["ocean"],self.largeur//4,5*self.hauteur//8, fenetre, is_selected)
+        self.theme_1.draw()
         self.text("Ocean", self.police,(0,0,0),self.largeur//4,self.hauteur//4  + self.choix_h//2 + 100,fenetre)
 
-        is_selected = (theme_actuel == "desert")
-        self.boutons["desert"] = self.img_button(self.choix["desert"],self.largeur//2,5*self.hauteur//8, fenetre, is_selected)
-        self.text("Desert", self.police,(0,0,0),self.largeur//2,self.hauteur//4  + self.choix_h//2  + 100, fenetre)
-
-        is_selected = (theme_actuel == "foret")
-        self.boutons["foret"] = self.img_button(self.choix["foret"],3*self.largeur//4,5*self.hauteur//8, fenetre, is_selected)
-        self.text("Foret", self.police,(0,0,0),3*self.largeur//4,self.hauteur//4  + self.choix_h//2  + 100, fenetre)
+        #is_selected = (theme_actuel == "desert")
+        #self.boutons["desert"] = self.img_button(self.choix["desert"],self.largeur//2,5*self.hauteur//8, fenetre, is_selected)
+        #self.text("Desert", self.police,(0,0,0),self.largeur//2,self.hauteur//4  + self.choix_h//2  + 100, fenetre)
+        #
+        #is_selected = (theme_actuel == "foret")
+        #self.boutons["foret"] = self.img_button(self.choix["foret"],3*self.largeur//4,5*self.hauteur//8, fenetre, is_selected)
+        #self.text("Foret", self.police,(0,0,0),3*self.largeur//4,self.hauteur//4  + self.choix_h//2  + 100, fenetre)
 
 
     def handle_input(self, events):
