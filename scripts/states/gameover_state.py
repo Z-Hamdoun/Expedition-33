@@ -3,10 +3,13 @@ from scripts.states.state import State
 from scripts.ui import Button
 
 class GameOverState(State):
-    def __init__(self, game, final_score = 100):
+    def __init__(self, game, final_score = 100, prev_state = None):
         super().__init__(game)
         self.score = final_score
         self.font = pygame.font.Font(None, 60)
+        
+        # Previous state
+        self.prev_state = prev_state
         
         # Transparent
         self.overlay = pygame.Surface((game.width, game.height))
@@ -19,6 +22,10 @@ class GameOverState(State):
         self.btn_quit = Button(cw, ch + 200, "Quitter", self.font, (0,0,0), (255,215,0))
 
     def draw(self, surface):
+        # Dessin de l'etat final
+        if self.prev_state:
+            self.prev_state.draw(surface)
+            
         # Effet transparent
         surface.blit(self.overlay, (0, 0))
         

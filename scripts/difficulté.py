@@ -10,7 +10,7 @@ class GestionDifficulte():
     def reset_depart(self):
         self.depart = pygame.time.get_ticks()
 
-    def maj(self):
+    def update(self):
         tps_ecoulé = (pygame.time.get_ticks() - self.depart)/1000 #conversion en secondes
         vitesse = min(self.vitesse0 + (tps_ecoulé * self.acceleration) , self.vmax)
         score = int(self.acceleration*tps_ecoulé*10)
