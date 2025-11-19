@@ -16,3 +16,26 @@ class PlayState(State):
         
         # Music
         # A completer
+    
+    def enter_state(self):
+        # Code pour gerer la musique
+        pass
+    
+    def update(self):
+        # Gestion du background
+        self.bg.maj()
+        
+        # Entree joueur + physique
+        keys = pygame.key.get_pressed()
+        self.player.update(keys)
+        
+        # Ennemis
+        self.enemy_manager.update()
+        
+        # 4. Collision 
+        if pygame.sprite.spritecollide(self.player, self.enemy_manager.obstacles, False):
+            # Passer a l'etat game_over
+            from states.game_over import GameOverState
+            new_state = GameOverState(self.game, score=self.enemy_manager.score)
+            new_state.enter_state()
+            self.game.current_state = new_state
