@@ -9,7 +9,7 @@ class background():
         self.largeur = largeur
         self.hauteur = hauteur
         self.vitesse = 3
-        self.img = pygame.image.load(img).convert()
+        self.img = img
         self.img = pygame.transform.scale(self.img, (self.largeur, self.hauteur))
         self.defilement_horizontal = 0
         self.pavage = math.ceil( self.largeur / self.img.get_width() ) + 1

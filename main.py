@@ -11,6 +11,7 @@ from scripts.reset import *
 from scripts.difficulté import *
 
 from config.settings import Settings
+from config.assets import AssetManager
 
 pygame.init()
 
@@ -40,25 +41,28 @@ def play_music(file_path):
 
 play_music(music_menu_file)
 
-
-settings = Settings()
  
 resolution = pygame.display.Info()
 WIDTH, HEIGHT= resolution.current_w, resolution.current_h
 ACC = 0.5
 obstacles = []
-difficulté = GestionDifficulte(settings.game_game_speed,0.5)
 score = 0
 score_police = pygame.font.Font(None, 60)
 
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# Configurations
+settings = Settings()
+assets = AssetManager()
+
 pygame.display.set_caption(settings.game_title)
+difficulté = GestionDifficulte(settings.game_game_speed,0.5)
 
 #definitions pour le background
 
-bg = background(img = os.path.join("assets", "Backgrounds", "Game", "tall_trees.png"))  #à changer plus tard avec le path du vrai bg
-player = Player(settings)
+bg = background(img = assets.backgrounds['background'])
+player = Player(settings, assets)
 
 menu_principal = MainMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))
 menu_option = OptionMenu(WIDTH,HEIGHT,img = os.path.join("assets", "Backgrounds", "Menu", "menubg_test.jpg"))

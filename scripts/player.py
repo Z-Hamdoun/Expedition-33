@@ -5,6 +5,7 @@ from pygame.math import Vector2
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
 from config.settings import Settings
+from config.assets import AssetManager
 
 pygame.mixer.init()
 
@@ -13,7 +14,7 @@ class Player(pygame.sprite.Sprite):
     Classe representant le joueur
     '''
     
-    def __init__(self, settings: Settings):
+    def __init__(self, settings: Settings, assets: AssetManager):
         '''
         Initialise l'objet Player
         '''
@@ -21,21 +22,15 @@ class Player(pygame.sprite.Sprite):
         
         # Parametres du joueur
         self.settings = settings
+        self.assets = assets
         
         self.pos = Vector2(self.settings.player_pos_initiale.copy())
         self.vel = Vector2(0, 0)
         
-        # Chargement des animations
-        jumping = pygame.image.load(os.path.join("assets", "Dino", "DinoJump.png"))
-        running = [pygame.image.load(os.path.join("assets", "Dino", "DinoRun1.png")),
-           pygame.image.load(os.path.join("assets", "Dino", "DinoRun2.png"))]
-        ducking = [pygame.image.load(os.path.join("assets", "Dino", "DinoDuck1.png")),
-           pygame.image.load(os.path.join("assets", "Dino", "DinoDuck2.png"))]
-        
         # Charger les animations dans un dictionnaire
-        self.animations = {'jumping': jumping,
-            'running': running,
-            'ducking': ducking}
+        self.animations = {'jumping': self.assets.player_imgs['jump'],
+            'running': self.assets.player_imgs['run'],
+            'ducking': self.assets.player_imgs['duck']}
         
         self.image = self.animations['running'][0]
         self.rect: pygame.Rect = self.image.get_rect()
