@@ -57,8 +57,11 @@ class PlayState(State):
         # 4. Collision 
         collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
         if collisions:
-            # Entrer dans etat game_over
-            self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
+            if not self.game.settings.debug_mode:
+                # Entrer dans etat game_over
+                self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
+            else:
+                pygame.time.delay(200)
     
     def handle_input(self, events):
         for event in events:
