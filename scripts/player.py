@@ -134,6 +134,10 @@ class Player(pygame.sprite.Sprite):
             # self.sound.play_sound("duck")
         else:
             self.ducking = False
+        
+        if inpt[pygame.K_s] and not self.running:
+            if self.vel.y < 0:
+                self.vel.y = 0
     
     def update_animation(self):
         # Compteur de frames
