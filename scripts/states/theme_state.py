@@ -9,7 +9,7 @@ class ThemeState(State):
         super().__init__(game)
 
         self.game = game
-        self.bg_img = game.assets.backgrounds.get("background")
+        self.bg_img = game.assets.backgrounds['menu']['theme']
         if self.bg_img:
             self.bg_img = pygame.transform.scale(self.bg_img, (game.width, game.height))
         

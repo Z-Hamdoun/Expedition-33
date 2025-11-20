@@ -75,6 +75,9 @@ class AssetManager:
         self.backgrounds['game']['desert'] = self.load_image(['backgrounds', 'game'], 'desert.png', transparent=False)
         
         # Menu backgrounds
+        self.backgrounds['menu']['main'] = self.load_image(['backgrounds', 'menu'], 'menubg_test.jpg', transparent=False)
+        self.backgrounds['menu']['theme'] = self.load_image(['backgrounds', 'menu'], 'menubg_test.jpg', transparent=False)
+        self.backgrounds['menu']['skins'] = self.load_image(['backgrounds', 'menu'], 'menubg_test.jpg', transparent=False)
         
         # --- Obstacles ----
         # Statique

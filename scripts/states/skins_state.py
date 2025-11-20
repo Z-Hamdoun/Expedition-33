@@ -1,9 +1,6 @@
 import pygame
 import os
 from scripts.states.state import State
-from scripts.states.play_state import PlayState
-from scripts.states.theme_state import ThemeState
-from scripts.ui import Button
 from scripts.ui import ImgButton
  
 class SkinState(State):
@@ -12,7 +9,7 @@ class SkinState(State):
         
         # Setup du background
         self.game = game
-        self.bg_img = game.assets.backgrounds.get('background') # Assuming you added this to assets
+        self.bg_img = game.assets.backgrounds['menu']['skins']
         if self.bg_img:
             self.bg_img = pygame.transform.scale(self.bg_img, (game.width, game.height))
             
@@ -25,20 +22,14 @@ class SkinState(State):
         self.choix = {}
         self.choix_l = 200
         self.choix_h = 400
-        skins = ["foret","snow","desert"]
+        skins = ["forest","snow","desert"]
         for skin in skins:
-            if skin == "snow" :
-                path = os.path.join("assets","Backgrounds","Game","snow.png")
-            if skin == "desert" : 
-                path = os.path.join("assets","Backgrounds","Game","colored_desert.png")
-            if skin == "foret" : 
-                path = os.path.join("assets","Backgrounds","Game","tall_trees.png")
-            image = pygame.image.load(path).convert()
+            image = self.game.assets.backgrounds['game'][skin]
             cadre = pygame.transform.scale(image, (self.choix_l, self.choix_h))
             self.choix[skin] = cadre
         
         self.img1 = ImgButton(self.game.width//4, 5*self.game.height//8, (0,0,0), (255,215,0),self.choix["snow"])
-        self.img2 = ImgButton(self.game.width//2, 5*self.game.height//8, (0,0,0), (255,215,0),self.choix["foret"])
+        self.img2 = ImgButton(self.game.width//2, 5*self.game.height//8, (0,0,0), (255,215,0),self.choix["forest"])
         self.img3 = ImgButton(3*self.game.width//4, 5*self.game.height//8, (0,0,0), (255,215,0),self.choix["desert"])
  
     def update(self):

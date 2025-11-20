@@ -12,7 +12,7 @@ class MenuState(State):
         
         # Setup du background
         self.game = game
-        self.bg_img = game.assets.backgrounds.get('background') # Assuming you added this to assets
+        self.bg_img = game.assets.backgrounds['menu']['main']
         if self.bg_img:
             self.bg_img = pygame.transform.scale(self.bg_img, (game.width, game.height))
             
