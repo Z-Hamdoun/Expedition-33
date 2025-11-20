@@ -15,6 +15,7 @@ class Settings:
         self.game_ground_y = 600
         self.game_game_speed = 10
         self.game_mode = 'Facile'
+        self.theme = "foret"
         self.game_acceleration = 0.5
         self.game_vmax = 40
         
@@ -47,6 +48,7 @@ class Settings:
                 self.game_mode = data_game.get('mode', self.game_mode)
                 self.game_acceleration = data_game.get("acceleration", self.game_acceleration)
                 self.game_vmax = data_game.get("vmax", self.game_vmax)
+                self.theme = data_game.get("theme",self.theme)
                 
                 print(data_game)
 
@@ -78,7 +80,8 @@ class Settings:
                 "game_speed": self.game_game_speed,
                 "mode": self.game_mode,
                 "acceleration": self.game_acceleration,
-                "vmax": self.game_vmax
+                "vmax": self.game_vmax,
+                "theme": self.theme
             },
             "constants": {
                 "gravity": self.constants_gravity

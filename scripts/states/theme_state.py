@@ -75,17 +75,17 @@ class ThemeState(State):
     def handle_input(self, events):
         for event in events:
             if self.theme_1.is_clicked(event):
-                # Entrer dans l'etat Play
                 new_state = PlayState(self.game)
                 self.game.current_state = new_state
+                self.game.theme = "snow"
             if self.theme_2.is_clicked(event):
-                # Entrer dans l'etat Play
                 new_state = PlayState(self.game)
                 self.game.current_state = new_state
+                self.game.theme = "foret"
             if self.theme_3.is_clicked(event):
-                # Entrer dans l'etat Play
                 new_state = PlayState(self.game)
                 self.game.current_state = new_state
+                self.game.theme = "desert"
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     from scripts.states.menu_state import MenuState
