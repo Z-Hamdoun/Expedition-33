@@ -3,8 +3,10 @@
         "fps": 60,
         "title": "Expedition 33",
         "high_score": 0,
-        "ground_y": 800,
-        "game_speed": 10.54912,
+        "ground_y": 600,
+        "game_speed": 10.15288,
+        "width": 1280,
+        "height": 720,
         "mode": "Facile",
         "acceleration": 0.5,
         "vmax": 40
@@ -19,6 +21,6 @@
             200,
             1000
         ],
-        "skin": "snow"
+        "skin": "desert"
     }
 }

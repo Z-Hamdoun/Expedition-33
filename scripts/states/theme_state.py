@@ -10,8 +10,8 @@ class ThemeState(State):
 
         self.game = game
         self.bg_img = game.assets.backgrounds['menu']['theme']
-        if self.bg_img:
-            self.bg_img = pygame.transform.scale(self.bg_img, (game.width, game.height))
+        # if self.bg_img:
+        #     self.bg_img = pygame.transform.scale(self.bg_img, (game.width, game.height))
         
         self.font = pygame.font.Font(None,60)
         self.largeur = self.game.width
@@ -55,7 +55,6 @@ class ThemeState(State):
         self.theme_1.draw(screen)
         self.theme_2.draw(screen)
         self.theme_3.draw(screen)
-        self.text("Ocean", self.font,(0,0,0),self.largeur//4,self.hauteur//4  + self.choix_h//2 + 100,screen)
 
         #is_selected = (theme_actuel == "desert")
         #self.boutons["desert"] = self.img_button(self.choix["desert"],self.largeur//2,5*self.hauteur//8, fenetre, is_selected)

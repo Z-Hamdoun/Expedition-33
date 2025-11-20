@@ -19,6 +19,8 @@ class Settings:
         self.theme = "foret"
         self.game_acceleration = 0.5
         self.game_vmax = 40
+        self.game_width = 1280
+        self.game_height = 720
         
         # ------ Player ----------
         self.player_jump_power = -16
@@ -51,8 +53,8 @@ class Settings:
                 self.game_acceleration = data_game.get("acceleration", self.game_acceleration)
                 self.game_vmax = data_game.get("vmax", self.game_vmax)
                 self.theme = data_game.get("theme",self.theme)
-                
-                print(data_game)
+                self.game_width = data_game.get("theme",self.game_width)  
+                self.game_height = data_game.get("theme",self.game_height)
 
                 # Player settings
                 data_player = data.get('player', {})
@@ -81,6 +83,8 @@ class Settings:
                 "high_score": self.game_high_score,
                 "ground_y" : self.game_ground_y,
                 "game_speed": self.game_game_speed,
+                "width": self.game_width,
+                "height": self.game_height,
                 "mode": self.game_mode,
                 "acceleration": self.game_acceleration,
                 "vmax": self.game_vmax, 
