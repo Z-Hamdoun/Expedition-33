@@ -89,6 +89,7 @@ class AssetManager:
         
         # --- Other ----
         self.other['bullet'] = self.load_image(['other'], 'bullet.png')
+        self.other['gun'] = self.load_image(['other'], 'gun.png')
         
         # --- Sons ---
         

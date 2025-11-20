@@ -74,13 +74,11 @@ class ObstacleManager:
         self.assets = assets
         self.settings = settings
         
-        # Groupe de sprites pygame pour stocker tout les obstacles actifs
+        # Groupe de sprites pygame pour stocker tout les obstacles actifs et les powerups
         self.obstacles = pygame.sprite.Group()
+        self.powerups = pygame.sprite.Group()
         
-        # Horloge
         self.spawn_timer = 0
-        self.min_spawn_time = self.settings.game_fps  # 1 seconde
-        self.max_spawn_time = 2 * self.settings.game_fps # 2 secondes
         
         self.pattern_queue = [] # stoque les motifs d'obstacles
 
@@ -95,27 +93,34 @@ class ObstacleManager:
                 
             obs_type, gap_distance = self.pattern_queue.pop(0)
             
-            if obs_type == 'random':
-                obs_type = 'oiseau' if random.random() < 0.2 and self.settings.game_game_speed > 20 else 'cactus'
+            if random.randint(1, 100) <= 40: 
+                self.spawn_powerup()
+                # Add a small gap after powerup so it's not unfair
+                self.spawn_timer = 400 / self.settings.game_game_speed
             
-            # Ajouter l obstacle
-            self.spawn_specific_obstacle(obs_type)
-            
-            # Trouver le temps avant le prochain spawn
-            # si le motif n'est pas fini, utiliser un gap_distance
-            if self.pattern_queue:
-                dist = gap_distance
             else:
-                # sinon prendre le game distance aleatoirement avant le prochain motif
-                min_gap = 1000
-                max_gap = 1200 + (self.settings.game_game_speed * 20) # Large variance makes it unpredictable
-                dist = random.randint(min_gap, int(max_gap))
+                if obs_type == 'random':
+                    obs_type = 'oiseau' if random.random() < 0.2 and self.settings.game_game_speed > 20 else 'cactus'
+
+                # Ajouter l obstacle
+                self.spawn_specific_obstacle(obs_type)
+            
+                # Trouver le temps avant le prochain spawn
+                # si le motif n'est pas fini, utiliser un gap_distance
+                if self.pattern_queue:
+                    dist = gap_distance
+                else:
+                    # sinon prendre le game distance aleatoirement avant le prochain motif
+                    min_gap = 1000
+                    max_gap = 1200 + (self.settings.game_game_speed * 20) # Large variance makes it unpredictable
+                    dist = random.randint(min_gap, int(max_gap))
             
 
-            self.spawn_timer = dist / self.settings.game_game_speed
+                self.spawn_timer = dist / self.settings.game_game_speed
             
-        # Mettre a jour tout les obstacles dans le groupe
+        # Mettre a jour tout les obstacles et les powerups dans le groupe
         self.obstacles.update()
+        self.powerups.update()
     
     
     def generate_pattern(self):
@@ -156,3 +161,29 @@ class ObstacleManager:
     def draw(self, screen):
         # Dessiner tout les obstacles
         self.obstacles.draw(screen)
+        self.powerups.draw(screen)
+    
+    def spawn_powerup(self):
+        gun = GunPowerup(self.assets, self.settings)
+        self.powerups.add(gun)
+
+class GunPowerup(pygame.sprite.Sprite):
+    def __init__(self, assets, settings):
+        super().__init__()
+        self.settings = settings
+        
+        self.image = pygame.Surface((30, 30))
+        self.image.fill((255, 215, 0)) # Gold box
+
+        self.rect = self.image.get_rect()
+        
+        # Position du spawn
+        self.rect.x = 1920 + 50
+        self.rect.bottom = settings.game_ground_y - random.choice([50, 150]) 
+
+    def update(self):
+        self.rect.x -= self.settings.game_game_speed
+        
+        # Despawn
+        if self.rect.right < 0:
+            self.kill()
