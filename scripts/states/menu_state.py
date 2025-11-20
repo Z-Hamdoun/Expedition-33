@@ -4,7 +4,8 @@ from scripts.states.state import State
 from scripts.states.play_state import PlayState
 from scripts.states.theme_state import ThemeState
 from scripts.ui import Button
- 
+from scripts.sound_management import SoundManager
+
 class MenuState(State):
     def __init__(self, game):
         super().__init__(game)
@@ -14,7 +15,8 @@ class MenuState(State):
         self.bg_img = game.assets.backgrounds.get('background') # Assuming you added this to assets
         if self.bg_img:
             self.bg_img = pygame.transform.scale(self.bg_img, (game.width, game.height))
-            
+        self.sound = SoundManager()
+
         # Setup poolice
         self.font = pygame.font.Font(None, 60)
         
@@ -25,6 +27,9 @@ class MenuState(State):
         self.btn_play = Button(cw, ch - 50, "NOUVELLE PARTIE", self.font, (0,0,0), (255,215,0))
         self.btn_options = Button(cw, ch + 50, "OPTIONS", self.font, (0,0,0), (255,215,0))
         self.btn_quit = Button(cw, ch + 150, "QUITTER", self.font, (0,0,0), (255,215,0))
+
+        #Musique
+        self.sound.play_music("accueil")
  
     def update(self):
         # Gere hover sur un boutton

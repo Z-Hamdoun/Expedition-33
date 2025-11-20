@@ -1,6 +1,7 @@
 import pygame
 from scripts.states.state import State
 from scripts.ui import Button
+from scripts.sound_management import SoundManager
 
 class GameOverState(State):
     def __init__(self, game, final_score = 100, prev_state = None):
@@ -20,6 +21,10 @@ class GameOverState(State):
         cw, ch = game.width // 2, game.height // 2
         self.btn_replay = Button(cw, ch + 100, "Rejouer", self.font, (0,0,0), (255,215,0))
         self.btn_quit = Button(cw, ch + 200, "Quitter", self.font, (0,0,0), (255,215,0))
+
+        #Musique
+        self.sound = SoundManager()
+        self.sound.play_music("gameover")
 
     def draw(self, surface):
         # Dessin de l'etat final
