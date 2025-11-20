@@ -11,7 +11,7 @@ class AssetManager:
         self.asset_dir = os.path.join(self.base_dir, 'assets')
         
         # Stockage des images dans des dictionnaires
-        self.player_imgs = {}   # Format {'run': [img1, img2], 'jump': img}
+        self.skins = {}  
         self.obstacles = {'statique': {'cactus': []}, 'dynamique': {'oiseau': []}} # format {'statique': {'cactus': {...}, 'arbre':{...}, ...}, 'dynamique': {'bird': ...}}
         self.backgrounds = {'game': {}, 'menu': {}}
         self.enemies = {}
@@ -54,17 +54,19 @@ class AssetManager:
         print("[AssetManager][Info] Chargement des assets ...")
         
         # --- Player ---
-        
-        # A changer lors de l'ajout de skins
-        self.player_imgs['run'] = [
-            self.load_image(['Dino'], 'DinoRun1.png'),
-            self.load_image(['Dino'], 'DinoRun2.png')
-        ]
-        self.player_imgs['jump'] = self.load_image(['Dino'], 'DinoJump.png')
-        self.player_imgs['duck'] = [
-            self.load_image(['Dino'], 'DinoDuck1.png'),
-            self.load_image(['Dino'], 'DinoDuck2.png')
-        ]
+        skins = ['forest', 'snow', 'desert']
+        for skin in skins:
+            self.skins[skin] = {}
+            
+            self.skins[skin]['run'] = [
+                self.load_image(['skins', skin], 'DinoRun1.png'),
+                self.load_image(['skins', skin], 'DinoRun2.png')
+            ]
+            self.skins[skin]['jump'] = self.load_image(['skins', skin], 'DinoJump.png')
+            self.skins[skin]['duck'] = [
+                self.load_image(['skins', skin], 'DinoDuck1.png'),
+                self.load_image(['skins', skin], 'DinoDuck2.png')
+            ]
 
         # --- Backgrounds ---
         # transparent=False pour plus de performance

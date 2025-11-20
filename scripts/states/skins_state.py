@@ -63,6 +63,7 @@ class SkinState(State):
                 self.img1.is_selected = True
                 self.img2.is_selected = False
                 self.img3.is_selected = False
+                self.game.settings.player_skin = 'snow'
 
                 
  
@@ -70,12 +71,14 @@ class SkinState(State):
                 self.img1.is_selected = False
                 self.img2.is_selected = True
                 self.img3.is_selected = False
+                self.game.settings.player_skin = 'forest'
                 
 
             if self.img3.is_clicked(event):
                 self.img1.is_selected = False
                 self.img2.is_selected = False
                 self.img3.is_selected = True
+                self.game.settings.player_skin = 'desert'
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
