@@ -80,18 +80,16 @@ class PlayState(State):
                 # Debogage
                 if event.key == pygame.K_h:
                     self.game.settings.debug_mode = not self.game.settings.debug_mode
-                if event.key == pygame.K_PAGEUP:
+                if event.key == pygame.K_p:
                     self.game.settings.game_game_speed += 5
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_z:
                     self.player.end_jump()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1: # Click gauche
                     if self.player._can_shoot():
                         self.shoot(event.pos)
                         self.player._shoot()
-                    else:
-                        print("Pas de munitions")
     
     def shoot(self, mouse_pos):
         """Tire vers la position de la souris"""
