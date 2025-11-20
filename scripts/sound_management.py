@@ -65,6 +65,7 @@ class SoundManager:
             self.stop_music()
             try:
                 pygame.mixer.music.load(file_path)
+                pygame.mixer.music.set_volume(0.3)
                 pygame.mixer.music.play(loops=loops)
                 self.current_music = file_path
                 print(f"Musique '{name}' lancée : {file_path}")

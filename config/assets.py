@@ -25,8 +25,7 @@ class AssetManager:
     def load_image(self,
         folder_path: list[str],
         filename: str,
-        transparent: bool = True,
-        size=None):
+        transparent: bool = True):
         """Permet de charger une image a partir d'un path
 
         Args:
@@ -46,9 +45,6 @@ class AssetManager:
                 img = img.convert_alpha() # Pour les sprites (transparence)
             else:
                 img = img.convert()       # Pour les backgrounds (plus rapide)
-            
-            if size is not None:
-                img = pygame.transform.scale(img, size)
             return img
         except FileNotFoundError:
             print(f"[AssetManager][Erreur]: Image introuvable a: {path}")
@@ -61,19 +57,18 @@ class AssetManager:
         print("[AssetManager][Info] Chargement des assets ...")
         
         # --- Player ---
-        PLAYER_SIZE = (20, 20) 
         skins = ['forest', 'snow', 'desert']
         for skin in skins:
             self.skins[skin] = {}
             
             self.skins[skin]['run'] = [
-                self.load_image(['skins', skin], 'DinoRun1.png', PLAYER_SIZE),
-                self.load_image(['skins', skin], 'DinoRun2.png', PLAYER_SIZE)
+                self.load_image(['skins', skin], 'DinoRun1.png'),
+                self.load_image(['skins', skin], 'DinoRun2.png')
             ]
-            self.skins[skin]['jump'] = self.load_image(['skins', skin], 'DinoJump.png', PLAYER_SIZE)
+            self.skins[skin]['jump'] = self.load_image(['skins', skin], 'DinoJump.png')
             self.skins[skin]['duck'] = [
-                self.load_image(['skins', skin], 'DinoDuck1.png', PLAYER_SIZE),
-                self.load_image(['skins', skin], 'DinoDuck2.png', PLAYER_SIZE)
+                self.load_image(['skins', skin], 'DinoDuck1.png'),
+                self.load_image(['skins', skin], 'DinoDuck2.png')
             ]
 
         # --- Backgrounds ---
