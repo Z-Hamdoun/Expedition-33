@@ -49,7 +49,6 @@ class Settings:
                 self.game_acceleration = data_game.get("acceleration", self.game_acceleration)
                 self.game_vmax = data_game.get("vmax", self.game_vmax)
                 
-                print(data_game)
 
                 # Player settings
                 data_player = data.get('player', {})
