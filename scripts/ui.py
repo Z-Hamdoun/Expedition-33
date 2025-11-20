@@ -62,7 +62,7 @@ class ImgButton:
 
         if self.is_hovered:
             contour_rect = self.rect.inflate(10, 10)
-            pygame.draw.rect(screen, (255, 255,0), contour_rect, width=4, border_radius=5)
+            pygame.draw.rect(screen, (255, 255,0), contour_rect, width=8, border_radius=5)
         else:
             pygame.draw.rect(screen, (255, 215, 0), self.rect, 6)
         # Re-render si la couleur change
