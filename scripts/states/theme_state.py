@@ -16,8 +16,8 @@ class ThemeState(State):
         self.font = pygame.font.Font(None,60)
         self.largeur = self.game.width
         self.hauteur = self.game.height
-        self.choix_l = 200
-        self.choix_h = 400
+        self.choix_l = 250
+        self.choix_h = 300
         self.choix = {}
         self.boutons = {}
         themes = ["forest","desert","snow"]
