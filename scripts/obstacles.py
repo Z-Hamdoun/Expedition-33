@@ -92,13 +92,23 @@ class ObstacleManager:
         self.obstacles.update()
 
     def spawn_obstacle(self):
-        # Decide que spawn (par exemple 20% de chance pour Oiseau et 80% pour Cactus)
-        if random.randint(1, 10) in [1, 2]:
+        # Au debut (vitesse lente), peu d'oiseaux
+        
+        bird_chance = 10 # 10% de chance initiale
+        
+        if self.settings.game_game_speed > 20:
+            bird_chance = 25 # 25% 
+        if self.settings.game_game_speed > 80:
+            bird_chance = 40 # 40% 
+
+        # Tirage aleatoire
+        tirage = random.randint(1, 100)
+        
+        if tirage <= bird_chance:
             obs_type = "oiseau"
         else:
             obs_type = "cactus"
             
-        # Creer l'objet et l'ajouter dans le groupe
         new_obs = Obstacle(self.assets, self.settings, obs_type)
         self.obstacles.add(new_obs)
 
