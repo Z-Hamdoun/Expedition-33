@@ -56,15 +56,27 @@ class PlayState(State):
 
         # 4. Collision 
         collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
+        powerups = pygame.sprite.spritecollide(self.player, self.obstacle_manager.powerups, True) # True pour supprimer le pistolet
         if collisions:
-            # Entrer dans etat game_over
-            self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
-    
+            if not self.game.settings.debug_mode:
+                # Entrer dans etat game_over
+                self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
+            else:
+                pygame.time.delay(200)
+        if powerups:
+            self.player.equip_gun()
+            # SON RECUPERER GUN
+            
     def handle_input(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.game.current_state = PauseState(self.game, prev_state=self)
+                # Debogage
+                if event.key == pygame.K_h:
+                    self.game.settings.debug_mode = not self.game.settings.debug_mode
+                if event.key == pygame.K_PAGEUP:
+                    self.game.settings.game_game_speed += 5
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
                     self.player.end_jump()
@@ -114,6 +126,18 @@ class PlayState(State):
         
         score_text = self.score_font.render(f'Score: {self.score}', True, (0, 0, 0))
         surface.blit(score_text, (self.game.width - 250, 20))
+        
+        if self.game.settings.debug_mode:
+            # Hitbox du joueur en rouge
+            pygame.draw.rect(surface, (255, 0, 0), self.player.rect, 2)
+            
+            # Hitbox des obstacles en bleu
+            for obs in self.obstacle_manager.obstacles:
+                pygame.draw.rect(surface, (0, 0, 255), obs.rect, 2)
+                
+            # Balles en Jaune
+            for bullet in self.bullets:
+                pygame.draw.rect(surface, (255, 255, 0), bullet.rect, 2)
         
     
     def desc(self):
