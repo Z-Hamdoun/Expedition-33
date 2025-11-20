@@ -25,7 +25,7 @@ class MenuState(State):
         # On les mets dans une liste ou dict
         cw, ch = game.width // 2, game.height // 2
         
-        self.btn_play = Button(cw//2,7*ch//4 , "NOUVELLE PARTIE", self.font,(240,230,140), (255,215,0))
+        self.btn_play = Button(cw//2,7*ch//4 , "COMMENCER", self.font,(240,230,140), (255,215,0))
         self.btn_options = Button(cw,7*ch//4 , "SKINS", self.font,(240,230,140), (255,215,0))
         self.btn_quit = Button(3*cw//2,7*ch//4, "QUITTER", self.font,(240,230,140), (255,215,0))
 

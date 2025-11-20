@@ -28,9 +28,9 @@ class SkinState(State):
             cadre = pygame.transform.scale(image, (self.choix_l, self.choix_h))
             self.choix[skin] = cadre
         
-        self.img1 = ImgButton(self.game.width//4, 4*self.game.height//8, (0,0,0), (255,215,0),self.choix["snow"])
-        self.img2 = ImgButton(self.game.width//2, 4*self.game.height//8, (0,0,0), (255,215,0),self.choix["forest"])
-        self.img3 = ImgButton(3*self.game.width//4, 4*self.game.height//8, (0,0,0), (255,215,0),self.choix["desert"])
+        self.img1 = ImgButton(self.game.width//4, 4*self.game.height//8, (0,0,0), (240,230,140),self.choix["snow"])
+        self.img2 = ImgButton(self.game.width//2, 4*self.game.height//8, (0,0,0), (240,230,140),self.choix["forest"])
+        self.img3 = ImgButton(3*self.game.width//4, 4*self.game.height//8, (0,0,0), (240,230,140),self.choix["desert"])
  
     def update(self):
         # Gere hover sur un boutton

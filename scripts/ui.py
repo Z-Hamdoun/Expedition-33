@@ -53,7 +53,7 @@ class ImgButton:
     def outline(self,screen,is_selected):
         if is_selected:
             outline_rect = self.rect.inflate(10, 10) 
-            pygame.draw.rect(screen, (255, 255, 0), outline_rect, width=10)
+            pygame.draw.rect(screen, (0, 255, 0), outline_rect, width=10)
             
 
     def draw(self, screen):
@@ -64,7 +64,7 @@ class ImgButton:
             contour_rect = self.rect.inflate(10, 10)
             pygame.draw.rect(screen, (255, 255,0), contour_rect, width=8, border_radius=5)
         else:
-            pygame.draw.rect(screen, (255, 215, 0), self.rect, 6)
+            pygame.draw.rect(screen, (240,230,140), self.rect, 6)
         # Re-render si la couleur change
         screen.blit(self.image_surface, self.rect)
 

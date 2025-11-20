@@ -39,7 +39,7 @@ class GameOverState(State):
         txt_rect = txt_surf.get_rect(center=(self.game.width//2, self.game.height//4))
         surface.blit(txt_surf, txt_rect)
         
-        score_surf = self.font.render(f"Score: {self.score}", True, (255, 215, 0))
+        score_surf = self.font.render(f"Score: {self.score}", True, (0, 255, 0))
         score_rect = score_surf.get_rect(center=(self.game.width//2, self.game.height//2))
         surface.blit(score_surf, score_rect)
 
