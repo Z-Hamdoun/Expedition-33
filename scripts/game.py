@@ -16,7 +16,7 @@ class Game:
         resolution = pygame.display.Info()
         self.width, self.height= resolution.current_w, resolution.current_h
         self.screen = pygame.display.set_mode((self.width, self.height))
-        
+
         # self.screen = pygame.display.set_mode((self.settings.width, self.settings.height))
         pygame.display.set_caption(self.settings.game_title)
         self.clock = pygame.time.Clock()
