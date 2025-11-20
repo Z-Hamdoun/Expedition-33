@@ -101,7 +101,7 @@ class ObstacleManager:
             
             else:
                 if obs_type == 'random':
-                    obs_type = 'oiseau' if random.random() < 0.2 and self.settings.game_game_speed > 20 else 'cactus'
+                    obs_type = 'oiseau' if random.random() < 0.2  else 'cactus'
 
                 # Ajouter l obstacle
                 self.spawn_specific_obstacle(obs_type)
