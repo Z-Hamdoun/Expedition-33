@@ -42,6 +42,7 @@ class PlayState(State):
         self.bg.maj()
         self.bg.vitesse = self.difficulté.update()[0]
         self.game.settings.game_game_speed = self.bg.vitesse
+        print(self.game.settings.game_game_speed)
 
         # Entree joueur + physique
         keys = pygame.key.get_pressed()

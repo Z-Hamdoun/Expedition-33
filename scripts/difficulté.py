@@ -1,7 +1,7 @@
 import pygame
 
 class GestionDifficulte():
-    def __init__(self,vitesse0 = 10,acceleration = 10,vmax = 40):
+    def __init__(self,vitesse0 = 10,acceleration = 0.08,vmax = 40):
         self.vitesse0 = vitesse0
         self.acceleration = acceleration
         self.depart = 0
