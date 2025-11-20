@@ -67,7 +67,7 @@ class PlayState(State):
                 pygame.time.delay(200)
         if powerups:
             self.player.equip_gun()
-            # SON RECUPERER GUN
+            self.sound.play_sound("recup")
             
     def handle_input(self, events):
         for event in events:
