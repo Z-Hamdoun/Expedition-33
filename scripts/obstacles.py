@@ -94,7 +94,7 @@ class ObstacleManager:
                 
             obs_type, gap_distance = self.pattern_queue.pop(0)
             
-            if random.randint(1, 100) <= 40: 
+            if random.randint(1, 100) <= 5: 
                 self.spawn_powerup()
                 # Add a small gap after powerup so it's not unfair
                 self.spawn_timer = 400 / self.settings.game_game_speed
