@@ -68,6 +68,47 @@ class Obstacle(pygame.sprite.Sprite):
             # Mettre a jour le mask
             self.mask = pygame.mask.from_surface(self.image)
 
+class JumpingEnemy(pygame.sprite.Sprite):
+    """Ennemi qui saute vers la gauche"""
+    def __init__(self, assets, settings):
+        super().__init__()
+        self.settings = settings
+        
+        # Partie graphique
+        self.image = pygame.Surface((40, 40))
+        self.image.fill((50, 205, 50)) # Vert
+            
+        pygame.draw.circle(self.image, (255, 255, 255), (10, 10), 5)
+        pygame.draw.circle(self.image, (255, 255, 255), (30, 10), 5)
+
+        self.rect = self.image.get_rect()
+        
+        # logique spawn 
+        self.rect.x = 1920 + 50 ## A CHANGER
+        self.rect.bottom = settings.game_ground_y
+        
+        # Physique
+        self.vel_y = 0
+        self.gravity = 0.6      # gravite differente de celle du joueur
+        self.jump_power = -14  
+
+    def update(self):
+        # Vers la gauche
+        self.rect.x -= self.settings.game_game_speed
+        
+        # Direction verticale
+        self.vel_y += self.gravity
+        self.rect.y += self.vel_y
+        
+        # Collision et rebondissement
+        if self.rect.bottom >= self.settings.game_ground_y:
+            self.rect.bottom = self.settings.game_ground_y
+            self.vel_y = self.jump_power 
+
+        # Despawn
+        if self.rect.right < 0:
+            self.kill()
+
 class ObstacleManager:
     """Gestionnaire d'obstacles du jeu.
     """
@@ -101,7 +142,13 @@ class ObstacleManager:
             
             else:
                 if obs_type == 'random':
-                    obs_type = 'oiseau' if random.random() < 0.2  else 'cactus'
+                    tirage = random.random()
+                    if tirage < 0.2 and self.settings.game_game_speed > 20:
+                        obs_type = 'oiseau'
+                    elif tirage < 0.3 and self.settings.game_game_speed > 20:
+                        obs_type = 'jumping_enemy'
+                    else:
+                        obs_type = 'cactus'
 
                 # Ajouter l obstacle
                 self.spawn_specific_obstacle(obs_type)
@@ -139,9 +186,10 @@ class ObstacleManager:
             
         if self.settings.game_game_speed > 20:
             # Deux oiseaux
-            patterns.append([('oiseau', 400), ('oiseau', 0)])
+            #patterns.append([('oiseau', 400), ('oiseau', 0)])
             # Piege Oiseau + cactus
-            patterns.append([('oiseau', 500), ('cactus', 0)])
+            #patterns.append([('oiseau', 500), ('cactus', 0)])
+            patterns.append([('jumping_enemy', 400), ('cactus', 400), ('oiseau', 0)])
 
         if self.settings.game_game_speed > 30:
             # 3 cactus
@@ -156,7 +204,10 @@ class ObstacleManager:
         self.pattern_queue.extend(choice)
 
     def spawn_specific_obstacle(self, type_name):
-        new_obs = Obstacle(self.assets, self.settings, type_name)
+        if type_name == 'jumping_enemy':
+            new_obs = JumpingEnemy(self.assets, self.settings)
+        else:
+            new_obs = Obstacle(self.assets, self.settings, type_name)
         self.obstacles.add(new_obs)
 
     def draw(self, screen):
