@@ -37,10 +37,7 @@ class PlayState(State):
         # Entree joueur + physique
         keys = pygame.key.get_pressed()
         self.player.update(keys)
-        if self.player.jumping:
-            self.sound.play_sound("jump")
-        if self.player.ducking:
-            self.sound.play_sound("duck")
+        
 
         # Ennemis
         self.obstacle_manager.update()

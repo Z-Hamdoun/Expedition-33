@@ -4,7 +4,7 @@ import os
 from pygame.math import Vector2
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 from scripts.bullet import Bullet
-
+from scripts.sound_management import SoundManager
 from config.settings import Settings
 from config.assets import AssetManager
 
@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
         
         self.image = self.animations['running'][0]
         self.rect: pygame.Rect = self.image.get_rect()
-
+        self.sound = SoundManager()
         # Etat initial
         self.jumping = False
         self.ducking = False
@@ -125,11 +125,13 @@ class Player(pygame.sprite.Sprite):
         # Jumping
         if inpt[pygame.K_UP] and self.running:
             self.jump()
+            self.sound.play_sound("jump")
             self.running = False
         
         # Ducking
         if inpt[pygame.K_DOWN] and self.running:
             self.ducking = True
+            self.sound.play_sound("duck")
         else:
             self.ducking = False
     
