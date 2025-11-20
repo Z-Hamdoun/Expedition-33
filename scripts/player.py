@@ -123,13 +123,13 @@ class Player(pygame.sprite.Sprite):
     
     def handle_input(self, inpt):
         # Jumping
-        if inpt[pygame.K_UP] and self.running:
+        if inpt[pygame.K_z] and self.running:
             self.jump()
             self.sound.play_sound("jump")
             self.running = False
         
         # Ducking
-        if inpt[pygame.K_DOWN] and self.running:
+        if inpt[pygame.K_s] and self.running:
             self.ducking = True
             # self.sound.play_sound("duck")
         else:
