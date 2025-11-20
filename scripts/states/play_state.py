@@ -7,12 +7,12 @@ from scripts.states.gameover_state import GameOverState
 from scripts.states.pause_state import PauseState
 
 class PlayState(State):
-    def __init__(self, game):
+    def __init__(self, game, theme):
         super().__init__(game)
         # Initialize Entities
         self.game = game
         self.player = Player(game.settings, game.assets)
-        self.bg = background(img=game.assets.backgrounds['background'])
+        self.bg = background(img=game.assets.backgrounds['game'][theme])
         self.bg.vitesse = game.settings.game_game_speed
         
         # New Manager for Enemies (Supports Bosses/Waves)

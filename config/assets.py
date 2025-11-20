@@ -13,7 +13,7 @@ class AssetManager:
         # Stockage des images dans des dictionnaires
         self.player_imgs = {}   # Format {'run': [img1, img2], 'jump': img}
         self.obstacles = {'statique': {'cactus': []}, 'dynamique': {'oiseau': []}} # format {'statique': {'cactus': {...}, 'arbre':{...}, ...}, 'dynamique': {'bird': ...}}
-        self.backgrounds = {}
+        self.backgrounds = {'game': {}, 'menu': {}}
         self.enemies = {}
         self.sounds = {}
         
@@ -68,7 +68,13 @@ class AssetManager:
 
         # --- Backgrounds ---
         # transparent=False pour plus de performance
-        self.backgrounds['background'] = self.load_image(['Backgrounds', 'Game'], 'tall_trees.png', transparent=False)
+        
+        # Game backgrounds
+        self.backgrounds['game']['snow'] = self.load_image(['backgrounds', 'game'], 'snow.png', transparent=False)
+        self.backgrounds['game']['forest'] = self.load_image(['backgrounds', 'game'], 'forest.png', transparent=False)
+        self.backgrounds['game']['desert'] = self.load_image(['backgrounds', 'game'], 'desert.png', transparent=False)
+        
+        # Menu backgrounds
         
         # --- Obstacles ----
         # Statique
