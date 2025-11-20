@@ -155,3 +155,22 @@ class Player(pygame.sprite.Sprite):
     
     def blit_me(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
+        
+        if self.has_gun:
+            gun_img = self.assets.other.get('gun')
+            gun_img = pygame.transform.scale(gun_img, (50, 50)) 
+            
+            if gun_img:
+                gun_x = self.rect.centerx + 10
+                gun_y = self.rect.centery - 30
+                
+                # Ajustement pour ducking
+                if self.ducking:
+                    gun_y += 5
+                    gun_x -= 10 
+                
+                if self.running and not self.ducking:
+                    bob_offset = 2 if int(self.frame_number) // 10 == 0 else -2
+                    gun_y += bob_offset
+                
+                screen.blit(gun_img, (gun_x, gun_y))
