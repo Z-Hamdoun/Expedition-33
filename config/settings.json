@@ -4,7 +4,7 @@
         "title": "Expedition 33",
         "high_score": 0,
         "ground_y": 800,
-        "game_speed": 26.3125,
+        "game_speed": 20,
         "mode": "Facile",
         "acceleration": 0.5,
         "vmax": 40
