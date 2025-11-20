@@ -8,6 +8,7 @@ from scripts.states.pause_state import PauseState
 from scripts.bullet import Bullet
 from scripts.sound_management import SoundManager
 
+
 class PlayState(State):
     def __init__(self, game):
         super().__init__(game)
@@ -55,12 +56,9 @@ class PlayState(State):
         collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
         powerups = pygame.sprite.spritecollide(self.player, self.obstacle_manager.powerups, True) # True pour supprimer le pistolet
         if collisions:
-            # Entrer dans etat game_over
-            self.sound.play_sound("dino_death")
             if not self.game.settings.debug_mode:
                 # Entrer dans etat game_over
                 self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
-                self.sound.play_sound("dino_death")
             else:
                 pygame.time.delay(200)
         if powerups:
