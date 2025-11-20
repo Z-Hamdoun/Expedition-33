@@ -8,6 +8,11 @@ class Obstacle(pygame.sprite.Sprite):
         super().__init__()
         self.settings = settings
         
+        # Variables d'animation
+        self.is_animated = False
+        self.frame_index = 0
+        self.animation_speed = 0.15 # Vitesse de battement des ailes
+        
         # Choix des images selon le type de l'obstacle
         if obs_type == "cactus":
             # Choisi un cactus aleatoire de la liste de cactus
@@ -19,28 +24,44 @@ class Obstacle(pygame.sprite.Sprite):
             self.rect.bottom = self.settings.game_ground_y
             
         elif obs_type == "oiseau":
+            self.is_animated = True
             # A  changer pour qu'il y ai d'animations
-            self.image = assets.obstacles['dynamique']['oiseau'][0]
+            self.frames = assets.obstacles['dynamique']['oiseau']
+            self.image = self.frames[0]
             
             # Position: hautre aleatoire : Haut, moyen, bas
             self.rect = self.image.get_rect()
             # Decalage par rapport au niveau du sol
-            height_offset = random.choice([50, 100, 20]) # on pourra ajouter ces parametres dans les parametres
+            height_offset = random.choice([20, 90, 150]) # on pourra ajouter ces parametres dans les parametres
             self.rect.bottom = self.settings.game_ground_y - height_offset
 
         # Spawn
         # on ajoute + 100 pour qu'il n'apparait pas instantannement
         
         ######## A CHANGER
-        self.rect.x = 1920
+        self.rect.x = 1920 + 50
 
     def update(self):
+        # Animation
+        self.update_animation()
+        
         # Bouge vers la gauche en utilisant la game_speed
         self.rect.x -= self.settings.game_game_speed
 
         # Despawn
         if self.rect.right < 0:
             self.kill()
+    
+    def update_animation(self):
+        if self.is_animated:
+            self.frame_index += self.animation_speed
+            # Boucle sur les frames (modulo)
+            if self.frame_index >= len(self.frames):
+                self.frame_index = 0
+            
+            self.image = self.frames[int(self.frame_index)]
+            # Mettre a jour le mask
+            self.mask = pygame.mask.from_surface(self.image)
 
 class ObstacleManager:
     """Gestionnaire d'obstacles du jeu.
