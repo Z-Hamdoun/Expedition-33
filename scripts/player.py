@@ -8,7 +8,6 @@ from scripts.bullet import Bullet
 from config.settings import Settings
 from config.assets import AssetManager
 
-pygame.mixer.init()
 
 class Player(pygame.sprite.Sprite):
     '''

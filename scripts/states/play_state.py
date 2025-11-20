@@ -28,7 +28,7 @@ class PlayState(State):
         self.score = 0
         self.score_font = pygame.font.Font(None, 60)
         
-        self.sound.play_music("troll")
+        self.sound.play_music("classique")
     
     def update(self):
         # Gestion du background
