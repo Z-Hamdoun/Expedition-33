@@ -94,14 +94,14 @@ class ObstacleManager:
                 
             obs_type, gap_distance = self.pattern_queue.pop(0)
             
-            if random.randint(1, 100) <= 40: 
+            if random.randint(1, 100) <= 5: 
                 self.spawn_powerup()
                 # Add a small gap after powerup so it's not unfair
                 self.spawn_timer = 400 / self.settings.game_game_speed
             
             else:
                 if obs_type == 'random':
-                    obs_type = 'oiseau' if random.random() < 0.2 and self.settings.game_game_speed > 20 else 'cactus'
+                    obs_type = 'oiseau' if random.random() < 0.2  else 'cactus'
 
                 # Ajouter l obstacle
                 self.spawn_specific_obstacle(obs_type)

@@ -7,6 +7,8 @@ from scripts.states.gameover_state import GameOverState
 from scripts.states.pause_state import PauseState
 from scripts.bullet import Bullet
 from scripts.difficulté import GestionDifficulte
+from scripts.sound_management import SoundManager
+
 
 class PlayState(State):
     def __init__(self, game, theme):
@@ -16,6 +18,7 @@ class PlayState(State):
         self.difficulté = GestionDifficulte()
         self.difficulté.reset_depart()
         self.player = Player(game.settings, game.assets)
+        self.sound = SoundManager()
         self.bg = background(img=game.assets.backgrounds['game'][theme])
         self.bg.vitesse = self.difficulté.update()[0]
         
@@ -29,13 +32,7 @@ class PlayState(State):
         self.score = 0
         self.score_font = pygame.font.Font(None, 60)
         
-        
-        # Musique
-        # A completer
-    
-    def enter_state(self):
-        # Code pour gerer la musique
-        pass
+        self.sound.play_music("classique")
     
     def update(self):
         # Gestion du background
@@ -47,6 +44,7 @@ class PlayState(State):
         # Entree joueur + physique
         keys = pygame.key.get_pressed()
         self.player.update(keys)
+        
 
         # Ennemis
         self.obstacle_manager.update()
@@ -60,7 +58,7 @@ class PlayState(State):
         if hits:
             pass
 
-        # 4. Collision 
+        # 4. Collision
         collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
         powerups = pygame.sprite.spritecollide(self.player, self.obstacle_manager.powerups, True) # True pour supprimer le pistolet
         if collisions:
@@ -69,9 +67,10 @@ class PlayState(State):
                 self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
             else:
                 pygame.time.delay(200)
+            self.sound.play_sound("dino_death")
         if powerups:
             self.player.equip_gun()
-            # SON RECUPERER GUN
+            self.sound.play_sound("recup")
             
     def handle_input(self, events):
         for event in events:
@@ -97,7 +96,7 @@ class PlayState(State):
     def shoot(self, mouse_pos):
         """Tire vers la position de la souris"""
         start_pos = self.player.rect.center
-        
+        self.sound.play_sound("gun")
         # Creer la balle
         new_bullet = Bullet(start_pos, mouse_pos, self.game.assets)
         
