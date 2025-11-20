@@ -20,10 +20,10 @@ class ThemeState(State):
         self.choix_h = 400
         self.choix = {}
         self.boutons = {}
-        themes = ["foret","desert","ocean"]
+        themes = ["foret","desert","snow"]
         for theme in themes:
-            if theme == "ocean" :
-                path = os.path.join("assets","Backgrounds","Game","colored_castle.png")
+            if theme == "snow" :
+                path = os.path.join("assets","Backgrounds","Game","snow.png")
             if theme == "desert" : 
                 path = os.path.join("assets","Backgrounds","Game","colored_desert.png")
             if theme == "foret" : 
@@ -34,7 +34,7 @@ class ThemeState(State):
         
         
         # Bouttons images
-        self.theme_1 = ImgButton(image_surface=self.choix["ocean"], x = self.largeur//4,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
+        self.theme_1 = ImgButton(image_surface=self.choix["snow"], x = self.largeur//4,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
         self.theme_2 = ImgButton(image_surface=self.choix["foret"], x = self.largeur//2,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
         self.theme_3 = ImgButton(image_surface=self.choix["desert"], x = 3*self.largeur//4,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))    
 
