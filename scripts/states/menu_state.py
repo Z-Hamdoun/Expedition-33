@@ -4,6 +4,7 @@ from scripts.states.state import State
 from scripts.states.play_state import PlayState
 from scripts.states.theme_state import ThemeState
 from scripts.ui import Button
+from scripts.states.skins_state import SkinState
  
 class MenuState(State):
     def __init__(self, game):
@@ -23,7 +24,7 @@ class MenuState(State):
         cw, ch = game.width // 2, game.height // 2
         
         self.btn_play = Button(cw, ch - 50, "NOUVELLE PARTIE", self.font, (0,0,0), (255,215,0))
-        self.btn_options = Button(cw, ch + 50, "OPTIONS", self.font, (0,0,0), (255,215,0))
+        self.btn_options = Button(cw, ch + 50, "SKINS", self.font, (0,0,0), (255,215,0))
         self.btn_quit = Button(cw, ch + 150, "QUITTER", self.font, (0,0,0), (255,215,0))
  
     def update(self):
@@ -59,7 +60,8 @@ class MenuState(State):
             if self.btn_quit.is_clicked(event):
                 self.game.running = False
                 
-            # Logique boutton options
+            # Logique boutton skins
             if self.btn_options.is_clicked(event):
-                pass
-                # A remplir par l'etat options
+                new_state = SkinState(self.game)
+                self.game.current_state = new_state
+  
