@@ -77,6 +77,8 @@ class ObstacleManager:
         self.spawn_timer = 0
         self.min_spawn_time = self.settings.game_fps  # 1 seconde
         self.max_spawn_time = 2 * self.settings.game_fps # 2 secondes
+        
+        self.pattern_queue = [] # stoque les motifs d'obstacles
 
     def update(self):
         # Mettre a jour l'horloge
@@ -84,40 +86,67 @@ class ObstacleManager:
         
         # Spawn
         if self.spawn_timer <= 0:
-            self.spawn_obstacle()
-            # Reinitialiser l'horloge aleatoirement
-            self.spawn_timer = random.randint(self.min_spawn_time, self.max_spawn_time)
+            if not self.pattern_queue:
+                self.generate_pattern()
+                
+            obs_type, gap_distance = self.pattern_queue.pop(0)
             
-            min_dist = 1000  # Distance minimale entre deux obstacles
-            max_dist = 1000 + (self.settings.game_game_speed * 10) # Plus on va vite, plus l'ecart max augmente
+            if obs_type == 'random':
+                obs_type = 'oiseau' if random.random() < 0.2 and self.settings.game_game_speed > 20 else 'cactus'
             
-            rand_dist = random.randint(min_dist, int(max_dist))
+            # Ajouter l obstacle
+            self.spawn_specific_obstacle(obs_type)
+            
+            # Trouver le temps avant le prochain spawn
+            # si le motif n'est pas fini, utiliser un gap_distance
+            if self.pattern_queue:
+                dist = gap_distance
+            else:
+                # sinon prendre le game distance aleatoirement avant le prochain motif
+                min_gap = 1000
+                max_gap = 1200 + (self.settings.game_game_speed * 20) # Large variance makes it unpredictable
+                dist = random.randint(min_gap, int(max_gap))
             
 
-            self.spawn_timer = rand_dist / self.settings.game_game_speed
+            self.spawn_timer = dist / self.settings.game_game_speed
             
         # Mettre a jour tout les obstacles dans le groupe
         self.obstacles.update()
-
-    def spawn_obstacle(self):
-        # Au debut (vitesse lente), peu d'oiseaux
+    
+    
+    def generate_pattern(self):
+        """Choisi un motif d'obstacles selon le game_speed"""
+        patterns = []
         
-        bird_chance = 10 # 10% de chance initiale
+        # --- motifs par defaut (n'import quelle vitesse) ---
+        patterns.append([('random', 0)]) # un truc aleatoire
+        patterns.append([('cactus', 0)]) # un cactus
         
-        if self.settings.game_game_speed > 20:
-            bird_chance = 25 # 25% 
-        if self.settings.game_game_speed > 80:
-            bird_chance = 40 # 40% 
-
-        # Tirage aleatoire
-        tirage = random.randint(1, 100)
-        
-        if tirage <= bird_chance:
-            obs_type = "oiseau"
-        else:
-            obs_type = "cactus"
+        # --- Motifs plus difficiles (selon la vitesse) ---
+        if self.settings.game_game_speed > 30:
+            # Deux cactus proches
+            patterns.append([('cactus', 280), ('cactus', 0)]) 
             
-        new_obs = Obstacle(self.assets, self.settings, obs_type)
+        if self.settings.game_game_speed > 10:
+            # Deux oiseaux
+            patterns.append([('oiseau', 400), ('oiseau', 0)])
+            # Piege Oiseau + cactus
+            patterns.append([('oiseau', 500), ('cactus', 0)])
+
+        if self.settings.game_game_speed > 50:
+            # 3 cactus
+            patterns.append([('cactus', 300), ('cactus', 300), ('cactus', 0)])
+            # 3 obstacles
+            patterns.append([('cactus', 350), ('oiseau', 350), ('cactus', 0)])
+
+        # Choix d'un pattern aleatoirement
+        choice = random.choice(patterns)
+        
+        # Ajouter a la file
+        self.pattern_queue.extend(choice)
+
+    def spawn_specific_obstacle(self, type_name):
+        new_obs = Obstacle(self.assets, self.settings, type_name)
         self.obstacles.add(new_obs)
 
     def draw(self, screen):
