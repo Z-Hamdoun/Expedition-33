@@ -69,14 +69,17 @@ class ThemeState(State):
         for event in events:
             if self.theme_1.is_clicked(event):
                 theme = "snow"
+                self.game.settings.game_ground_y = 620
                 new_state = PlayState(self.game, theme)
                 self.game.current_state = new_state
             if self.theme_2.is_clicked(event):
                 theme = "forest"
+                self.game.settings.game_ground_y = 650
                 new_state = PlayState(self.game, theme)
                 self.game.current_state = new_state
             if self.theme_3.is_clicked(event):
                 theme = "desert"
+                self.game.settings.game_ground_y = 575
                 new_state = PlayState(self.game, theme)
                 self.game.current_state = new_state
             if event.type == pygame.KEYDOWN:
