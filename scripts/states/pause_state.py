@@ -1,6 +1,7 @@
 import pygame
 from scripts.states.state import State
 from scripts.ui import Button
+from scripts.sound_management import SoundManager
 
 class PauseState(State):
     def __init__(self, game, prev_state):
@@ -25,6 +26,8 @@ class PauseState(State):
         self.btn_menu = Button(cw, ch + 80, "Menu Principal", self.font, (255,255,255), (255,215,0))
         self.btn_rejouer = Button(cw, ch, 'Rejouer',self.font, (255,255,255), (255,215,0))
 
+        self.sound = SoundManager()
+        self.sound.play_music("accueil")
     def update(self):
         # We do NOT call self.prev_state.update()
         # This effectively "Freezes" the game logic!

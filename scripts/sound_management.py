@@ -11,13 +11,20 @@ class SoundManager:
             pygame.mixer.init()
 
         self.sounds = {} 
-        self.musics = {} 
+        self.musics = {
+            "troll" : os.path.join("Musiques","Musique_thème_troll__Badali-Badala_.mp3"),
+            "classique" : os.path.join("Musiques", "Musique_thème_classique_Night_Drifting.mp3"),
+            "gameover" : os.path.join("Musiques", "Musique_game_over.mp3"),
+            "accueil" : os.path.join("Musiques", "Musique_écran_acceuil.mp3")} 
         self.current_music = ""
         
         self.sound_paths = {
-            "jump": os.path.join("Sons", "thème troll", "saut-2.mp3"), 
-            "dino_death": os.path.join("Sons", "thème troll", "Mort-méchant-dinosaure.mp3"),
-            "pterodactyl": os.path.join("Sons", "thème troll", "Oiseaux-dinosaure-1.mp3"), 
+            "jump": os.path.join("Sons", "jump.mp3"), 
+            "dino_death": os.path.join("Sons", "Mort dinosaure.mp3"),
+            "pterodactyl": os.path.join("Sons", "Oiseaux dinosaures.mp3"),
+            "duck": os.path.join("Sons", "Se baisser.mp3"),
+            "gun": os.path.join("Sons","Tir au gun.mp3"),
+            "recup" :  os.path.join("Sons","Récupération gun.mp3")
         }
         
         self.load_sounds()
@@ -33,10 +40,6 @@ class SoundManager:
             except pygame.error as e:
                 print(f"Erreur de chargement du son '{name}' à '{path}': {e}")
                 
-    def register_music_paths(self, music_dict):
-        """Enregistre les chemins des musiques (dictionnaire de nom -> chemin)."""
-        self.musics = music_dict
-        print("Chemins des musiques enregistrés.")
 
 
     def play_sound(self, name):
