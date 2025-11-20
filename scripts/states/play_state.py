@@ -92,6 +92,9 @@ class PlayState(State):
         start_x = 20
         y_pos = 80
         
+        bullet_img = self.game.assets.other.get('bullet')
+        width = bullet_img.get_width()
+        
         for i in range(self.player.max_ammo):
             # Calculer la position de chaque balle
             x_pos = start_x + (i * (radius * 2 + padding))
@@ -99,10 +102,7 @@ class PlayState(State):
             if i < self.player.current_ammo:
                 color = (255, 215, 0) # Gold
                 width = 0 # Remplir
-                pygame.draw.circle(surface, color, (x_pos, y_pos), radius, width)
-            else:
-                color = (100, 100, 100) # Gris
-                width = 2 # Outline
+                surface.blit(bullet_img, (x_pos, y_pos))
                 
             
     
