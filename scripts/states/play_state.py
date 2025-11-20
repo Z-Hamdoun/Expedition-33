@@ -60,8 +60,16 @@ class PlayState(State):
         if collisions:
             # Entrer dans etat game_over
             self.sound.play_sound("dino_death")
-            self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
-    
+            if not self.game.settings.debug_mode:
+                # Entrer dans etat game_over
+                self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
+                self.sound.play_sound("dino_death")
+            else:
+                pygame.time.delay(200)
+        if powerups:
+            self.player.equip_gun()
+            self.sound.play_sound("recup")
+            
     def handle_input(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
