@@ -10,9 +10,11 @@ class PauseState(State):
         self.game = game
         
         # Transparent Overlay
-        self.overlay = pygame.Surface((game.width, game.height))
+        self.overlay = pygame.Surface((game.height//2, 3*game.width//8))
         self.overlay.fill((0, 0, 0)) # Black overlay
         self.overlay.set_alpha(128)  # 50% Darker
+        self.overlay_rect = self.overlay.get_rect()
+        self.overlay_rect.center = (game.width//2, game.height//2)
 
         # Fonts
         self.font = pygame.font.Font(None, 60)
@@ -37,7 +39,7 @@ class PauseState(State):
         self.prev_state.draw(surface)
         
         # 2. Draw the dark overlay
-        surface.blit(self.overlay, (0, 0))
+        surface.blit(self.overlay,self.overlay_rect)
         
         # 3. Draw UI
         title = self.font.render("PAUSE", True, (255, 255, 255))

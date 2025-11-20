@@ -9,7 +9,7 @@ class ThemeState(State):
         super().__init__(game)
 
         self.game = game
-        self.bg_img = game.assets.backgrounds.get("background")
+        self.bg_img = game.assets.backgrounds['menu']['theme']
         if self.bg_img:
             self.bg_img = pygame.transform.scale(self.bg_img, (game.width, game.height))
         
@@ -20,22 +20,16 @@ class ThemeState(State):
         self.choix_h = 400
         self.choix = {}
         self.boutons = {}
-        themes = ["foret","desert","ocean"]
+        themes = ["forest","desert","snow"]
         for theme in themes:
-            if theme == "ocean" :
-                path = os.path.join("assets","Backgrounds","Game","colored_castle.png")
-            if theme == "desert" : 
-                path = os.path.join("assets","Backgrounds","Game","colored_desert.png")
-            if theme == "foret" : 
-                path = os.path.join("assets","Backgrounds","Game","tall_trees.png")
-            image = pygame.image.load(path).convert()
+            image = self.game.assets.backgrounds['game'][theme]
             cadre = pygame.transform.scale(image, (self.choix_l, self.choix_h))
             self.choix[theme] = cadre
         
         
         # Bouttons images
-        self.theme_1 = ImgButton(image_surface=self.choix["ocean"], x = self.largeur//4,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
-        self.theme_2 = ImgButton(image_surface=self.choix["foret"], x = self.largeur//2,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
+        self.theme_1 = ImgButton(image_surface=self.choix["snow"], x = self.largeur//4,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
+        self.theme_2 = ImgButton(image_surface=self.choix["forest"], x = self.largeur//2,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))
         self.theme_3 = ImgButton(image_surface=self.choix["desert"], x = 3*self.largeur//4,y = 5*self.hauteur//8,color_base=(255, 215, 0), color_hover=(255, 255, 255))    
 
     def text(self,texte,font,couleur,x,y,fenetre):
@@ -75,16 +69,16 @@ class ThemeState(State):
     def handle_input(self, events):
         for event in events:
             if self.theme_1.is_clicked(event):
-                # Entrer dans l'etat Play
-                new_state = PlayState(self.game)
+                theme = "snow"
+                new_state = PlayState(self.game, theme)
                 self.game.current_state = new_state
             if self.theme_2.is_clicked(event):
-                # Entrer dans l'etat Play
-                new_state = PlayState(self.game)
+                theme = "forest"
+                new_state = PlayState(self.game, theme)
                 self.game.current_state = new_state
             if self.theme_3.is_clicked(event):
-                # Entrer dans l'etat Play
-                new_state = PlayState(self.game)
+                theme = "desert"
+                new_state = PlayState(self.game, theme)
                 self.game.current_state = new_state
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:

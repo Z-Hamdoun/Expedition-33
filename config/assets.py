@@ -11,9 +11,9 @@ class AssetManager:
         self.asset_dir = os.path.join(self.base_dir, 'assets')
         
         # Stockage des images dans des dictionnaires
-        self.player_imgs = {}   # Format {'run': [img1, img2], 'jump': img}
+        self.skins = {}  
         self.obstacles = {'statique': {'cactus': []}, 'dynamique': {'oiseau': []}} # format {'statique': {'cactus': {...}, 'arbre':{...}, ...}, 'dynamique': {'bird': ...}}
-        self.backgrounds = {}
+        self.backgrounds = {'game': {}, 'menu': {}}
         self.enemies = {}
         self.sounds = {}
         
@@ -25,7 +25,8 @@ class AssetManager:
     def load_image(self,
         folder_path: list[str],
         filename: str,
-        transparent: bool = True):
+        transparent: bool = True,
+        size=None):
         """Permet de charger une image a partir d'un path
 
         Args:
@@ -42,9 +43,13 @@ class AssetManager:
         try:
             img = pygame.image.load(path)
             if transparent:
-                return img.convert_alpha() # Pour les sprites (transparence)
+                img = img.convert_alpha() # Pour les sprites (transparence)
             else:
-                return img.convert()       # Pour les backgrounds (plus rapide)
+                img = img.convert()       # Pour les backgrounds (plus rapide)
+            
+            if size is not None:
+                img = pygame.transform.scale(img, size)
+            return img
         except FileNotFoundError:
             print(f"[AssetManager][Erreur]: Image introuvable a: {path}")
             # Placeholder pour montrer que le fichier manque, et ne pas arreter le jeu
@@ -56,21 +61,33 @@ class AssetManager:
         print("[AssetManager][Info] Chargement des assets ...")
         
         # --- Player ---
-        
-        # A changer lors de l'ajout de skins
-        self.player_imgs['run'] = [
-            self.load_image(['Dino'], 'DinoRun1.png'),
-            self.load_image(['Dino'], 'DinoRun2.png')
-        ]
-        self.player_imgs['jump'] = self.load_image(['Dino'], 'DinoJump.png')
-        self.player_imgs['duck'] = [
-            self.load_image(['Dino'], 'DinoDuck1.png'),
-            self.load_image(['Dino'], 'DinoDuck2.png')
-        ]
+        PLAYER_SIZE = (20, 20) 
+        skins = ['forest', 'snow', 'desert']
+        for skin in skins:
+            self.skins[skin] = {}
+            
+            self.skins[skin]['run'] = [
+                self.load_image(['skins', skin], 'DinoRun1.png', PLAYER_SIZE),
+                self.load_image(['skins', skin], 'DinoRun2.png', PLAYER_SIZE)
+            ]
+            self.skins[skin]['jump'] = self.load_image(['skins', skin], 'DinoJump.png', PLAYER_SIZE)
+            self.skins[skin]['duck'] = [
+                self.load_image(['skins', skin], 'DinoDuck1.png', PLAYER_SIZE),
+                self.load_image(['skins', skin], 'DinoDuck2.png', PLAYER_SIZE)
+            ]
 
         # --- Backgrounds ---
         # transparent=False pour plus de performance
-        self.backgrounds['background'] = self.load_image(['Backgrounds', 'Game'], 'tall_trees.png', transparent=False)
+        
+        # Game backgrounds
+        self.backgrounds['game']['snow'] = self.load_image(['backgrounds', 'game'], 'snow.png', transparent=False)
+        self.backgrounds['game']['forest'] = self.load_image(['backgrounds', 'game'], 'forest.png', transparent=False)
+        self.backgrounds['game']['desert'] = self.load_image(['backgrounds', 'game'], 'desert.png', transparent=False)
+        
+        # Menu backgrounds
+        self.backgrounds['menu']['main'] = self.load_image(['backgrounds', 'menu'], 'menubg_test.jpg', transparent=False)
+        self.backgrounds['menu']['theme'] = self.load_image(['backgrounds', 'menu'], 'menubg_test.jpg', transparent=False)
+        self.backgrounds['menu']['skins'] = self.load_image(['backgrounds', 'menu'], 'menubg_test.jpg', transparent=False)
         
         # --- Obstacles ----
         # Statique

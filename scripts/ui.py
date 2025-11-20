@@ -34,13 +34,14 @@ class Button:
         return False
     
 class ImgButton:
-    def __init__(self, x, y, color_base, color_hover, image_surface):
+    def __init__(self, x, y, color_base, color_hover, image_surface,is_selected = False):
         self.x = x
         self.y = y
         self.color_base = color_base
         self.color_hover = color_hover
         self.image_surface = image_surface
-        
+        self.rect = image_surface.get_rect(center = (x,y))
+        self.is_selected = False
         # Render text and get dimensions
         self.rect = image_surface.get_rect(center=(x, y))
         self.is_hovered = False
@@ -49,11 +50,19 @@ class ImgButton:
         """Met a jour le boutton en mode hover"""
         self.is_hovered = self.rect.collidepoint(mouse_pos)
 
+    def outline(self,screen,is_selected):
+        if is_selected:
+            outline_rect = self.rect.inflate(10, 10) 
+            pygame.draw.rect(screen, (255, 255, 0), outline_rect, width=10)
+            
+
     def draw(self, screen):
         """Dessine le bouton"""
         # color = self.color_hover if self.is_hovered else self.color_base
+
         if self.is_hovered:
-            pygame.draw.rect(screen, (255, 255, 255), self.rect, 3)
+            contour_rect = self.rect.inflate(10, 10)
+            pygame.draw.rect(screen, (255, 255,0), contour_rect, width=8, border_radius=5)
         else:
             pygame.draw.rect(screen, (255, 215, 0), self.rect, 6)
         # Re-render si la couleur change

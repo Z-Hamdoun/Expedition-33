@@ -18,6 +18,7 @@
         "pos_initiale": [
             200,
             1000
-        ]
+        ],
+        "skin": "forest"
     }
 }

@@ -29,9 +29,9 @@ class Player(pygame.sprite.Sprite):
         self.vel = Vector2(0, 0)
         
         # Charger les animations dans un dictionnaire
-        self.animations = {'jumping': self.assets.player_imgs['jump'],
-            'running': self.assets.player_imgs['run'],
-            'ducking': self.assets.player_imgs['duck']}
+        self.animations = {'jumping': self.assets.skins[self.settings.player_skin]['jump'],
+            'running': self.assets.skins[self.settings.player_skin]['run'],
+            'ducking': self.assets.skins[self.settings.player_skin]['duck']}
         
         self.image = self.animations['running'][0]
         self.rect: pygame.Rect = self.image.get_rect()

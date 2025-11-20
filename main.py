@@ -47,6 +47,7 @@ best_score = 0   # BEST SCORE
 
 score_police = pygame.font.Font(None, 60)
 best_score_police = pygame.font.Font(None, 60)
+menu_actuel = "foret"
 
 clock = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -102,7 +103,7 @@ while en_cours:
             if event.button == 1: #clic gauche
                 if not jeu_actif :
                     if "start" in boutons and boutons["start"].collidepoint(event.pos):
-                        jeu_actif = True
+                        etat_menu = "themes"
                         play_music(music_game_file)
                     if "quitter" in boutons and boutons["quitter"].collidepoint(event.pos):
                         en_cours = False
@@ -188,6 +189,9 @@ while en_cours:
         player.blit_me(displaysurface)
         obstacle_manager.draw(displaysurface)
         boutons  = menu_pause.affichage(displaysurface)
+
+    elif etat_menu == "themes":
+        boutons = menu_themes.affichage(displaysurface,menu_actuel)
         
     else :
         play_music(music_menu_file) 
