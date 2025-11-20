@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 class Obstacle(pygame.sprite.Sprite):
     """Classe generale decrivant un obstacle tel un cactus ou un oiseau
@@ -179,10 +180,21 @@ class GunPowerup(pygame.sprite.Sprite):
         
         # Position du spawn
         self.rect.x = 1920 + 50
-        self.rect.bottom = settings.game_ground_y - random.choice([50, 150]) 
+        self.base_y = settings.game_ground_y - random.choice([50, 150]) 
+        self.rect.centery = self.base_y
+        
+        # Variables d'animation
+        self.hover_timer = 0
+        self.hover_speed = 0.05  # frequence d oscillation
+        self.hover_amount = 10   # Amplitude
 
     def update(self):
         self.rect.x -= self.settings.game_game_speed
+        
+        # Animation
+        self.hover_timer += self.hover_speed
+        offset = math.sin(self.hover_timer) * self.hover_amount
+        self.rect.centery = self.base_y + offset
         
         # Despawn
         if self.rect.right < 0:
