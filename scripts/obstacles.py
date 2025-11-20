@@ -135,7 +135,7 @@ class ObstacleManager:
         # --- Motifs plus difficiles (selon la vitesse) ---
         if self.settings.game_game_speed > 10:
             # Deux cactus proches
-            patterns.append([('cactus', 300), ('cactus', 0)]) 
+            patterns.append([('cactus', 400), ('cactus', 0)]) 
             
         if self.settings.game_game_speed > 20:
             # Deux oiseaux
