@@ -20,17 +20,17 @@ class SkinState(State):
         # On les mets dans une liste ou dict
         cw, ch = self.game.width // 2, self.game.height // 2
         self.choix = {}
-        self.choix_l = 200
-        self.choix_h = 400
+        self.choix_l = 250
+        self.choix_h = 300
         skins = ["forest","snow","desert"]
         for skin in skins:
-            image = self.game.assets.backgrounds['game'][skin]
+            image = self.game.assets.skins[skin]['run'][0]
             cadre = pygame.transform.scale(image, (self.choix_l, self.choix_h))
             self.choix[skin] = cadre
         
-        self.img1 = ImgButton(self.game.width//4, 5*self.game.height//8, (0,0,0), (255,215,0),self.choix["snow"])
-        self.img2 = ImgButton(self.game.width//2, 5*self.game.height//8, (0,0,0), (255,215,0),self.choix["forest"])
-        self.img3 = ImgButton(3*self.game.width//4, 5*self.game.height//8, (0,0,0), (255,215,0),self.choix["desert"])
+        self.img1 = ImgButton(self.game.width//4, 4*self.game.height//8, (0,0,0), (255,215,0),self.choix["snow"])
+        self.img2 = ImgButton(self.game.width//2, 4*self.game.height//8, (0,0,0), (255,215,0),self.choix["forest"])
+        self.img3 = ImgButton(3*self.game.width//4, 4*self.game.height//8, (0,0,0), (255,215,0),self.choix["desert"])
  
     def update(self):
         # Gere hover sur un boutton
