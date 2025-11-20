@@ -47,7 +47,8 @@ class Player(pygame.sprite.Sprite):
         # Gestion de l'ammunition
         self.max_ammo = 3
         self.current_ammo = 3
-        self.reload_cooldown = 2000
+        self.last_shot_time = 0
+        self.shoot_delay = 1000 # 1 secondes entre deux tirs
 
         # Hitting
         self.attacking = False
@@ -74,6 +75,19 @@ class Player(pygame.sprite.Sprite):
         self.vel.y += self.settings.constants_gravity
         if self.vel.y > self.settings.player_vitesse_limite:
             self.vel.y = self.settings.player_vitesse_limite
+    
+    def _can_shoot(self):
+        """Gere la logique du tir"""
+        current_time = pygame.time.get_ticks()
+        has_ammo = self.current_ammo > 0
+        cooldown_ready = (current_time - self.last_shot_time >= self.shoot_delay)
+        return has_ammo and cooldown_ready
+
+    def _shoot(self):
+        """Mets a jour les variables apres un tir"""
+        self.current_ammo -= 1
+        self.last_shot_time = pygame.time.get_ticks()
+        self.last_reload_time = self.last_shot_time 
             
 
     def update(self, inpt: list):

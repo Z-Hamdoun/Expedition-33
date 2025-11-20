@@ -67,11 +67,9 @@ class PlayState(State):
                     self.game.current_state = PauseState(self.game, prev_state=self)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1: # Click gauche
-                    if self.player.current_ammo > 0:
+                    if self.player._can_shoot():
                         self.shoot(event.pos)
-                        self.player.current_ammo -= 1 # Deduct bullet
-                        # Reset reload timer so you don't get a bullet back instantly after shooting
-                        self.player.last_reload_time = pygame.time.get_ticks()
+                        self.player._shoot()
                     else:
                         print("Pas de munitions")
     
@@ -93,15 +91,12 @@ class PlayState(State):
         y_pos = 80
         
         bullet_img = self.game.assets.other.get('bullet')
-        width = bullet_img.get_width()
         
         for i in range(self.player.max_ammo):
             # Calculer la position de chaque balle
             x_pos = start_x + (i * (radius * 2 + padding))
             
             if i < self.player.current_ammo:
-                color = (255, 215, 0) # Gold
-                width = 0 # Remplir
                 surface.blit(bullet_img, (x_pos, y_pos))
                 
             
