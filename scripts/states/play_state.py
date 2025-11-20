@@ -67,7 +67,13 @@ class PlayState(State):
                     self.game.current_state = PauseState(self.game, prev_state=self)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1: # Click gauche
-                    self.shoot(event.pos)
+                    if self.player.current_ammo > 0:
+                        self.shoot(event.pos)
+                        self.player.current_ammo -= 1 # Deduct bullet
+                        # Reset reload timer so you don't get a bullet back instantly after shooting
+                        self.player.last_reload_time = pygame.time.get_ticks()
+                    else:
+                        print("Pas de munitions")
     
     def shoot(self, mouse_pos):
         """Tire vers la position de la souris"""
@@ -79,12 +85,34 @@ class PlayState(State):
         # Ajouter au groupe
         self.bullets.add(new_bullet)
     
+    def _draw_ammo_ui(self, surface):
+        """Represente les balles disponibles"""
+        padding = 10
+        radius = 10
+        start_x = 20
+        y_pos = 80
+        
+        for i in range(self.player.max_ammo):
+            # Calculer la position de chaque balle
+            x_pos = start_x + (i * (radius * 2 + padding))
+            
+            if i < self.player.current_ammo:
+                color = (255, 215, 0) # Gold
+                width = 0 # Remplir
+                pygame.draw.circle(surface, color, (x_pos, y_pos), radius, width)
+            else:
+                color = (100, 100, 100) # Gris
+                width = 2 # Outline
+                
+            
+    
     def draw(self, surface):
         self.bg.affiche(surface)
         self.player.blit_me(surface)
         self.obstacle_manager.draw(surface)
         
         self.bullets.draw(surface)
+        self._draw_ammo_ui(surface)
         
         score_text = self.score_font.render(f'Score: {self.score}', True, (0, 0, 0))
         surface.blit(score_text, (self.game.width - 250, 20))

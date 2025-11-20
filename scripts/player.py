@@ -44,6 +44,10 @@ class Player(pygame.sprite.Sprite):
         # Variable qui gere l'animation running
         self.frame_number = 0
 
+        # Gestion de l'ammunition
+        self.max_ammo = 3
+        self.current_ammo = 3
+        self.reload_cooldown = 2000
 
         # Hitting
         self.attacking = False
