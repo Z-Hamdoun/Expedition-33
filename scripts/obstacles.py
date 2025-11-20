@@ -172,8 +172,8 @@ class GunPowerup(pygame.sprite.Sprite):
         super().__init__()
         self.settings = settings
         
-        self.image = pygame.Surface((30, 30))
-        self.image.fill((255, 215, 0)) # Gold box
+        img = assets.other['gun']
+        self.image = pygame.transform.scale(img, (50, 50))
 
         self.rect = self.image.get_rect()
         
