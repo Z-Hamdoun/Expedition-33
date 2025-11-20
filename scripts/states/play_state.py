@@ -65,6 +65,8 @@ class PlayState(State):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.game.current_state = PauseState(self.game, prev_state=self)
+                if event.key == pygame.K_h:
+                    self.game.settings.debug_mode = not self.game.settings.debug_mode
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
                     self.player.end_jump()
@@ -114,6 +116,18 @@ class PlayState(State):
         
         score_text = self.score_font.render(f'Score: {self.score}', True, (0, 0, 0))
         surface.blit(score_text, (self.game.width - 250, 20))
+        
+        if self.game.settings.debug_mode:
+            # Hitbox du joueur en rouge
+            pygame.draw.rect(surface, (255, 0, 0), self.player.rect, 2)
+            
+            # Hitbox des obstacles en bleu
+            for obs in self.obstacle_manager.obstacles:
+                pygame.draw.rect(surface, (0, 0, 255), obs.rect, 2)
+                
+            # Balles en Jaune
+            for bullet in self.bullets:
+                pygame.draw.rect(surface, (255, 255, 0), bullet.rect, 2)
         
     
     def desc(self):
