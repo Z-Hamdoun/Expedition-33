@@ -22,7 +22,8 @@ class SoundManager:
             "jump": os.path.join("Sons", "thème troll", "saut-3.mp3"), 
             "dino_death": os.path.join("Sons", "thème troll", "Mort méchant dinosaure.mp3"),
             "pterodactyl": os.path.join("Sons", "thème troll", "Oiseaux-dinosaure-1.mp3"),
-            "duck": os.path.join("Sons", "thème troll", "Se-baisser-1.mp3") 
+            "duck": os.path.join("Sons", "thème troll", "Se-baisser-1.mp3"),
+            "gun": os.path.join("Sons","thème troll","Gun 2.mp3") 
         }
         
         self.load_sounds()

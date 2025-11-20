@@ -86,7 +86,7 @@ class PlayState(State):
     def shoot(self, mouse_pos):
         """Tire vers la position de la souris"""
         start_pos = self.player.rect.center
-        
+        self.sound.play_sound("gun")
         # Creer la balle
         new_bullet = Bullet(start_pos, mouse_pos, self.game.assets)
         
