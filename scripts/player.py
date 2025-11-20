@@ -95,6 +95,8 @@ class Player(pygame.sprite.Sprite):
         self.current_ammo -= 1
         self.last_shot_time = pygame.time.get_ticks()
         self.last_reload_time = self.last_shot_time 
+        if self.current_ammo <= 0:
+            self.has_gun = False
             
 
     def update(self, inpt: list):
