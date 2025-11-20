@@ -88,6 +88,14 @@ class ObstacleManager:
             # Reinitialiser l'horloge aleatoirement
             self.spawn_timer = random.randint(self.min_spawn_time, self.max_spawn_time)
             
+            min_dist = 1000  # Distance minimale entre deux obstacles
+            max_dist = 1000 + (self.settings.game_game_speed * 10) # Plus on va vite, plus l'ecart max augmente
+            
+            rand_dist = random.randint(min_dist, int(max_dist))
+            
+
+            self.spawn_timer = rand_dist / self.settings.game_game_speed
+            
         # Mettre a jour tout les obstacles dans le groupe
         self.obstacles.update()
 

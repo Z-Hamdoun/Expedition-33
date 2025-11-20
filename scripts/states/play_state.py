@@ -65,6 +65,9 @@ class PlayState(State):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.game.current_state = PauseState(self.game, prev_state=self)
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_UP:
+                    self.player.end_jump()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1: # Click gauche
                     if self.player._can_shoot():
