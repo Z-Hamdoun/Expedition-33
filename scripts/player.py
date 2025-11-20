@@ -3,6 +3,7 @@ import sys
 import os
 from pygame.math import Vector2
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+from scripts.bullet import Bullet
 
 from config.settings import Settings
 from config.assets import AssetManager
@@ -43,10 +44,16 @@ class Player(pygame.sprite.Sprite):
         # Variable qui gere l'animation running
         self.frame_number = 0
 
+        # Gestion de l'ammunition
+        self.max_ammo = 3
+        self.current_ammo = 0
+        self.last_shot_time = 0
+        self.shoot_delay = 1000 # 1 secondes entre deux tirs
+        
+        self.has_gun = False
 
         # Hitting
         self.attacking = False
-    
     
     def jump(self):
         """
@@ -70,6 +77,26 @@ class Player(pygame.sprite.Sprite):
         self.vel.y += self.settings.constants_gravity
         if self.vel.y > self.settings.player_vitesse_limite:
             self.vel.y = self.settings.player_vitesse_limite
+    
+    def _can_shoot(self):
+        """Gere la logique du tir"""
+        current_time = pygame.time.get_ticks()
+        ready = self.has_gun and self.current_ammo > 0
+        cooldown_ready = (current_time - self.last_shot_time >= self.shoot_delay)
+        return ready and cooldown_ready
+
+    def equip_gun(self):
+        """Appelee quand le joueur recupere le pistolet"""
+        self.has_gun = True
+        self.current_ammo = self.max_ammo
+
+    def _shoot(self):
+        """Mets a jour les variables apres un tir"""
+        self.current_ammo -= 1
+        self.last_shot_time = pygame.time.get_ticks()
+        self.last_reload_time = self.last_shot_time 
+        if self.current_ammo <= 0:
+            self.has_gun = False
             
 
     def update(self, inpt: list):
@@ -128,15 +155,24 @@ class Player(pygame.sprite.Sprite):
             self.image = self.animations['running'][self.frame_number // 10]
             self.rect = self.image.get_rect()
     
-
-    def attack(self):
-        """
-        Gere le cas ou le joueur touche un obstacle
-        """
-        self.hit = True
-        son = pygame.mixer.Sound(r"Sons\thème troll\hit_hurt.mp3")
-        son.play()
- 
-    
     def blit_me(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
+        
+        if self.has_gun:
+            gun_img = self.assets.other.get('gun')
+            gun_img = pygame.transform.scale(gun_img, (50, 50)) 
+            
+            if gun_img:
+                gun_x = self.rect.centerx + 10
+                gun_y = self.rect.centery - 30
+                
+                # Ajustement pour ducking
+                if self.ducking:
+                    gun_y += 5
+                    gun_x -= 10 
+                
+                if self.running and not self.ducking:
+                    bob_offset = 2 if int(self.frame_number) // 10 == 0 else -2
+                    gun_y += bob_offset
+                
+                screen.blit(gun_img, (gun_x, gun_y))
