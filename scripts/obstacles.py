@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 class Obstacle(pygame.sprite.Sprite):
     """Classe generale decrivant un obstacle tel un cactus ou un oiseau
@@ -7,6 +8,7 @@ class Obstacle(pygame.sprite.Sprite):
     def __init__(self, assets, settings, obs_type):
         super().__init__()
         self.settings = settings
+        self.obs_type = obs_type
         
         # Variables d'animation
         self.is_animated = False
@@ -46,7 +48,10 @@ class Obstacle(pygame.sprite.Sprite):
         self.update_animation()
         
         # Bouge vers la gauche en utilisant la game_speed
-        self.rect.x -= self.settings.game_game_speed
+        if self.obs_type == 'oiseau':
+            self.rect.x -= (self.settings.game_game_speed + 5)
+        else:
+            self.rect.x -= self.settings.game_game_speed
 
         # Despawn
         if self.rect.right < 0:
@@ -70,13 +75,11 @@ class ObstacleManager:
         self.assets = assets
         self.settings = settings
         
-        # Groupe de sprites pygame pour stocker tout les obstacles actifs
+        # Groupe de sprites pygame pour stocker tout les obstacles actifs et les powerups
         self.obstacles = pygame.sprite.Group()
+        self.powerups = pygame.sprite.Group()
         
-        # Horloge
         self.spawn_timer = 0
-        self.min_spawn_time = self.settings.game_fps  # 1 seconde
-        self.max_spawn_time = 2 * self.settings.game_fps # 2 secondes
         
         self.pattern_queue = [] # stoque les motifs d'obstacles
 
@@ -91,27 +94,34 @@ class ObstacleManager:
                 
             obs_type, gap_distance = self.pattern_queue.pop(0)
             
-            if obs_type == 'random':
-                obs_type = 'oiseau' if random.random() < 0.2 and self.settings.game_game_speed > 20 else 'cactus'
+            if random.randint(1, 100) <= 5: 
+                self.spawn_powerup()
+                # Add a small gap after powerup so it's not unfair
+                self.spawn_timer = 400 / self.settings.game_game_speed
             
-            # Ajouter l obstacle
-            self.spawn_specific_obstacle(obs_type)
-            
-            # Trouver le temps avant le prochain spawn
-            # si le motif n'est pas fini, utiliser un gap_distance
-            if self.pattern_queue:
-                dist = gap_distance
             else:
-                # sinon prendre le game distance aleatoirement avant le prochain motif
-                min_gap = 1000
-                max_gap = 1200 + (self.settings.game_game_speed * 20) # Large variance makes it unpredictable
-                dist = random.randint(min_gap, int(max_gap))
+                if obs_type == 'random':
+                    obs_type = 'oiseau' if random.random() < 0.2 and self.settings.game_game_speed > 20 else 'cactus'
+
+                # Ajouter l obstacle
+                self.spawn_specific_obstacle(obs_type)
+            
+                # Trouver le temps avant le prochain spawn
+                # si le motif n'est pas fini, utiliser un gap_distance
+                if self.pattern_queue:
+                    dist = gap_distance
+                else:
+                    # sinon prendre le game distance aleatoirement avant le prochain motif
+                    min_gap = 1000
+                    max_gap = 1200 + (self.settings.game_game_speed * 20) # Large variance makes it unpredictable
+                    dist = random.randint(min_gap, int(max_gap))
             
 
-            self.spawn_timer = dist / self.settings.game_game_speed
+                self.spawn_timer = dist / self.settings.game_game_speed
             
-        # Mettre a jour tout les obstacles dans le groupe
+        # Mettre a jour tout les obstacles et les powerups dans le groupe
         self.obstacles.update()
+        self.powerups.update()
     
     
     def generate_pattern(self):
@@ -152,3 +162,40 @@ class ObstacleManager:
     def draw(self, screen):
         # Dessiner tout les obstacles
         self.obstacles.draw(screen)
+        self.powerups.draw(screen)
+    
+    def spawn_powerup(self):
+        gun = GunPowerup(self.assets, self.settings)
+        self.powerups.add(gun)
+
+class GunPowerup(pygame.sprite.Sprite):
+    def __init__(self, assets, settings):
+        super().__init__()
+        self.settings = settings
+        
+        img = assets.other['gun']
+        self.image = pygame.transform.scale(img, (50, 50))
+
+        self.rect = self.image.get_rect()
+        
+        # Position du spawn
+        self.rect.x = 1920 + 50
+        self.base_y = settings.game_ground_y - random.choice([50, 150]) 
+        self.rect.centery = self.base_y
+        
+        # Variables d'animation
+        self.hover_timer = 0
+        self.hover_speed = 0.05  # frequence d oscillation
+        self.hover_amount = 10   # Amplitude
+
+    def update(self):
+        self.rect.x -= self.settings.game_game_speed
+        
+        # Animation
+        self.hover_timer += self.hover_speed
+        offset = math.sin(self.hover_timer) * self.hover_amount
+        self.rect.centery = self.base_y + offset
+        
+        # Despawn
+        if self.rect.right < 0:
+            self.kill()

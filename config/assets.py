@@ -79,7 +79,6 @@ class AssetManager:
         for i in range(6):
             self.obstacles['statique']['cactus'].append(
                 self.load_image(['obstacles', 'statique', 'cactus'], f'{i}.png'))
-        print(self.obstacles)
 
         # A completer
             
@@ -90,6 +89,7 @@ class AssetManager:
         
         # --- Other ----
         self.other['bullet'] = self.load_image(['other'], 'bullet.png')
+        self.other['gun'] = self.load_image(['other'], 'gun.png')
         
         # --- Sons ---
         

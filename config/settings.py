@@ -9,6 +9,7 @@ class Settings:
         # Parametres par defaut
         
         # ------ Game ----------------
+        self.debug_mode = False
         self.game_fps = 60
         self.game_title = "Expedition 33"
         self.game_high_score = 0
