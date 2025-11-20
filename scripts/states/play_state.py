@@ -66,7 +66,8 @@ class PlayState(State):
                 # Entrer dans etat game_over
                 self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
             else:
-                pygame.time.delay(200)
+                # pygame.time.delay(200)
+                pass
             self.sound.play_sound("dino_death")
         if powerups:
             self.player.equip_gun()
