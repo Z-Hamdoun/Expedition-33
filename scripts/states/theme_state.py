@@ -51,7 +51,7 @@ class ThemeState(State):
             screen.blit(self.bg_img, (0,0))
         else:
             screen.fill("gray")
-        self.text("Selectionnez un thème",self.font,(0,0,0),self.largeur//2,self.hauteur//4,screen)
+        self.text("Selectionnez un thème",self.font,(240,230,140),self.largeur//2,self.hauteur//4,screen)
         self.theme_1.draw(screen)
         self.theme_2.draw(screen)
         self.theme_3.draw(screen)

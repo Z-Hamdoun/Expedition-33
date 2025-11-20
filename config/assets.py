@@ -81,8 +81,8 @@ class AssetManager:
         
         # Menu backgrounds
         self.backgrounds['menu']['main'] = self.load_image(['backgrounds', 'menu'], 'main_menu_background.png', transparent=False)
-        self.backgrounds['menu']['theme'] = self.load_image(['backgrounds', 'menu'], 'menubg_test.jpg', transparent=False)
-        self.backgrounds['menu']['skins'] = self.load_image(['backgrounds', 'menu'], 'menubg_test.jpg', transparent=False)
+        self.backgrounds['menu']['theme'] = self.load_image(['backgrounds', 'menu'], 'menus_background.png', transparent=False)
+        self.backgrounds['menu']['skins'] = self.load_image(['backgrounds', 'menu'], 'menus_background.png', transparent=False)
         
         # --- Obstacles ----
         # Statique
