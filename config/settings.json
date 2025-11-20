@@ -4,7 +4,7 @@
         "title": "Expedition 33",
         "high_score": 0,
         "ground_y": 600,
-        "game_speed": 10.15288,
+        "game_speed": 12.1948,
         "width": 1280,
         "height": 720,
         "mode": "Facile",
@@ -21,7 +21,6 @@
             200,
             1000
         ],
-        "skin": "desert"
         "skin": "desert"
     }
 }
