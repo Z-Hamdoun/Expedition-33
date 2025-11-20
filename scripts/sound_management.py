@@ -19,12 +19,12 @@ class SoundManager:
         self.current_music = ""
         
         self.sound_paths = {
-            "jump": os.path.join("Sons", "jump.mp3"), 
-            "dino_death": os.path.join("Sons", "Mort dinosaure.mp3"),
-            "pterodactyl": os.path.join("Sons", "Oiseaux dinosaures.mp3"),
-            "duck": os.path.join("Sons", "Se baisser.mp3"),
-            "gun": os.path.join("Sons","Tir au gun.mp3"),
-            "recup" :  os.path.join("Sons","Récupération gun.mp3")
+            "jump": os.path.join("sons", "jump.wav"), 
+            "dino_death": os.path.join("sons", "mort.wav"),
+            "pterodactyl": os.path.join("sons", "oiseau.wav"),
+            "duck": os.path.join("sons", "duck.wav"),
+            "gun": os.path.join("sons","tir.wav"),
+            "recup" :  os.path.join("sons","recuperer.wav")
         }
         
         self.load_sounds()
