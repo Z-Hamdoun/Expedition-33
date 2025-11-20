@@ -28,7 +28,7 @@ class PlayState(State):
         self.score = 0
         self.score_font = pygame.font.Font(None, 60)
         
-        self.sound.play_music("troll")
+        self.sound.play_music("classique")
     
     def update(self):
         # Gestion du background
@@ -58,9 +58,11 @@ class PlayState(State):
         collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
         powerups = pygame.sprite.spritecollide(self.player, self.obstacle_manager.powerups, True) # True pour supprimer le pistolet
         if collisions:
+            self.sound.play_sound("dino_death")
             if not self.game.settings.debug_mode:
                 # Entrer dans etat game_over
                 self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
+                self.sound.play_sound("dino_death")
             else:
                 pygame.time.delay(200)
         if powerups:
