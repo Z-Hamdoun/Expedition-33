@@ -131,7 +131,7 @@ class Player(pygame.sprite.Sprite):
         # Ducking
         if inpt[pygame.K_DOWN] and self.running:
             self.ducking = True
-            self.sound.play_sound("duck")
+            # self.sound.play_sound("duck")
         else:
             self.ducking = False
     
