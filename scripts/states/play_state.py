@@ -52,7 +52,7 @@ class PlayState(State):
         # Balles
         self.bullets.update()
             
-        self.score += int(self.game.settings.game_game_speed / 10)
+        self.score += int(self.game.settings.game_game_speed / 4)
         
         hits = pygame.sprite.groupcollide(self.bullets, self.obstacle_manager.obstacles, True, True)  
         if hits:
