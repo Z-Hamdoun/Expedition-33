@@ -7,6 +7,7 @@ class Obstacle(pygame.sprite.Sprite):
     def __init__(self, assets, settings, obs_type):
         super().__init__()
         self.settings = settings
+        self.obs_type = obs_type
         
         # Variables d'animation
         self.is_animated = False
@@ -46,7 +47,10 @@ class Obstacle(pygame.sprite.Sprite):
         self.update_animation()
         
         # Bouge vers la gauche en utilisant la game_speed
-        self.rect.x -= self.settings.game_game_speed
+        if self.obs_type == 'oiseau':
+            self.rect.x -= (self.settings.game_game_speed + 5)
+        else:
+            self.rect.x -= self.settings.game_game_speed
 
         # Despawn
         if self.rect.right < 0:

@@ -65,8 +65,11 @@ class PlayState(State):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.game.current_state = PauseState(self.game, prev_state=self)
+                # Debogage
                 if event.key == pygame.K_h:
                     self.game.settings.debug_mode = not self.game.settings.debug_mode
+                if event.key == pygame.K_PAGEUP:
+                    self.game.settings.game_game_speed += 5
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
                     self.player.end_jump()
