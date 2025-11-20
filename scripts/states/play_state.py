@@ -6,6 +6,7 @@ from scripts.obstacles import ObstacleManager
 from scripts.states.gameover_state import GameOverState
 from scripts.states.pause_state import PauseState
 from scripts.bullet import Bullet
+from scripts.sound_management import SoundManager
 
 class PlayState(State):
     def __init__(self, game):
@@ -14,6 +15,7 @@ class PlayState(State):
         self.game = game
         self.player = Player(game.settings, game.assets)
         self.bg = background(img=game.assets.backgrounds['background'])
+        self.sound = SoundManager()
         self.bg.vitesse = game.settings.game_game_speed
         
         # Gestionnaire des obstacles
@@ -26,13 +28,7 @@ class PlayState(State):
         self.score = 0
         self.score_font = pygame.font.Font(None, 60)
         
-        
-        # Musique
-        # A completer
-    
-    def enter_state(self):
-        # Code pour gerer la musique
-        pass
+        self.sound.play_music("troll")
     
     def update(self):
         # Gestion du background
@@ -41,6 +37,10 @@ class PlayState(State):
         # Entree joueur + physique
         keys = pygame.key.get_pressed()
         self.player.update(keys)
+        if self.player.jumping:
+            self.sound.play_sound("jump")
+        if self.player.ducking:
+            self.sound.play_sound("duck")
 
         # Ennemis
         self.obstacle_manager.update()
@@ -54,19 +54,14 @@ class PlayState(State):
         if hits:
             pass
 
-        # 4. Collision 
+        # 4. Collision
         collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
         powerups = pygame.sprite.spritecollide(self.player, self.obstacle_manager.powerups, True) # True pour supprimer le pistolet
         if collisions:
-            if not self.game.settings.debug_mode:
-                # Entrer dans etat game_over
-                self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
-            else:
-                pygame.time.delay(200)
-        if powerups:
-            self.player.equip_gun()
-            # SON RECUPERER GUN
-            
+            # Entrer dans etat game_over
+            self.sound.play_sound("dino_death")
+            self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
+    
     def handle_input(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
