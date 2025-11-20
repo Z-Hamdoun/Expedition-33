@@ -41,7 +41,7 @@ class Obstacle(pygame.sprite.Sprite):
         # on ajoute + 100 pour qu'il n'apparait pas instantannement
         
         ######## A CHANGER
-        self.rect.x = 1920 + 50
+        self.rect.x = settings.game_width + 50
 
     def update(self):
         # Animation
@@ -113,7 +113,7 @@ class ObstacleManager:
                 else:
                     # sinon prendre le game distance aleatoirement avant le prochain motif
                     min_gap = 1000
-                    max_gap = 1200 + (self.settings.game_game_speed * 20) # Large variance makes it unpredictable
+                    max_gap = 1200 + (self.settings.game_game_speed * 20)
                     dist = random.randint(min_gap, int(max_gap))
             
 
@@ -128,22 +128,22 @@ class ObstacleManager:
         """Choisi un motif d'obstacles selon le game_speed"""
         patterns = []
         
-        # --- motifs par defaut (n'import quelle vitesse) ---
+        # --- motifs par defaut (n'importe quelle vitesse) ---
         patterns.append([('random', 0)]) # un truc aleatoire
         patterns.append([('cactus', 0)]) # un cactus
         
         # --- Motifs plus difficiles (selon la vitesse) ---
-        if self.settings.game_game_speed > 30:
-            # Deux cactus proches
-            patterns.append([('cactus', 280), ('cactus', 0)]) 
-            
         if self.settings.game_game_speed > 10:
+            # Deux cactus proches
+            patterns.append([('cactus', 300), ('cactus', 0)]) 
+            
+        if self.settings.game_game_speed > 20:
             # Deux oiseaux
             patterns.append([('oiseau', 400), ('oiseau', 0)])
             # Piege Oiseau + cactus
             patterns.append([('oiseau', 500), ('cactus', 0)])
 
-        if self.settings.game_game_speed > 50:
+        if self.settings.game_game_speed > 30:
             # 3 cactus
             patterns.append([('cactus', 300), ('cactus', 300), ('cactus', 0)])
             # 3 obstacles
@@ -179,7 +179,7 @@ class GunPowerup(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         
         # Position du spawn
-        self.rect.x = 1920 + 50
+        self.rect.x = settings.game_width + 50
         self.base_y = settings.game_ground_y - random.choice([50, 150]) 
         self.rect.centery = self.base_y
         

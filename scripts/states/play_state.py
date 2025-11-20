@@ -19,7 +19,7 @@ class PlayState(State):
         self.difficulté.reset_depart()
         self.player = Player(game.settings, game.assets)
         self.sound = SoundManager()
-        self.bg = background(hauteur=game.height, largeur=game.width, img=game.assets.backgrounds['game'][theme])
+        self.bg = background(settings=game.settings, img=game.assets.backgrounds['game'][theme])
         self.bg.vitesse = self.difficulté.update()[0]
         
         # Gestionnaire des obstacles

@@ -5,17 +5,16 @@ import math
 pygame.init()
 
 class background():
-    def __init__(self,largeur = pygame.display.Info().current_w,hauteur = pygame.display.Info().current_h,img = None , vitesse = 3):
+    def __init__(self,settings,img = None , vitesse = 3):
         self.img = img
-        self.largeur = largeur
-        self.hauteur = hauteur
+        self.settings = settings
         self.vitesse = 3
-        self.img = pygame.transform.scale(self.img, (self.largeur, self.hauteur))
+        self.img = pygame.transform.scale(self.img, (self.settings.game_width, self.settings.game_height))
         self.defilement_horizontal = 0
-        self.pavage = math.ceil( self.largeur / self.img.get_width() ) + 1
+        self.pavage = math.ceil( self.settings.game_width / self.img.get_width() ) + 1
 
     def maj(self):
-        self.defilement_horizontal -= self.vitesse
+        self.defilement_horizontal -= self.settings.game_game_speed
         if abs(self.defilement_horizontal) > self.img.get_width():
             self.defilement_horizontal = 0
     
