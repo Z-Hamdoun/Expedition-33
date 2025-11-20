@@ -5,15 +5,18 @@ from scripts.scrollable_bg import background
 from scripts.obstacles import ObstacleManager
 from scripts.states.gameover_state import GameOverState
 from scripts.states.pause_state import PauseState
+from scripts.difficulté import GestionDifficulte
 
 class PlayState(State):
     def __init__(self, game, theme):
         super().__init__(game)
         # Initialize Entities
         self.game = game
+        self.difficulté = GestionDifficulte()
+        self.difficulté.reset_depart()
         self.player = Player(game.settings, game.assets)
         self.bg = background(img=game.assets.backgrounds['game'][theme])
-        self.bg.vitesse = game.settings.game_game_speed
+        self.bg.vitesse = self.difficulté.update()[0]
         
         # New Manager for Enemies (Supports Bosses/Waves)
         self.obstacle_manager = ObstacleManager(game.assets, game.settings)
@@ -37,6 +40,8 @@ class PlayState(State):
         if not self.pause:
             # Gestion du background
             self.bg.maj()
+            self.bg.vitesse = self.difficulté.update()[0]
+            self.game.settings.game_game_speed = self.bg.vitesse
 
             # Entree joueur + physique
             keys = pygame.key.get_pressed()
