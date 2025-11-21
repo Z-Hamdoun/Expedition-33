@@ -13,7 +13,6 @@ class Game:
         
         
         self.settings = Settings()
-        resolution = pygame.display.Info()
         self.width, self.height= self.settings.game_width, self.settings.game_height
         self.screen = pygame.display.set_mode((self.width, self.height))
 
