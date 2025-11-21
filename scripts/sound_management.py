@@ -28,7 +28,9 @@ class SoundManager:
             "bouton_confirm": os.path.join("sons","bouton_confirmation.ogg"),
             "drop": os.path.join("sons","drop.ogg"),
             "drop1": os.path.join("sons","drop1.ogg"),
-            "confirm": os.path.join("sons","confirm.ogg")
+            "confirm": os.path.join("sons","confirm.ogg"),
+            "hit_cactus": os.path.join("sons","hit_cactus.ogg"),
+            "hit": os.path.join("sons","hit.ogg")
         }
         
         self.load_sounds()

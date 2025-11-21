@@ -137,7 +137,7 @@ class Player(pygame.sprite.Sprite):
         
         if inpt[pygame.K_s] and not self.running and not inpt[pygame.K_z]:
             if self.vel.y < 0:
-                self.vel.y = 2
+                self.vel.y = 5
     
     def update_animation(self):
         # Compteur de frames

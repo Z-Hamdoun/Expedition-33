@@ -17,6 +17,7 @@ class Obstacle(pygame.sprite.Sprite):
         
         # Choix des images selon le type de l'obstacle
         if obs_type == "cactus":
+            self.is_shootable = False
             # Choisi un cactus aleatoire de la liste de cactus
             # assets.obstacles['statique']['nom obstacle'] est une liste d'image
             self.image = random.choice(assets.obstacles['statique']['cactus'])
@@ -27,6 +28,7 @@ class Obstacle(pygame.sprite.Sprite):
             
         elif obs_type == "oiseau":
             self.is_animated = True
+            self.is_shootable = True
             # A  changer pour qu'il y ai d'animations
             self.frames = assets.obstacles['dynamique']['oiseau']
             self.image = self.frames[0]
@@ -73,6 +75,7 @@ class JumpingEnemy(pygame.sprite.Sprite):
     def __init__(self, assets, settings):
         super().__init__()
         self.settings = settings
+        self.is_shootable = True
         
         # Partie graphique
         self.image = pygame.Surface((40, 40))

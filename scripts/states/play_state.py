@@ -45,7 +45,10 @@ class PlayState(State):
         keys = pygame.key.get_pressed()
         self.player.update(keys)
         
-
+        if self.player.has_gun:
+            pygame.mouse.set_visible(False)
+        else:
+            pygame.mouse.set_visible(True)
         # Ennemis
         self.obstacle_manager.update()
         
@@ -54,9 +57,16 @@ class PlayState(State):
             
         self.score += int(self.game.settings.game_game_speed / 4)
         
-        hits = pygame.sprite.groupcollide(self.bullets, self.obstacle_manager.obstacles, True, True)  
-        if hits:
-            pass
+        hits = pygame.sprite.groupcollide(self.bullets, self.obstacle_manager.obstacles, True, False)  
+        for bullet, hit_obstacles in hits.items():
+            for obs in hit_obstacles:
+                # Only destroy if it's a "Shootable" enemy (Bird/Frog)
+                if getattr(obs, 'is_shootable', False):
+                    obs.kill()
+                    self.score += 5
+                    self.sound.play_sound('hit')
+                else:
+                    self.sound.play_sound('hit_cactus')
 
         # 4. Collision
         collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
@@ -65,6 +75,7 @@ class PlayState(State):
             if not self.game.settings.debug_mode:
                 # Entrer dans etat game_over
                 self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
+                pygame.mouse.set_visible(True)
                 # High score
                 if self.score > self.game.settings.game_high_score:
                     self.game.settings.game_high_score = self.score
@@ -81,6 +92,7 @@ class PlayState(State):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    pygame.mouse.set_visible(True)
                     self.game.current_state = PauseState(self.game, prev_state=self)
                 # Debogage
                 if event.key == pygame.K_h:
@@ -146,6 +158,13 @@ class PlayState(State):
             # Balles en Jaune
             for bullet in self.bullets:
                 pygame.draw.rect(surface, (255, 255, 0), bullet.rect, 2)
+        
+        if self.player.has_gun:
+            scope_img = self.game.assets.other.get('crosshair')
+            mx, my = pygame.mouse.get_pos()
+            # Centrer l'image
+            scope_rect = scope_img.get_rect(center=(mx, my))
+            surface.blit(scope_img, scope_rect)
         
     
     def desc(self):
