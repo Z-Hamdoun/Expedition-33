@@ -4,11 +4,10 @@ import os
 from pygame.math import Vector2
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 from scripts.bullet import Bullet
-
+from scripts.sound_management import SoundManager
 from config.settings import Settings
 from config.assets import AssetManager
 
-pygame.mixer.init()
 
 class Player(pygame.sprite.Sprite):
     '''
@@ -29,13 +28,13 @@ class Player(pygame.sprite.Sprite):
         self.vel = Vector2(0, 0)
         
         # Charger les animations dans un dictionnaire
-        self.animations = {'jumping': self.assets.player_imgs['jump'],
-            'running': self.assets.player_imgs['run'],
-            'ducking': self.assets.player_imgs['duck']}
+        self.animations = {'jumping': self.assets.skins[self.settings.player_skin]['jump'],
+            'running': self.assets.skins[self.settings.player_skin]['run'],
+            'ducking': self.assets.skins[self.settings.player_skin]['duck']}
         
         self.image = self.animations['running'][0]
         self.rect: pygame.Rect = self.image.get_rect()
-
+        self.sound = SoundManager()
         # Etat initial
         self.jumping = False
         self.ducking = False
@@ -124,15 +123,21 @@ class Player(pygame.sprite.Sprite):
     
     def handle_input(self, inpt):
         # Jumping
-        if inpt[pygame.K_UP] and self.running:
+        if inpt[pygame.K_z] and self.running:
             self.jump()
+            self.sound.play_sound("jump")
             self.running = False
         
         # Ducking
-        if inpt[pygame.K_DOWN] and self.running:
+        if inpt[pygame.K_s] and self.running:
             self.ducking = True
+            # self.sound.play_sound("duck")
         else:
             self.ducking = False
+        
+        if inpt[pygame.K_s] and not self.running and not inpt[pygame.K_z]:
+            if self.vel.y < 0:
+                self.vel.y = 5
     
     def update_animation(self):
         # Compteur de frames

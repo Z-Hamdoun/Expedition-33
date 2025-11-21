@@ -11,13 +11,27 @@ class SoundManager:
             pygame.mixer.init()
 
         self.sounds = {} 
-        self.musics = {} 
+        self.musics = {
+            "troll" : os.path.join("Musiques","Musique_thème_troll__Badali-Badala_.mp3"),
+            "classique" : os.path.join("Musiques", "Musique_thème_classique_Night_Drifting.mp3"),
+            "gameover" : os.path.join("Musiques", "Musique_game_over.mp3"),
+            "accueil" : os.path.join("Musiques", "Musique_écran_acceuil.mp3")} 
         self.current_music = ""
         
         self.sound_paths = {
-            "jump": os.path.join("Sons", "thème troll", "saut-2.mp3"), 
-            "dino_death": os.path.join("Sons", "thème troll", "Mort-méchant-dinosaure.mp3"),
-            "pterodactyl": os.path.join("Sons", "thème troll", "Oiseaux-dinosaure-1.mp3"), 
+            "jump": os.path.join("sons", "jump.wav"), 
+            "dino_death": os.path.join("sons", "mort.wav"),
+            "pterodactyl": os.path.join("sons", "oiseau.wav"),
+            "duck": os.path.join("sons", "duck.wav"),
+            "gun": os.path.join("sons","tir.wav"),
+            "recup" :  os.path.join("sons","recuperer.wav"),
+            "bouton_confirm": os.path.join("sons","bouton_confirmation.ogg"),
+            "drop": os.path.join("sons","drop.ogg"),
+            "drop1": os.path.join("sons","drop1.ogg"),
+            "confirm": os.path.join("sons","confirm.ogg"),
+            "hit_cactus": os.path.join("sons","hit_cactus.ogg"),
+            "hit": os.path.join("sons","hit.ogg"),
+            "pause": os.path.join("sons","pause.ogg")
         }
         
         self.load_sounds()
@@ -33,10 +47,6 @@ class SoundManager:
             except pygame.error as e:
                 print(f"Erreur de chargement du son '{name}' à '{path}': {e}")
                 
-    def register_music_paths(self, music_dict):
-        """Enregistre les chemins des musiques (dictionnaire de nom -> chemin)."""
-        self.musics = music_dict
-        print("Chemins des musiques enregistrés.")
 
 
     def play_sound(self, name):
@@ -62,6 +72,7 @@ class SoundManager:
             self.stop_music()
             try:
                 pygame.mixer.music.load(file_path)
+                pygame.mixer.music.set_volume(0.3)
                 pygame.mixer.music.play(loops=loops)
                 self.current_music = file_path
                 print(f"Musique '{name}' lancée : {file_path}")

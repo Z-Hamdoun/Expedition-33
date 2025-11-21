@@ -6,15 +6,21 @@ from scripts.obstacles import ObstacleManager
 from scripts.states.gameover_state import GameOverState
 from scripts.states.pause_state import PauseState
 from scripts.bullet import Bullet
+from scripts.difficulté import GestionDifficulte
+from scripts.sound_management import SoundManager
+
 
 class PlayState(State):
-    def __init__(self, game):
+    def __init__(self, game, theme):
         super().__init__(game)
         # Initialisation
         self.game = game
+        self.difficulté = GestionDifficulte()
+        self.difficulté.reset_depart()
         self.player = Player(game.settings, game.assets)
-        self.bg = background(img=game.assets.backgrounds['background'])
-        self.bg.vitesse = game.settings.game_game_speed
+        self.sound = SoundManager()
+        self.bg = background(settings=game.settings, img=game.assets.backgrounds['game'][theme])
+        self.bg.vitesse = self.difficulté.update()[0]
         
         # Gestionnaire des obstacles
         self.obstacle_manager = ObstacleManager(game.assets, game.settings)
@@ -26,72 +32,87 @@ class PlayState(State):
         self.score = 0
         self.score_font = pygame.font.Font(None, 60)
         
-        
-        # Musique
-        # A completer
-    
-    def enter_state(self):
-        # Code pour gerer la musique
-        pass
+        self.sound.play_music("classique")
     
     def update(self):
         # Gestion du background
         self.bg.maj()
+        self.bg.vitesse = self.difficulté.update()[0]
+        self.game.settings.game_game_speed = self.bg.vitesse
+        self.score = self.difficulté.update()[1]
 
         # Entree joueur + physique
         keys = pygame.key.get_pressed()
         self.player.update(keys)
-
+        
+        if self.player.has_gun:
+            pygame.mouse.set_visible(False)
+        else:
+            pygame.mouse.set_visible(True)
         # Ennemis
         self.obstacle_manager.update()
         
         # Balles
         self.bullets.update()
             
-        self.score += int(self.game.settings.game_game_speed / 10)
+        self.score += int(self.game.settings.game_game_speed / 4)
         
-        hits = pygame.sprite.groupcollide(self.bullets, self.obstacle_manager.obstacles, True, True)  
-        if hits:
-            pass
+        hits = pygame.sprite.groupcollide(self.bullets, self.obstacle_manager.obstacles, True, False)  
+        for bullet, hit_obstacles in hits.items():
+            for obs in hit_obstacles:
+                # Only destroy if it's a "Shootable" enemy (Bird/Frog)
+                if getattr(obs, 'is_shootable', False):
+                    obs.kill()
+                    self.score += 5
+                    self.sound.play_sound('hit')
+                else:
+                    self.sound.play_sound('hit_cactus')
 
-        # 4. Collision 
+        # 4. Collision
         collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
         powerups = pygame.sprite.spritecollide(self.player, self.obstacle_manager.powerups, True) # True pour supprimer le pistolet
         if collisions:
             if not self.game.settings.debug_mode:
                 # Entrer dans etat game_over
                 self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
+                pygame.mouse.set_visible(True)
+                # High score
+                if self.score > self.game.settings.game_high_score:
+                    self.game.settings.game_high_score = self.score
+                    self.game.settings.save_settings()
             else:
-                pygame.time.delay(200)
+                # pygame.time.delay(200)
+                pass
+            self.sound.play_sound("dino_death")
         if powerups:
             self.player.equip_gun()
-            # SON RECUPERER GUN
+            self.sound.play_sound("recup")
             
     def handle_input(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    pygame.mouse.set_visible(True)
+                    self.sound.play_sound('pause')
                     self.game.current_state = PauseState(self.game, prev_state=self)
                 # Debogage
                 if event.key == pygame.K_h:
                     self.game.settings.debug_mode = not self.game.settings.debug_mode
-                if event.key == pygame.K_PAGEUP:
+                if event.key == pygame.K_p:
                     self.game.settings.game_game_speed += 5
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_z:
                     self.player.end_jump()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1: # Click gauche
                     if self.player._can_shoot():
                         self.shoot(event.pos)
                         self.player._shoot()
-                    else:
-                        print("Pas de munitions")
     
     def shoot(self, mouse_pos):
         """Tire vers la position de la souris"""
         start_pos = self.player.rect.center
-        
+        self.sound.play_sound("gun")
         # Creer la balle
         new_bullet = Bullet(start_pos, mouse_pos, self.game.assets)
         
@@ -138,6 +159,13 @@ class PlayState(State):
             # Balles en Jaune
             for bullet in self.bullets:
                 pygame.draw.rect(surface, (255, 255, 0), bullet.rect, 2)
+        
+        if self.player.has_gun:
+            scope_img = self.game.assets.other.get('crosshair')
+            mx, my = pygame.mouse.get_pos()
+            # Centrer l'image
+            scope_rect = scope_img.get_rect(center=(mx, my))
+            surface.blit(scope_img, scope_rect)
         
     
     def desc(self):

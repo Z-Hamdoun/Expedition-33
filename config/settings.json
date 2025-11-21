@@ -2,9 +2,11 @@
     "game": {
         "fps": 60,
         "title": "Expedition 33",
-        "high_score": 0,
-        "ground_y": 800,
-        "game_speed": 20,
+        "high_score": 183,
+        "ground_y": 650,
+        "game_speed": 11.26117,
+        "width": 1280,
+        "height": 720,
         "mode": "Facile",
         "acceleration": 0.5,
         "vmax": 40
@@ -18,6 +20,7 @@
         "pos_initiale": [
             200,
             1000
-        ]
+        ],
+        "skin": "forest"
     }
 }

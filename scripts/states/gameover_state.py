@@ -1,6 +1,7 @@
 import pygame
 from scripts.states.state import State
 from scripts.ui import Button
+from scripts.sound_management import SoundManager
 
 class GameOverState(State):
     def __init__(self, game, final_score = 100, prev_state = None):
@@ -21,6 +22,10 @@ class GameOverState(State):
         self.btn_replay = Button(cw, ch + 100, "Rejouer", self.font, (0,0,0), (255,215,0))
         self.btn_quit = Button(cw, ch + 200, "Quitter", self.font, (0,0,0), (255,215,0))
 
+        #Musique
+        self.sound = SoundManager()
+        self.sound.play_music("gameover")
+
     def draw(self, surface):
         # Dessin de l'etat final
         if self.prev_state:
@@ -30,11 +35,11 @@ class GameOverState(State):
         surface.blit(self.overlay, (0, 0))
         
         # Afficher Text
-        txt_surf = self.font.render("GAME OVER", True, (255, 0, 0))
+        txt_surf = self.font.render("GAME OVER", True, (200, 50, 50))
         txt_rect = txt_surf.get_rect(center=(self.game.width//2, self.game.height//4))
         surface.blit(txt_surf, txt_rect)
         
-        score_surf = self.font.render(f"Score: {self.score}", True, (255, 215, 0))
+        score_surf = self.font.render(f"Score: {self.score}", True, (200, 150, 50))
         score_rect = score_surf.get_rect(center=(self.game.width//2, self.game.height//2))
         surface.blit(score_surf, score_rect)
 
