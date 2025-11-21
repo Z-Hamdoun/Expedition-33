@@ -87,13 +87,13 @@ class JumpingEnemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         
         # logique spawn 
-        self.rect.x = 1920 + 50 ## A CHANGER
+        self.rect.x = settings.game_width + 50
         self.rect.bottom = settings.game_ground_y
         
         # Physique
         self.vel_y = 0
         self.gravity = 0.6      # gravite differente de celle du joueur
-        self.jump_power = -14  
+        self.jump_power = -20
 
     def update(self):
         # Vers la gauche
@@ -146,9 +146,9 @@ class ObstacleManager:
             else:
                 if obs_type == 'random':
                     tirage = random.random()
-                    if tirage < 0.2 and self.settings.game_game_speed > 20:
+                    if tirage < 0.2 and self.settings.game_game_speed > 10:
                         obs_type = 'oiseau'
-                    elif tirage < 0.3 and self.settings.game_game_speed > 20:
+                    elif tirage < 0.3 and self.settings.game_game_speed > 10:
                         obs_type = 'jumping_enemy'
                     else:
                         obs_type = 'cactus'
@@ -178,27 +178,55 @@ class ObstacleManager:
         """Choisi un motif d'obstacles selon le game_speed"""
         patterns = []
         
-        # --- motifs par defaut (n'importe quelle vitesse) ---
-        patterns.append([('random', 0)]) # un truc aleatoire
-        patterns.append([('cactus', 0)]) # un cactus
+        # --- NIVEAU 0: WARMUP (Speed < 16) ---
+        # Mostly random single obstacles to get used to the speed
+        patterns.append([('random', 0)]) 
+        patterns.append([('cactus', 0)])
         
-        # --- Motifs plus difficiles (selon la vitesse) ---
-        if self.settings.game_game_speed > 10:
-            # Deux cactus proches
-            patterns.append([('cactus', 400), ('cactus', 0)]) 
+        # --- NIVEAU 1: RHYTHM (Speed 16 - 17) ---
+        # Introduction of basic combos. 
+        if self.settings.game_game_speed >= 16:
+            # "The Double": Classic two-jump rhythm
+            patterns.append([('cactus', 450), ('cactus', 0)]) 
             
-        if self.settings.game_game_speed > 20:
-            # Deux oiseaux
-            #patterns.append([('oiseau', 400), ('oiseau', 0)])
-            # Piege Oiseau + cactus
-            #patterns.append([('oiseau', 500), ('cactus', 0)])
-            patterns.append([('jumping_enemy', 400), ('cactus', 400), ('oiseau', 0)])
+            # Oiseau + cactus
+            patterns.append([('oiseau', 400), ('cactus', 0)]) 
 
-        if self.settings.game_game_speed > 30:
-            # 3 cactus
-            patterns.append([('cactus', 300), ('cactus', 300), ('cactus', 0)])
-            # 3 obstacles
-            patterns.append([('cactus', 350), ('oiseau', 350), ('cactus', 0)])
+        # --- NIVEAU 2: PRECISION (Speed 17 - 21) ---
+        # Faster, introducing the Jumping Enemy which requires timing
+        if self.settings.game_game_speed >= 17:
+            # Cactus puis frog
+            patterns.append([('cactus', 450), ('jumping_enemy', 0)])
+            
+            # "Duck and Cover": Deux oiseaux
+            # Duck -> Jump 
+            patterns.append([('oiseau', 400), ('oiseau', 0)])
+
+        # --- NIVEAU 3: Pieges (Speed 21 - 24) ---
+        # Mental load increases. You have to identify threats quickly.
+        if self.settings.game_game_speed >= 21:
+            # "Le MUR" 3 cactus
+            patterns.append([('cactus', 500), ('cactus', 50), ('cactus', 0)])
+            
+            # Frog + bird
+            patterns.append([('jumping_enemy', 450), ('oiseau', 0)])
+            
+            # Jeu de tirs 
+            patterns.append([('oiseau', 300), ('jumping_enemy', 300), ('oiseau', 0)])
+
+        # --- NIVEAU 4: CHAOS (Speed 24+) ---
+        if self.settings.game_game_speed >= 24:
+            # 4 obstacles. 
+            # Cactus -> (fast jump) -> Cactus -> (duck) -> Bird -> (shoot/jump) -> Frog
+            patterns.append([('cactus', 450), ('cactus', 400), ('oiseau', 400), ('jumping_enemy', 0)])
+            
+            # 3 oiseaux
+            patterns.append([('oiseau', 350), ('oiseau', 350), ('oiseau', 0)])
+
+        # --- MAX SPEED (Speed 27+) ---
+        if self.settings.game_game_speed >= 27:
+            # mode panique: RANDOM
+            patterns.append([('random', 250), ('random', 250), ('random', 0)])
 
         # Choix d'un pattern aleatoirement
         choice = random.choice(patterns)

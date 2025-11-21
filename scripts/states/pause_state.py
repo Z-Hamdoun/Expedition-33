@@ -27,7 +27,7 @@ class PauseState(State):
         self.btn_rejouer = Button(cw, ch, 'Rejouer',self.font, (255,255,255), (255,215,0))
 
         self.sound = SoundManager()
-        self.sound.play_music("accueil")
+        #self.sound.play_music("accueil")
     def update(self):
         # We do NOT call self.prev_state.update()
         # This effectively "Freezes" the game logic!

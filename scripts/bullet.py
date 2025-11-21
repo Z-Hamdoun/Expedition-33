@@ -22,7 +22,7 @@ class Bullet(pygame.sprite.Sprite):
             direction = direction.normalize() 
         
         # Vitesse
-        self.speed = 15 
+        self.speed = 30
         self.velocity = direction * self.speed
 
     def update(self):
