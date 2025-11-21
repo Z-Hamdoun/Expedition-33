@@ -11,8 +11,13 @@ class GestionDifficulte():
         self.depart = pygame.time.get_ticks()
 
     def update(self):
-        tps_ecoulé = (pygame.time.get_ticks() - self.depart)/100 #conversion en secondes
-        vitesse = min(self.vitesse0 + (tps_ecoulé * self.acceleration) , self.vmax)
+        tps_ecoulé = (pygame.time.get_ticks() - self.depart)/1000 #conversion en secondes
+        if tps_ecoulé <= 30:
+            vitesse = min(self.vitesse0 + (tps_ecoulé * self.acceleration) , 20)
+        elif 30<=tps_ecoulé<=60:
+            vitesse = min(20 + ((tps_ecoulé-30) * self.acceleration) , 30)
+        elif 60<=tps_ecoulé:
+            vitesse = min(30 + ((tps_ecoulé-60) * self.acceleration) , 40)
         score = int(self.acceleration*tps_ecoulé*10)
         return vitesse,score
 

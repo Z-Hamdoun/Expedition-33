@@ -53,7 +53,7 @@ class PlayState(State):
         # Balles
         self.bullets.update()
             
-        self.score += int(self.game.settings.game_game_speed / 10)
+        self.score += int(self.game.settings.game_game_speed / 4)
         
         hits = pygame.sprite.groupcollide(self.bullets, self.obstacle_manager.obstacles, True, True)  
         if hits:
@@ -70,7 +70,8 @@ class PlayState(State):
                 if self.score > self.game.settings.game_high_score:
                     self.game.game_high_score = self.score
             else:
-                pygame.time.delay(200)
+                # pygame.time.delay(200)
+                pass
             self.sound.play_sound("dino_death")
         if powerups:
             self.player.equip_gun()
