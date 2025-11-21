@@ -18,13 +18,14 @@ class MenuState(State):
         # Initialisation du son
         self.sound = SoundManager()
         # Définition de la police
-        self.font = pygame.font.Font(None, 60)
+        self.font = pygame.font.Font(None, 30)
         # Creation des boutons
         cw, ch = game.width // 2, game.height // 2
         self.btn_play = Button(cw//2,7*ch//4 , "COMMENCER", self.font,(240,230,140), (255,215,0))
         self.btn_skins = Button(cw,7*ch//4 , "SKINS", self.font,(240,230,140), (255,215,0))
         self.btn_quit = Button(3*cw//2,7*ch//4, "QUITTER", self.font,(240,230,140), (255,215,0))
-        self.hi_score = self.text("High score = " + str(self.game.settings.game_high_score),self.font,2*cw - 150,0,self.bg_img)
+        
+        
         #Musique
         self.sound.play_music("accueil")
 
@@ -34,6 +35,7 @@ class MenuState(State):
         rect.center  = (x,y)
         fenetre.blit(txt_to_img,rect)
 
+    
     def update(self):
         # Vérifie si un des boutons a été survolé
         mouse_pos = pygame.mouse.get_pos()
@@ -48,10 +50,11 @@ class MenuState(State):
             surface.blit(self.bg_img, (0,0))
         else:
             surface.fill("gray")  
-        # Dessine les boutons
+        # Dessine les boutons et meilleur score
         self.btn_play.draw(surface)
         self.btn_skins.draw(surface)
         self.btn_quit.draw(surface)
+        self.text("High score = " + str(self.game.settings.game_high_score),self.font,(0,0,0),self.game.width - 150,20,surface)
  
 
     def handle_input(self, events):

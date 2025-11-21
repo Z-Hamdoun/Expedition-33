@@ -1,6 +1,6 @@
 import pygame
 
-class Button:
+class Button():
     def __init__(self, x, y, text, font, color_base, color_hover):
         self.x = x
         self.y = y
@@ -33,7 +33,7 @@ class Button:
                 return True
         return False
     
-class ImgButton:
+class ImgButton():
     def __init__(self, x, y, color_base, color_hover, image_surface,is_selected = False):
         self.x = x
         self.y = y
@@ -74,3 +74,4 @@ class ImgButton:
             if self.is_hovered:
                 return True
         return False
+    

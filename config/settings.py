@@ -12,7 +12,7 @@ class Settings:
         self.debug_mode = False
         self.game_fps = 60
         self.game_title = "Expedition 33"
-        self.game_high_score = 0
+        self.game_high_score = 000
         self.game_ground_y = 600
         self.game_game_speed = 10
         self.game_mode = 'Facile'
