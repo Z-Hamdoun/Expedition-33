@@ -30,7 +30,8 @@ class SoundManager:
             "drop1": os.path.join("sons","drop1.ogg"),
             "confirm": os.path.join("sons","confirm.ogg"),
             "hit_cactus": os.path.join("sons","hit_cactus.ogg"),
-            "hit": os.path.join("sons","hit.ogg")
+            "hit": os.path.join("sons","hit.ogg"),
+            "pause": os.path.join("sons","pause.ogg")
         }
         
         self.load_sounds()

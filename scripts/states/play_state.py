@@ -93,6 +93,7 @@ class PlayState(State):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.mouse.set_visible(True)
+                    self.sound.play_sound('pause')
                     self.game.current_state = PauseState(self.game, prev_state=self)
                 # Debogage
                 if event.key == pygame.K_h:
