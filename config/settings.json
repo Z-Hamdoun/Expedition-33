@@ -2,9 +2,9 @@
     "game": {
         "fps": 60,
         "title": "Expedition 33",
-        "high_score": 3,
+        "high_score": 4,
         "ground_y": 620,
-        "game_speed": 10.10728,
+        "game_speed": 10.28878,
         "width": 1280,
         "height": 720,
         "mode": "Facile",

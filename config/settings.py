@@ -46,7 +46,7 @@ class Settings:
                 data_game = data.get('game', {})
                 self.game_fps = data_game.get('fps', self.game_fps)
                 self.game_title = data_game.get('title', self.game_title)
-                self.high_score = data_game.get('high_score', self.game_high_score)
+                self.game_high_score = data_game.get('high_score', self.game_high_score)
                 self.game_ground_y = data_game.get('ground_y', self.game_ground_y)
                 self.game_game_speed = data_game.get('game_speed', self.game_game_speed)
                 self.game_mode = data_game.get('mode', self.game_mode)

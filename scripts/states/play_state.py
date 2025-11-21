@@ -54,9 +54,16 @@ class PlayState(State):
             
         self.score += int(self.game.settings.game_game_speed / 4)
         
-        hits = pygame.sprite.groupcollide(self.bullets, self.obstacle_manager.obstacles, True, True)  
-        if hits:
-            pass
+        hits = pygame.sprite.groupcollide(self.bullets, self.obstacle_manager.obstacles, True, False)  
+        for bullet, hit_obstacles in hits.items():
+            for obs in hit_obstacles:
+                # Only destroy if it's a "Shootable" enemy (Bird/Frog)
+                if getattr(obs, 'is_shootable', False):
+                    obs.kill()
+                    self.score += 5
+                    self.sound.play_sound('hit')
+                else:
+                    self.sound.play_sound('hit_cactus')
 
         # 4. Collision
         collisions = pygame.sprite.spritecollide(self.player, self.obstacle_manager.obstacles, False)
