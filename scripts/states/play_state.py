@@ -45,7 +45,6 @@ class PlayState(State):
         keys = pygame.key.get_pressed()
         self.player.update(keys)
         
-        print(self.game.settings.game_game_speed)
 
         # Ennemis
         self.obstacle_manager.update()
@@ -68,7 +67,8 @@ class PlayState(State):
                 self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
                 # High score
                 if self.score > self.game.settings.game_high_score:
-                    self.game.game_high_score = self.score
+                    self.game.settings.game_high_score = self.score
+                    self.game.settings.save_settings()
             else:
                 # pygame.time.delay(200)
                 pass
