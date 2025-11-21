@@ -56,14 +56,6 @@ class ThemeState(State):
         self.theme_2.draw(screen)
         self.theme_3.draw(screen)
 
-        #is_selected = (theme_actuel == "desert")
-        #self.boutons["desert"] = self.img_button(self.choix["desert"],self.largeur//2,5*self.hauteur//8, fenetre, is_selected)
-        #self.text("Desert", self.police,(0,0,0),self.largeur//2,self.hauteur//4  + self.choix_h//2  + 100, fenetre)
-        #
-        #is_selected = (theme_actuel == "foret")
-        #self.boutons["foret"] = self.img_button(self.choix["foret"],3*self.largeur//4,5*self.hauteur//8, fenetre, is_selected)
-        #self.text("Foret", self.police,(0,0,0),3*self.largeur//4,self.hauteur//4  + self.choix_h//2  + 100, fenetre)
-
 
     def handle_input(self, events):
         for event in events:

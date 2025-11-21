@@ -45,6 +45,7 @@ class PlayState(State):
         keys = pygame.key.get_pressed()
         self.player.update(keys)
         
+        print(self.game.settings.game_game_speed)
 
         # Ennemis
         self.obstacle_manager.update()
@@ -65,6 +66,9 @@ class PlayState(State):
             if not self.game.settings.debug_mode:
                 # Entrer dans etat game_over
                 self.game.current_state = GameOverState(self.game, final_score=self.score, prev_state=self)
+                # High score
+                if self.score > self.game.settings.game_high_score:
+                    self.game.game_high_score = self.score
             else:
                 pygame.time.delay(200)
             self.sound.play_sound("dino_death")

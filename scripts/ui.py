@@ -1,4 +1,5 @@
 import pygame
+from scripts.sound_management import SoundManager
 
 class Button:
     def __init__(self, x, y, text, font, color_base, color_hover):
@@ -8,6 +9,7 @@ class Button:
         self.font = font
         self.color_base = color_base
         self.color_hover = color_hover
+        self.sound = SoundManager()
         
         # Render text and get dimensions
         self.surf = self.font.render(text, True, color_base)
@@ -16,7 +18,11 @@ class Button:
 
     def update(self, mouse_pos):
         """Met a jour le boutton en mode hover"""
+        was_hovered = self.is_hovered
         self.is_hovered = self.rect.collidepoint(mouse_pos)
+        if not was_hovered and self.is_hovered:
+            self.sound.play_sound('drop')
+        
 
     def draw(self, screen):
         """Dessine le bouton"""
@@ -42,13 +48,18 @@ class ImgButton:
         self.image_surface = image_surface
         self.rect = image_surface.get_rect(center = (x,y))
         self.is_selected = False
+        self.sound = SoundManager()
         # Render text and get dimensions
         self.rect = image_surface.get_rect(center=(x, y))
         self.is_hovered = False
 
     def update(self, mouse_pos):
         """Met a jour le boutton en mode hover"""
+        was_hovered = self.is_hovered
         self.is_hovered = self.rect.collidepoint(mouse_pos)
+        
+        if not was_hovered and self.is_hovered:
+            self.sound.play_sound('drop1')
 
     def outline(self,screen,is_selected):
         if is_selected:
@@ -72,5 +83,6 @@ class ImgButton:
         """Retourn True si clicke"""
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if self.is_hovered:
+                self.sound.play_sound('confirm')
                 return True
         return False

@@ -60,6 +60,7 @@ class MenuState(State):
                 # Entrer dans l'etat Play
                 new_state = ThemeState(self.game)
                 self.game.current_state = new_state
+                self.sound.play_sound('bouton_confirm')
                 
             # Logique boutton quitter
             if self.btn_quit.is_clicked(event):
@@ -69,4 +70,5 @@ class MenuState(State):
             if self.btn_options.is_clicked(event):
                 new_state = SkinState(self.game)
                 self.game.current_state = new_state
+                self.sound.play_sound('bouton_confirm')
   
