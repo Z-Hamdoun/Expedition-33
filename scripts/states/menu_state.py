@@ -17,7 +17,7 @@ class MenuState(State):
         self.sound = SoundManager()
         # Définition de la police
         self.font = pygame.font.Font(None, 60)
-        self.font_text = pygame.font.Font(None, 30)
+        self.font_text = pygame.font.Font(None, 45)
         # Creation des boutons
         cw, ch = game.width // 2, game.height // 2
         self.btn_play = Button(cw//2,7*ch//4 , "COMMENCER", self.font,(240,230,140), (255,215,0))
@@ -53,7 +53,7 @@ class MenuState(State):
         self.btn_play.draw(surface)
         self.btn_skins.draw(surface)
         self.btn_quit.draw(surface)
-        self.text("High score = " + str(self.game.settings.game_high_score),self.font_text,(0,0,0),self.game.width - 150,20,surface)
+        self.text("High Score : " + str(self.game.settings.game_high_score),self.font_text,(240,230,140),self.game.width - 200,40,surface)
  
 
     def handle_input(self, events):
