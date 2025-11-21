@@ -17,11 +17,11 @@ class GestionDifficulte():
         elif 30<tps_ecoulé<=60:
             vitesse = min(15 + ((tps_ecoulé-30) * self.acceleration) , 17)
         elif 60<tps_ecoulé<=90:
-            vitesse = min(20 + ((tps_ecoulé-60) * self.acceleration) , 21)
+            vitesse = min(17 + ((tps_ecoulé-60) * self.acceleration) , 21)
         elif 90<tps_ecoulé<=120:
-            vitesse = min(27 + ((tps_ecoulé-90) * self.acceleration) , 24)
+            vitesse = min(21 + ((tps_ecoulé-90) * self.acceleration) , 24)
         elif 120<tps_ecoulé:
-            vitesse = min( 35 + ((tps_ecoulé-90) * self.acceleration) , 27)
+            vitesse = min( 24 + ((tps_ecoulé-90) * self.acceleration) , 27)
         print(vitesse)
         score = int(self.acceleration*tps_ecoulé*10)
         return vitesse,score
