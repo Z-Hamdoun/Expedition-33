@@ -35,11 +35,11 @@ class GameOverState(State):
         surface.blit(self.overlay, (0, 0))
         
         # Afficher Text
-        txt_surf = self.font.render("GAME OVER", True, (255, 0, 0))
+        txt_surf = self.font.render("GAME OVER", True, (200, 50, 50))
         txt_rect = txt_surf.get_rect(center=(self.game.width//2, self.game.height//4))
         surface.blit(txt_surf, txt_rect)
         
-        score_surf = self.font.render(f"Score: {self.score}", True, (0, 255, 0))
+        score_surf = self.font.render(f"Score: {self.score}", True, (200, 150, 50))
         score_rect = score_surf.get_rect(center=(self.game.width//2, self.game.height//2))
         surface.blit(score_surf, score_rect)
 
