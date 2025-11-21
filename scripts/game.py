@@ -11,7 +11,6 @@ class Game:
         pygame.init()
         pygame.mixer.init()
         
-        
         self.settings = Settings()
         self.width, self.height= self.settings.game_width, self.settings.game_height
         self.screen = pygame.display.set_mode((self.width, self.height))

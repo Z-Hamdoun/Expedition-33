@@ -4,7 +4,7 @@
         "title": "Expedition 33",
         "high_score": 183,
         "ground_y": 650,
-        "game_speed": 11.26117,
+        "game_speed": 10.62136,
         "width": 1280,
         "height": 720,
         "mode": "Facile",
@@ -21,6 +21,6 @@
             200,
             1000
         ],
-        "skin": "forest"
+        "skin": "snow"
     }
 }
