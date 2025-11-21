@@ -24,7 +24,11 @@ class SoundManager:
             "pterodactyl": os.path.join("sons", "oiseau.wav"),
             "duck": os.path.join("sons", "duck.wav"),
             "gun": os.path.join("sons","tir.wav"),
-            "recup" :  os.path.join("sons","recuperer.wav")
+            "recup" :  os.path.join("sons","recuperer.wav"),
+            "bouton_confirm": os.path.join("sons","bouton_confirmation.ogg"),
+            "drop": os.path.join("sons","drop.ogg"),
+            "drop1": os.path.join("sons","drop1.ogg"),
+            "confirm": os.path.join("sons","confirm.ogg")
         }
         
         self.load_sounds()
