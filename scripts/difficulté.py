@@ -15,7 +15,7 @@ class GestionDifficulte():
         if tps_ecoulé <= 30:
             vitesse = min(self.vitesse0 + (tps_ecoulé * self.acceleration) , 13)
         elif 30<tps_ecoulé<=60:
-            vitesse = min(15 + ((tps_ecoulé-30) * self.acceleration) , 17)
+            vitesse = min(14 + ((tps_ecoulé-30) * self.acceleration) , 17)
         elif 60<tps_ecoulé<=90:
             vitesse = min(17 + ((tps_ecoulé-60) * self.acceleration) , 21)
         elif 90<tps_ecoulé<=120:
