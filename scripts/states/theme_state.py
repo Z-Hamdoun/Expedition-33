@@ -1,8 +1,7 @@
 import pygame
-import os
 from scripts.states.state import State
 from scripts.states.play_state import PlayState
-from scripts.ui import Button, ImgButton
+from scripts.ui import ImgButton
 
 class ThemeState(State):
     def __init__(self,game):

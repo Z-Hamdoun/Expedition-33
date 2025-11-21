@@ -1,7 +1,5 @@
 import pygame
-import os
 from scripts.states.state import State
-from scripts.states.play_state import PlayState
 from scripts.states.theme_state import ThemeState
 from scripts.ui import Button
 from scripts.states.skins_state import SkinState
