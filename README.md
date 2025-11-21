@@ -2,6 +2,12 @@
 Dino Runner est un jeu développé en Python avec Pygame, inspiré du jeu du dinosaure de Google Chrome. Le joueur contrôle un personnage capable de sauter, s'accroupir et tirer pour éviter ou détruire des obstacles, dans plusieurs thèmes graphiques et avec différents skins.
 Ce projet a été réalisé dans le cadre d’un travail collaboratif organisé en sprints, en utilisant Git comme outil de travail.
 
+## Installation
+```sh
+pip install -r requirements.txt
+```
+Puis executer main.py dans un terminal
+
 ## Présentation
 Dino Runner est un runner en 2D où le joueur doit éviter les obstacles, survivre le plus longtemps possible, et progresser dans un environnement dynamique.
 Le jeu inclut différents thèmes, un système complet de tir, plusieurs obstacles, des sons, des menus, ainsi qu’un système de score.
