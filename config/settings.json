@@ -2,9 +2,9 @@
     "game": {
         "fps": 60,
         "title": "Expedition 33",
-        "high_score": 3,
-        "ground_y": 620,
-        "game_speed": 10.10776,
+        "high_score": 5,
+        "ground_y": 650,
+        "game_speed": 11.09224,
         "width": 1280,
         "height": 720,
         "mode": "Facile",
@@ -21,6 +21,6 @@
             200,
             1000
         ],
-        "skin": "snow"
+        "skin": "desert"
     }
 }
